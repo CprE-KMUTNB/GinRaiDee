@@ -3,7 +3,7 @@ import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/constant.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColor: authenPriColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: loginScreen(),
+      home: Login_Screen(),
     );
   }
 }
