@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
 
-const authenPriColor = Color(0x00A6C606);
-const authenPriLightColor = Color(0x00F1F7E7);
+const authenPriColor = Color.fromARGB(255, 166, 198, 6);
+const authenPriLightColor = Color(0xFFF1F7E7);
