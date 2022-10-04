@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
+from django.template.defaultfilters import slugify
 
 
 class UserProfileManager(BaseUserManager):
@@ -32,6 +33,7 @@ class UserProfileManager(BaseUserManager):
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=255, unique=True)
+    userslug = models.SlugField()
     is_activate = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -40,6 +42,12 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.userslug = slugify(self.username)
+
+        super(UserProfile, self).save(*args, **kwargs)
 
 
     def get_email(self):

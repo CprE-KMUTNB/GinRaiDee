@@ -10,19 +10,20 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserProfile
-        fields = ('id', 'email', 'username', 'password', 'confirm_password')
+        fields = ('id', 'email', 'username','userslug', 'password', 'confirm_password')
         extra_kwargs = {
             'password': {
                 'write_only': True,
                 'style': {'input_type': 'password'}
             },
+            'userslug': {'read_only':True},
         }
 
 
-    def validate(self, data):
-        username_used =  list(models.UserProfile.objects.values_list('username',flat=True))
+    def validate(self,data):
+        username_used =  list(models.UserProfile.objects.values_list('userslug',flat=True))
         email_used = list(models.UserProfile.objects.values_list('email',flat=True))
-        email = data.get('email')
+        email = data.get('email').lower()
         username = data.get('username')
         password = data.get('password')
         confirm_password = data.get('confirm_password')
@@ -30,15 +31,18 @@ class UserProfileSerializer(serializers.ModelSerializer):
         Validate_text = {}
         has_error = False
 
-        if email in email_used:
-            if not IsAuthenticated:
-                Validate_text.update({'email':'This email has been used!'})
-                has_error = True
+        if email.lower() in email_used:
+            Validate_text.update({'email':'This email has been used!'})
+            has_error = True
+
         
-        if username in username_used:
-            if not IsAuthenticated:
-                Validate_text.update({'username' : 'This username has been used!'})
-                has_error = True
+        if username.lower() in username_used:
+            Validate_text.update({'username' : 'This username has been used!'})
+            has_error = True
+        
+        if len(username.split(' ')) != 1:
+            Validate_text.update({'username' : 'Can not use space in username'})
+            has_error = True
 
         if confirm_password != password:
             Validate_text.update({'confirm_password' : 'Password does not match!'})
