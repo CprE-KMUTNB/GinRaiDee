@@ -29,6 +29,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  ionicons: ^0.2.1
+  
+  google_fonts: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -77,24 +80,25 @@ flutter:
   fonts:
     - family: IBMPlexSansThai
       fonts:
-        - asset: fonts/IBMPlexSansThai-Bold.ttf
-        - asset: fonts/IBMPlexSansThai-ExtraLight.ttf
-        - asset: fonts/IBMPlexSansThai-Light.ttf
-        - asset: fonts/IBMPlexSansThai-Medium.ttf
-        - asset: fonts/IBMPlexSansThai-Regular.ttf
-        - asset: fonts/IBMPlexSansThai-SemiBold.ttf
-        - asset: fonts/IBMPlexSansThai-Thin.ttf
+        - asset: assets/fonts/IBMPlexSansThai-Bold.ttf
+        - asset: assets/fonts/IBMPlexSansThai-ExtraLight.ttf
+        - asset: assets/fonts/IBMPlexSansThai-Light.ttf
+        - asset: assets/fonts/IBMPlexSansThai-Medium.ttf
+        - asset: assets/fonts/IBMPlexSansThai-Regular.ttf
+        - asset: assets/fonts/IBMPlexSansThai-SemiBold.ttf
+        - asset: assets/fonts/IBMPlexSansThai-Thin.ttf
           
     - family: Itim
       fonts:
-        - asset: fonts/Itim-Regular.ttf
+        - asset: assets/fonts/Itim-Regular.ttf
           weight: 700
 
     - family: Sriracha
       fonts:
-        - asset: fonts/Sriracha-Regular.ttf
-          style: italic
-          weight: 700
+        - asset: assets/fonts/Sriracha-Regular.ttf
+          
+
+    
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

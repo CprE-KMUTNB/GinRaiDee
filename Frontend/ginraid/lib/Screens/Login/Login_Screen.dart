@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class loginScreen extends StatelessWidget {
   @override
@@ -17,12 +19,14 @@ class loginScreen extends StatelessWidget {
               
               //กินไรดี
               Text(
-                'กินไรดี',
-                style: TextStyle(
-                  fontFamily: 'Sriracha',
-                  fontSize: 50
+                'กินไรดีGinrai de',
+                style: GoogleFonts.itim(fontStyle: FontStyle.italic,fontSize: 50),
+                // TextStyle(
+                //   fontSize: 50,
+                //   fontFamily: 'Sriracha',
+                //   color: Colors.teal
                 )
-              ),
+              ,
               SizedBox(height : 20),
 
 
