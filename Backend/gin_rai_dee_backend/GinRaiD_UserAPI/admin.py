@@ -1,5 +1,6 @@
 from django.contrib import admin
-from . import models
+from .models import UserProfile
+from GinRaiD_Recipes.models import Menu
 
-
-admin.site.register(models.UserProfile)
+admin.site.register(UserProfile)
+admin.site.register(Menu)

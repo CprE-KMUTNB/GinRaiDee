@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'GinRaiD_UserAPI',
+    'GinRaiD_Recipes',
 ]
 
 MIDDLEWARE = [
