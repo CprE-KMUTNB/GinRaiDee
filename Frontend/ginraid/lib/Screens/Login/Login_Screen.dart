@@ -17,15 +17,17 @@ class loginScreen extends StatelessWidget {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               
+              
               //กินไรดี
               Text(
                 'กินไรดีGinrai de',
-                style: GoogleFonts.itim(fontStyle: FontStyle.italic,fontSize: 50),
-                // TextStyle(
-                //   fontSize: 50,
-                //   fontFamily: 'Sriracha',
+                style: GoogleFonts.sriracha(fontSize : 50.0 , fontStyle: FontStyle.italic),
+                // style: TextStyle(
+                //   fontSize: 50.0,
+                //   fontFamily: "Sriracha",
                 //   color: Colors.teal
-                )
+                // ),
+              )
               ,
               SizedBox(height : 20),
 
