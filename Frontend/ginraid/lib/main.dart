@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           // primaryColor: authenPriColor,
-          scaffoldBackgroundColor: Color.fromARGB(255, 241, 247, 231),
+          scaffoldBackgroundColor: Color(0xFFF1F7E7),
         ),
         home: loginScreen());
   }
