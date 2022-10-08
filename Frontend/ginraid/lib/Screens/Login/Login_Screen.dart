@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'componants/background.dart';
+
 class loginScreen extends StatefulWidget {
   const loginScreen({Key? key}) : super(key: key);
 
@@ -15,9 +17,11 @@ class loginScreen extends StatefulWidget {
 
 class _loginScreenState extends State<loginScreen> {
   bool _isObscure = true;
+  late double screenWidth, screenHeight;
   @override
   Widget build(BuildContext context) {
-    var imageStrings = ['Frontend\ginraid\assets\image\loginbacktrans.png'];
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
     @override
     void initState() {
       var _passwordVisible = false;
@@ -26,33 +30,74 @@ class _loginScreenState extends State<loginScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFF1F7E7),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              //กินไรดี
-              Text(
-                'กินไรดีGinrai de',
-                style: GoogleFonts.sriracha(
-                    fontSize: 50.0, fontStyle: FontStyle.italic),
-                // style: TextStyle(
-                //   fontSize: 50.0,
-                //   fontFamily: "Sriracha",
-                //   color: Colors.teal
-                // ),
-              ),
-              SizedBox(height: 40),
+        child: Stack(
+          // child: Column(
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            Mybackground().buildBackground(screenWidth, screenHeight),
+            SizedBox(height: 40),
 
-              //กล่องใหญ่
-              Container(
-                height: 400,
-                margin: const EdgeInsets.symmetric(horizontal: 25.0),
-                padding: const EdgeInsets.all(16),
+            Container(
+              alignment: Alignment.topCenter,
+              // width: screenWidth * 0.75,
+              child:
+                  //กินไรดี
+                  Text(
+                'กินไรดี \n GinRaiD',
+                style: TextStyle(
+                  fontSize: 60.0,
+                  fontFamily: "Sriracha",
+                  color: Color.fromARGB(255, 84, 96, 17),
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+
+            // SizedBox(height: 100),
+            SingleChildScrollView(
+              child:
+
+                  //กล่องใหญ่
+                  Container(
+                height: 500,
+                margin: const EdgeInsets.symmetric(
+                    vertical: 200.0, horizontal: 25.0),
+                padding: const EdgeInsets.all(47),
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(16)),
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(47),
+                ),
                 child: Column(
                   children: <Widget>[
+
+
+                    //login/sigin
+                    Container(
+                      child: Container(
+                        child: Center(
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor: Color.fromARGB(255, 166, 198, 6),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              'Login',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: "Itim",
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ), 
+
+
+
                     //กรอกusername
                     Container(
                       child: Container(
@@ -68,12 +113,14 @@ class _loginScreenState extends State<loginScreen> {
                                     color: Color.fromARGB(255, 0, 0, 0)),
                               ),
                               hintText: 'Username',
-                              hintStyle: GoogleFonts.itim(
-                                fontSize: 20.0,
+                              hintStyle: TextStyle(
+                                fontSize: 25.0,
+                                fontFamily: "Itim",
                                 color: Color.fromARGB(255, 179, 190, 190),
                               ),
-                              labelStyle: GoogleFonts.itim(
+                              labelStyle: TextStyle(
                                 fontSize: 30.0,
+                                fontFamily: "Itim",
                                 color: Color.fromARGB(255, 0, 0, 0),
                               ),
                             ),
@@ -109,12 +156,14 @@ class _loginScreenState extends State<loginScreen> {
                                     color: Color.fromARGB(255, 0, 0, 0)),
                               ),
                               hintText: 'Password',
-                              hintStyle: GoogleFonts.itim(
-                                fontSize: 20.0,
+                              hintStyle: TextStyle(
+                                fontSize: 25.0,
+                                fontFamily: "Itim",
                                 color: Color.fromARGB(255, 179, 190, 190),
                               ),
-                              labelStyle: GoogleFonts.itim(
+                              labelStyle: TextStyle(
                                 fontSize: 30.0,
+                                fontFamily: "Itim",
                                 color: Color.fromARGB(255, 0, 0, 0),
                               ),
                             ),
@@ -131,10 +180,10 @@ class _loginScreenState extends State<loginScreen> {
                           style: TextButton.styleFrom(),
                           onPressed: () {},
                           child: const Text(
-                            'Forget Password',
+                            'Forgot Password',
                             style: TextStyle(
                               fontSize: 15.0,
-                              fontFamily: "Sriracha",
+                              fontFamily: "Itim",
                               color: Color.fromARGB(255, 179, 190, 190),
                             ),
                           ),
@@ -142,18 +191,18 @@ class _loginScreenState extends State<loginScreen> {
                       ),
                     ),
 
-                    //login/sigin
+                    
 
-                    //login
+                    //loginbutton
                     Container(
                       child: Container(
                         child: Center(
-                          child: TextButton(                           
-                            style: TextButton.styleFrom(                              
-                              shape: RoundedRectangleBorder(                                
-                                borderRadius: BorderRadius.circular(30),                                
-                              ),                              
-                              backgroundColor: Color.fromARGB(255, 166, 198, 6),                              
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor: Color.fromARGB(255, 166, 198, 6),
                             ),
                             onPressed: () {},
                             child: const Text(
@@ -167,14 +216,14 @@ class _loginScreenState extends State<loginScreen> {
                           ),
                         ),
                       ),
-                      
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+        // ),
       ),
     );
   }
