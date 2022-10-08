@@ -7,6 +7,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'componants/background.dart';
+import 'componants/Animated.dart';
 
 class loginScreen extends StatefulWidget {
   const loginScreen({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class loginScreen extends StatefulWidget {
 class _loginScreenState extends State<loginScreen> {
   bool _isObscure = true;
   late double screenWidth, screenHeight;
+  int _toggleValue = 0;
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
@@ -61,111 +63,95 @@ class _loginScreenState extends State<loginScreen> {
                   Container(
                 height: 500,
                 margin: const EdgeInsets.symmetric(
-                    vertical: 200.0, horizontal: 25.0),
-                padding: const EdgeInsets.all(47),
+                    vertical: 225.0, horizontal: 20.0),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(47),
                 ),
                 child: Column(
                   children: <Widget>[
-
-
                     //login/sigin
-                    Container(
-                      child: Container(
-                        child: Center(
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              backgroundColor: Color.fromARGB(255, 166, 198, 6),
-                            ),
-                            onPressed: () {},
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Itim",
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ), 
+                    AnimatedToggle(
+                      values: ['Log In', 'Sign In'],
+                      onToggleCallback: (value) {
+                        setState(() {
+                          _toggleValue = value;
+                        });
+                      },
+                      buttonColor: const Color.fromARGB(255, 166, 198, 6),
+                      backgroundColor: const Color.fromARGB(255, 237, 237, 237),
+                      textColor: const Color.fromARGB(255, 255, 255, 255),
+                    ),
+                    // Text('Toggle Value : $_toggleValue'), ไว้ดูค่า toggle
 
 
+                           
 
                     //กรอกusername
                     Container(
-                      child: Container(
-                        child: Center(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 179, 190, 190)),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 0, 0, 0)),
-                              ),
-                              hintText: 'Username',
-                              hintStyle: TextStyle(
-                                fontSize: 25.0,
-                                fontFamily: "Itim",
-                                color: Color.fromARGB(255, 179, 190, 190),
-                              ),
-                              labelStyle: TextStyle(
-                                fontSize: 30.0,
-                                fontFamily: "Itim",
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
+                      child: Center(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 179, 190, 190)),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                            hintText: 'Username',
+                            hintStyle: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 179, 190, 190),
+                            ),
+                            labelStyle: TextStyle(
+                              fontSize: 30.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                           ),
                         ),
                       ),
                     ),
 
-                    SizedBox(height: 50),
+                    SizedBox(height: 60),
 
                     //กรอกpass
                     Container(
-                      child: Container(
-                        child: Center(
-                          child: TextField(
-                            obscureText: _isObscure,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                  icon: Icon(_isObscure
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onPressed: () {
-                                    setState(() {
-                                      _isObscure = !_isObscure;
-                                    });
-                                  }),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 179, 190, 190)),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 0, 0, 0)),
-                              ),
-                              hintText: 'Password',
-                              hintStyle: TextStyle(
-                                fontSize: 25.0,
-                                fontFamily: "Itim",
-                                color: Color.fromARGB(255, 179, 190, 190),
-                              ),
-                              labelStyle: TextStyle(
-                                fontSize: 30.0,
-                                fontFamily: "Itim",
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
+                      child: Center(
+                        child: TextField(
+                          obscureText: _isObscure,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                icon: Icon(_isObscure
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    _isObscure = !_isObscure;
+                                  });
+                                }),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 179, 190, 190)),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                            hintText: 'Password',
+                            hintStyle: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 179, 190, 190),
+                            ),
+                            labelStyle: TextStyle(
+                              fontSize: 30.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                           ),
                         ),
@@ -174,44 +160,41 @@ class _loginScreenState extends State<loginScreen> {
 
                     //fogetpass
                     Container(
-                      child: Container(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                          style: TextButton.styleFrom(),
-                          onPressed: () {},
-                          child: const Text(
-                            'Forgot Password',
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 179, 190, 190),
-                            ),
+                      alignment: Alignment.bottomRight,
+                      child: TextButton(
+                        style: TextButton.styleFrom(),
+                        onPressed: () {},
+                        child: const Text(
+                          'Forgot Password',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontFamily: "Itim",
+                            color: Color.fromARGB(255, 179, 190, 190),
                           ),
                         ),
                       ),
                     ),
 
-                    
+
+                    SizedBox(height: 30),
 
                     //loginbutton
                     Container(
-                      child: Container(
-                        child: Center(
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              backgroundColor: Color.fromARGB(255, 166, 198, 6),
+                      child: Center(
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
                             ),
-                            onPressed: () {},
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Itim",
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
+                            backgroundColor: Color.fromARGB(255, 166, 198, 6),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            '   Login   ',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 255, 255, 255),
                             ),
                           ),
                         ),
