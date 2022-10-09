@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ginraid/Screens/Login/Login_Screen.dart';
 
+import 'package:ginraid/Screens/Signup/Signup_Screen.dart';
+
 class AnimatedToggle extends StatefulWidget {
   final List<String> values;
   final ValueChanged onToggleCallback;
@@ -28,17 +30,25 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
       // color: Color.fromARGB(255, 20, 60, 10),
       width: Get.width * 0.6,
       height: Get.width * 0.13,
-      margin: EdgeInsets.only(top: 30,bottom: 20),
+      margin: EdgeInsets.only(top: 30, bottom: 20),
       child: Stack(
         children: <Widget>[
           GestureDetector(
             onTap: () {
               initialPosition = !initialPosition;
               var index = 0;
-              if (!initialPosition) {
+              if (!initialPosition) {                
                 index = 1;
+                                               
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => const SigninScreen()));
               }
+             
+              
               widget.onToggleCallback(index);
+              // Navigator.push(context , MaterialPageRoute(builder: (context) => const loginScreen()) );
               setState(() {});
             },
             child: Container(
@@ -61,7 +71,6 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
                       style: TextStyle(
                         fontFamily: 'Itim',
                         fontSize: 25.0,
-                        
                         color: const Color(0xAA000000),
                       ),
                     ),
@@ -70,6 +79,8 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
               ),
             ),
           ),
+
+          
           AnimatedAlign(
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
@@ -90,7 +101,6 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
                   fontFamily: 'Itim',
                   fontSize: 25.0,
                   color: widget.textColor,
-                  
                 ),
               ),
               alignment: Alignment.center,

@@ -3,6 +3,8 @@ import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Screens/Signup/Signup_Screen.dart';
+
 void main() {
   runApp(MyApp());
 }
