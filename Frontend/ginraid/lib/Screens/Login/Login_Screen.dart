@@ -93,8 +93,7 @@ class _loginScreenState extends State<loginScreen> {
                     ),
 
                     //sign in to continue!
-                    Container(
-                      // color: Colors.black26,
+                    Container(                      
                       alignment: Alignment.topLeft,
                       margin: EdgeInsets.only(bottom: 30),
                       child: Text(

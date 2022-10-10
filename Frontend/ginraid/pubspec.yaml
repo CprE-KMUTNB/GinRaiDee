@@ -30,8 +30,9 @@ dependencies:
   flutter:
     sdk: flutter
   ionicons: ^0.2.1
-  
+  flutter_shine: ^0.0.5
   google_fonts: ^3.0.1
+  drop_shadow: ^0.0.1+4
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -84,6 +85,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/image/loginbacktrans.png
+    - assets/image/Home1.png
+    - assets/image/Home2.png
+    - assets/image/Home3.png
     - assets/icons/
     
 
