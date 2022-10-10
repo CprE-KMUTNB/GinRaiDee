@@ -3,7 +3,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,19 +10,20 @@ import 'package:ginraid/Screens/componants/background.dart';
 import 'package:ginraid/Screens/componants/AnimatedLog.dart';
 import 'package:ginraid/Screens/componants/AnimatedSign.dart';
 
-import '../Signup/Signup_Screen.dart';
+import 'Signup_Screen.dart';
 import '../componants/test.dart';
-import 'WidLog.dart';
 
-class loginScreen extends StatefulWidget {
-  const loginScreen({Key? key}) : super(key: key);
+
+class signupScreen extends StatefulWidget {
+  const signupScreen({Key? key}) : super(key: key);
 
   @override
-  State<loginScreen> createState() => _loginScreenState();
+  State<signupScreen> createState() => _signupScreenState();
 }
 
-class _loginScreenState extends State<loginScreen> {
+class _signupScreenState extends State<signupScreen> {
   bool _isObscure = true;
+  bool _isObscure1 = true;
   late double screenWidth, screenHeight;
   int _toggleValue = 0;
   @override
@@ -77,13 +77,13 @@ class _loginScreenState extends State<loginScreen> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    //login
+                    //signup
                     Container(
                       // color: Colors.black26,
                       alignment: Alignment.topLeft,
                       margin: EdgeInsets.only(top: 30),
                       child: Text(
-                        'LOGIN,',
+                        'SIGN UP,',
                         style: TextStyle(
                           fontSize: 45.0,
                           fontFamily: "Itim",
@@ -92,13 +92,13 @@ class _loginScreenState extends State<loginScreen> {
                       ),
                     ),
 
-                    //sign in to continue!
+                    //Sign up to get start!
                     Container(
                       // color: Colors.black26,
                       alignment: Alignment.topLeft,
-                      margin: EdgeInsets.only(bottom: 30),
+                      margin: EdgeInsets.only(bottom: 20),
                       child: Text(
-                        'Sign in to continue!',
+                        'Sign up to get start!',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontFamily: "Itim",
@@ -109,7 +109,8 @@ class _loginScreenState extends State<loginScreen> {
 
                     // กรอกusername
                     Container(
-                      child: Center(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top:10),
                         child: TextField(
                           decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -133,14 +134,15 @@ class _loginScreenState extends State<loginScreen> {
                             ),
                           ),
                         ),
-                      ),
+                      
                     ),
 
-                    SizedBox(height: 60),
+                    // SizedBox(height: 60),
 
                     //กรอกpass
                     Container(
-                      child: Center(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top:10),
                         child: TextField(
                           obscureText: _isObscure,
                           decoration: InputDecoration(
@@ -174,31 +176,60 @@ class _loginScreenState extends State<loginScreen> {
                             ),
                           ),
                         ),
-                      ),
+                      
                     ),
 
-                    //fogetpass
+
+
+                    //comfirm pass
                     Container(
-                      alignment: Alignment.bottomRight,
-                      child: TextButton(
-                        style: TextButton.styleFrom(),
-                        onPressed: () {},
-                        child: const Text(
-                          'Forgot Password',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontFamily: "Itim",
-                            color: Color.fromARGB(255, 179, 190, 190),
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top:10),
+                        child: TextField(
+                          obscureText: _isObscure1,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                icon: Icon(_isObscure1
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    _isObscure1 = !_isObscure1;
+                                  });
+                                }),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 179, 190, 190)),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                            hintText: 'Confirm Password',
+                            hintStyle: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 179, 190, 190),
+                            ),
+                            labelStyle: TextStyle(
+                              fontSize: 30.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
                           ),
                         ),
-                      ),
+                      
                     ),
 
-                    // SizedBox(height: 30),
+                    
 
-                    //loginbutton
+                   
+
+                    //confirmbutton
                     Container(
-                      child: Center(
+                      //color: Colors.black,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 30),
                         child: TextButton(
                           style: TextButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -208,7 +239,7 @@ class _loginScreenState extends State<loginScreen> {
                           ),
                           onPressed: () {},
                           child: const Text(
-                            '       Login       ',
+                            '       Confirm       ',
                             style: TextStyle(
                               fontSize: 25.0,
                               fontFamily: "Itim",
@@ -216,25 +247,19 @@ class _loginScreenState extends State<loginScreen> {
                             ),
                           ),
                         ),
-                      ),
+                      
                     ),
 
                     SizedBox(height: 30),
 
                     GestureDetector(
-                      onTap: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const signupScreen()),
-                        ),
-                      },
+                      onTap: () => {Navigator.pop(context)},
                       child: RichText(
                         text: TextSpan(
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
                             TextSpan(
-                              text: 'I\’m new user. ',
+                              text: 'I\’m already a member. ',
                               style: TextStyle(
                                 fontSize: 18.0,
                                 fontFamily: "Itim",
@@ -242,7 +267,7 @@ class _loginScreenState extends State<loginScreen> {
                               ),
                             ),
                             TextSpan(
-                              text: 'Sign Up',
+                              text: 'Login',
                               style: TextStyle(
                                 fontSize: 18.0,
                                 fontFamily: "Itim",
