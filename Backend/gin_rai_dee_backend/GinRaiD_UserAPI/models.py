@@ -1,3 +1,5 @@
+import os
+import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
 from django.template.defaultfilters import slugify
@@ -27,6 +29,10 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
+def image_file_path(instance, filename):
+    ext = os.path.splitext(filename)[1]
+    filename = f'{uuid.uuid4()}{ext}'
+    return os.path.join('static','profile-images', filename)
 
 
 
@@ -34,6 +40,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=255, unique=True)
     userslug = models.SlugField()
+    userpic = models.ImageField(upload_to = image_file_path, null = True)
     is_activate = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -55,3 +62,20 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.username
+
+
+class UserFollowManager(models.Manager):
+    def my_following(self, *args, **kwargs):
+        user = kwargs.pop('follower')
+        return super(UserFollowManager, self).filter(follower=user)
+        
+
+class UserFollowModule(models.Model):
+    follower = models.ForeignKey(UserProfile, related_name='following', on_delete=models.CASCADE)
+    following = models.ForeignKey(UserProfile, related_name='follower', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    objects = UserFollowManager()
+
+    class Meta:
+        unique_together = ('follower', 'following',)

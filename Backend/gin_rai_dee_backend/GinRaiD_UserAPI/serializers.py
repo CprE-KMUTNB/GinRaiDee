@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from . import models
 from rest_framework.exceptions import ValidationError
-from rest_framework.permissions import IsAuthenticated
+from GinRaiD_Recipes.serializers import MenuSerializer,FavListSerializer
+from GinRaiD_Notifications.serializers import NotificationSerializer
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class UserRegisterSerializer(serializers.ModelSerializer):
  
     confirm_password = serializers.CharField(write_only=True, style={'input_type': 'password'})
 
@@ -21,12 +22,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
     def validate(self,data):
-        username_used =  list(models.UserProfile.objects.values_list('userslug',flat=True))
         email_used = list(models.UserProfile.objects.values_list('email',flat=True))
         email = data.get('email').lower()
         username = data.get('username')
         password = data.get('password')
         confirm_password = data.get('confirm_password')
+        restrict_sign = '\\'
+
+
 
         Validate_text = {}
         has_error = False
@@ -35,9 +38,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             Validate_text.update({'email':'This email has been used!'})
             has_error = True
 
-        
-        if username.lower() in username_used:
-            Validate_text.update({'username' : 'This username has been used!'})
+        if restrict_sign in email:
+            Validate_text.update({'email': 'Can not use special character'})
+            has_error = True
+
+        if restrict_sign in username:
+            Validate_text.update({'username': 'Can not use special character'})
             has_error = True
         
         if len(username.split(' ')) != 1:
@@ -46,6 +52,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         if confirm_password != password:
             Validate_text.update({'confirm_password' : 'Password does not match!'})
+            has_error = True
+        
+        if restrict_sign in password:
+            Validate_text.update({'password': 'Can not use special character'})
             has_error = True
 
         if has_error:
@@ -56,7 +66,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         user = models.UserProfile.objects.create_user(
-            email = validated_data['email'],
+            email = validated_data['email'].lower(),
             username = validated_data['username'],
             password = validated_data['password'],
         )
@@ -69,3 +79,109 @@ class UserProfileSerializer(serializers.ModelSerializer):
             password = validated_data.pop('password')
             instance.set_password(password)
         return super().update(instance, validated_data)
+
+
+class UserPicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserProfile
+        fields = ('id', 'username','userpic')
+        extra_kwargs = {
+            'username': {'read_only':True},
+        }
+
+
+class UserNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserProfile
+        fields = ('id', 'username')
+
+
+class PasswordSerializer(serializers.ModelSerializer):
+    old_password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+    confirm_password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+
+    class Meta:
+        model = models.UserProfile
+        fields = ('id', 'old_password' ,'password', 'confirm_password')
+        extra_kwargs = {
+            'password': {
+                'write_only': True,
+                'style': {'input_type': 'password'}
+            },}
+
+    def validate(self,data):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        old_password = data.get('old_password')
+        password = data.get('password')
+        confirm_password = data.get('confirm_password')
+        Validate_text = {}
+        has_error = False
+
+        if not user.check_password(old_password):
+            Validate_text.update({'old_password' : 'Password does not match!'})
+            has_error = True
+
+        if confirm_password != password:
+            Validate_text.update({'confirm_password' : 'Password does not match!'})
+            has_error = True
+
+        if has_error:
+            raise ValidationError(Validate_text)
+
+        return data
+
+    def update(self, instance, validated_data):
+        password = validated_data['password'],
+        if 'password' in validated_data:
+            password = validated_data.pop('password')
+            instance.set_password(password)
+        return super().update(instance, validated_data)
+
+
+
+class UserFollowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserFollowModule
+        fields = ('id','follower','following')
+        extra_kwargs = {
+            'follower': {'read_only':True},
+        }
+    
+
+class UserFollowListSerializer(serializers.ModelSerializer):
+
+    followingname = serializers.CharField(source = 'following.username', read_only=True)
+    followingpic = serializers.ImageField(source = 'following.userpic', read_only=True)
+    
+    class Meta:
+        model = models.UserFollowModule
+        fields = ('id','following','followingname','followingpic')
+
+
+class FollowerSerializer(serializers.ModelSerializer):
+    followername = serializers.CharField(source = 'follower.username', read_only=True)
+    followerpic = serializers.ImageField(source = 'follower.userpic', read_only=True)
+    
+    class Meta:
+        model = models.UserFollowModule
+        fields = ('id','follower','followername','followerpic')
+
+
+    
+
+class UserAllDataSerializer(serializers.ModelSerializer):
+
+    menu = MenuSerializer(many=True, read_only=True)
+    favorite = FavListSerializer(many=True, read_only=True)
+    following = UserFollowListSerializer(many=True, read_only=True)
+    following_count = serializers.IntegerField(source='following.count', read_only=True)
+    follower = FollowerSerializer(many=True, read_only=True)
+    follower_count = serializers.IntegerField(source='follower.count', read_only=True)
+    Notifications = NotificationSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.UserProfile
+        fields = ('id', 'email', 'username','userslug', 'menu', 'favorite', 'follower','follower_count' ,'following', 'following_count','Notifications') 

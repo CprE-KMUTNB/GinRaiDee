@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user-api/', include('GinRaiD_UserAPI.urls')),
-    path('', include('GinRaiD_Recipes.urls')),
-]
+    path('menu-api/', include('GinRaiD_Recipes.urls')),
+    path('notification-api/', include('GinRaiD_Notifications.urls'))
+] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
