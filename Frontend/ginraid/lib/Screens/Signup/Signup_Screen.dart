@@ -13,7 +13,6 @@ import 'package:ginraid/Screens/componants/AnimatedSign.dart';
 import 'Signup_Screen.dart';
 import '../componants/test.dart';
 
-
 class signupScreen extends StatefulWidget {
   const signupScreen({Key? key}) : super(key: key);
 
@@ -62,55 +61,55 @@ class _signupScreenState extends State<signupScreen> {
             ),
 
             // SizedBox(height: 100),
-            SingleChildScrollView(
+            Container(
               child:
 
                   //กล่องใหญ่
                   Container(
-                height: 500,
-                margin: const EdgeInsets.symmetric(
-                    vertical: 225.0, horizontal: 20.0),
+                margin:
+                    const EdgeInsets.only(top: 225.0, left: 20.0, right: 20.0),
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(47),
                 ),
-                child: Column(
-                  children: <Widget>[
-                    //signup
-                    Container(
-                      // color: Colors.black26,
-                      alignment: Alignment.topLeft,
-                      margin: EdgeInsets.only(top: 30),
-                      child: Text(
-                        'SIGN UP,',
-                        style: TextStyle(
-                          fontSize: 45.0,
-                          fontFamily: "Itim",
-                          color: Color.fromARGB(255, 84, 96, 17),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      //signup
+                      Container(
+                        // color: Colors.black26,
+                        alignment: Alignment.topLeft,
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(
+                          'SIGN UP,',
+                          style: TextStyle(
+                            fontSize: 45.0,
+                            fontFamily: "Itim",
+                            color: Color.fromARGB(255, 84, 96, 17),
+                          ),
                         ),
                       ),
-                    ),
 
-                    //Sign up to get start!
-                    Container(
-                      // color: Colors.black26,
-                      alignment: Alignment.topLeft,
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: Text(
-                        'Sign up to get start!',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "Itim",
-                          color: Color.fromARGB(255, 179, 190, 190),
+                      //Sign up to get start!
+                      Container(
+                        // color: Colors.black26,
+                        alignment: Alignment.topLeft,
+                        margin: EdgeInsets.only(bottom: 20),
+                        child: Text(
+                          'Sign up to get start!',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontFamily: "Itim",
+                            color: Color.fromARGB(255, 179, 190, 190),
+                          ),
                         ),
                       ),
-                    ),
 
-                    // กรอกusername
-                    Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top:10),
+                      // กรอกusername
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 10),
                         child: TextField(
                           decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -134,15 +133,43 @@ class _signupScreenState extends State<signupScreen> {
                             ),
                           ),
                         ),
-                      
-                    ),
+                      ),
 
-                    // SizedBox(height: 60),
+                      //email
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 10),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 179, 190, 190)),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                            hintText: 'Email',
+                            hintStyle: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 179, 190, 190),
+                            ),
+                            labelStyle: TextStyle(
+                              fontSize: 30.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                        ),
+                      ),
 
-                    //กรอกpass
-                    Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top:10),
+                      // SizedBox(height: 60),
+
+                      //กรอกpass
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 10),
                         child: TextField(
                           obscureText: _isObscure,
                           decoration: InputDecoration(
@@ -176,15 +203,12 @@ class _signupScreenState extends State<signupScreen> {
                             ),
                           ),
                         ),
-                      
-                    ),
+                      ),
 
-
-
-                    //comfirm pass
-                    Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top:10),
+                      //comfirm pass
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 10),
                         child: TextField(
                           obscureText: _isObscure1,
                           decoration: InputDecoration(
@@ -218,18 +242,13 @@ class _signupScreenState extends State<signupScreen> {
                             ),
                           ),
                         ),
-                      
-                    ),
+                      ),
 
-                    
-
-                   
-
-                    //confirmbutton
-                    Container(
-                      //color: Colors.black,
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 30),
+                      //confirmbutton
+                      Container(
+                        //color: Colors.black,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 30),
                         child: TextButton(
                           style: TextButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -247,38 +266,38 @@ class _signupScreenState extends State<signupScreen> {
                             ),
                           ),
                         ),
-                      
-                    ),
+                      ),
 
-                    SizedBox(height: 30),
+                      SizedBox(height: 30),
 
-                    GestureDetector(
-                      onTap: () => {Navigator.pop(context)},
-                      child: RichText(
-                        text: TextSpan(
-                          // ignore: prefer_const_literals_to_create_immutables
-                          children: [
-                            TextSpan(
-                              text: 'I\’m already a member. ',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontFamily: "Itim",
-                                color: Color.fromARGB(255, 179, 190, 190),
+                      GestureDetector(
+                        onTap: () => {Navigator.pop(context)},
+                        child: RichText(
+                          text: TextSpan(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              TextSpan(
+                                text: 'I\’m already a member. ',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "Itim",
+                                  color: Color.fromARGB(255, 179, 190, 190),
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: 'Login',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontFamily: "Itim",
-                                color: Color.fromARGB(255, 166, 198, 6),
+                              TextSpan(
+                                text: 'Login',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "Itim",
+                                  color: Color.fromARGB(255, 166, 198, 6),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
