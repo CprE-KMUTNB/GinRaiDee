@@ -95,6 +95,26 @@ class UserNameSerializer(serializers.ModelSerializer):
         model = models.UserProfile
         fields = ('id', 'username')
 
+    def validate(self,data):
+        username = data.get('username')
+        restrict_sign = '\\'
+
+        Validate_text = {}
+        has_error = False
+
+        if restrict_sign in username:
+            Validate_text.update({'username': 'Can not use special character'})
+            has_error = True
+        
+        if len(username.split(' ')) != 1:
+            Validate_text.update({'username' : 'Can not use space in username'})
+            has_error = True
+
+        if has_error:
+            raise ValidationError(Validate_text)
+
+        return data
+
 
 class PasswordSerializer(serializers.ModelSerializer):
     old_password = serializers.CharField(write_only=True, style={'input_type': 'password'})
@@ -121,7 +141,7 @@ class PasswordSerializer(serializers.ModelSerializer):
         has_error = False
 
         if not user.check_password(old_password):
-            Validate_text.update({'old_password' : 'Password does not match!'})
+            Validate_text.update({'old_password' : 'Incorrect Password!'})
             has_error = True
 
         if confirm_password != password:
