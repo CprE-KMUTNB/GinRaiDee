@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from . import models
+from GinRaiD_UserAPI.models import UserFollowModule
 
 
 class ListSerializer(serializers.ModelSerializer):
@@ -30,18 +31,43 @@ class FilterMenuListSerializer(serializers.ListSerializer):
 
 
 class MenuSerializer(serializers.ModelSerializer):
-
+ 
+    is_following = serializers.SerializerMethodField()
     owner_name = serializers.CharField(source='Owner', read_only = True)
+    is_favorites = serializers.SerializerMethodField()
     favorites = ListSerializer(many=True, read_only = True)
     favorites_count = serializers.IntegerField(source='favorites.count', read_only=True)
 
     class Meta:
         model = models.Menu
         list_serializer_class = FilterMenuListSerializer
-        fields = ('id', 'Owner' ,'owner_name' , 'Foodname' , 'Foodpic' , 'ingredient' ,'recipes','favorites','favorites_count' ,'is_public')
+        fields = ('id', 'Owner' ,'owner_name' , 'is_following' ,'Foodname' , 'Foodpic' , 'ingredient' ,'recipes', 'is_favorites' ,'favorites','favorites_count' ,'is_public')
         extra_kwargs = {
             'Owner': {'read_only': True,},
         }
+
+    def get_is_following(self,obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        following = list(UserFollowModule.objects.values_list('following',flat=True).filter(follower=user.id))
+        if obj.Owner.id in following:
+            return True
+        return False
+
+
+
+    def get_is_favorites(self,obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        fav_list = list(models.Favorite.objects.values_list('user',flat=True).filter(fav_menu=obj.id))
+        if user.id in fav_list:
+            return True
+        return False
+
 
 class MenuUpdateSerializer(serializers.ModelSerializer):
 
@@ -72,13 +98,13 @@ class MenuPicSerializer(serializers.ModelSerializer):
 
 
 class FavSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Favorite
         fields = ('id', 'user' , 'fav_menu')
         extra_kwargs = {
             'user': {'read_only': True,},
         }
+        
 
 
 class FavListSerializer(serializers.ModelSerializer):
@@ -90,7 +116,7 @@ class FavListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Favorite
-        fields = ('id', 'user' , 'fav_menu', 'Foodname','ingredient','recipes','Foodpic')
+        fields = ('fav_menu','user', 'Foodname','ingredient','recipes','Foodpic')
         extra_kwargs = {
             'user': {'read_only': True,},
             'fav_menu': {'read_only': True,},

@@ -19,3 +19,7 @@ class Notification(models.Model):
     have_read = models.BooleanField(default = False)
 
     objects = NotificationManager()
+
+    def __str__(self):
+        return 'Sender :'+self.Sender.username+' |Recipient :'+self.Receiver.username+' |Data :'+self.Information.Foodname
+

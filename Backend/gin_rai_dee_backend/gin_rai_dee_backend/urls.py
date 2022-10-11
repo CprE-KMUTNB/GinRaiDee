@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user-api/', include('GinRaiD_UserAPI.urls')),
     path('menu-api/', include('GinRaiD_Recipes.urls')),
-    path('notification-api/', include('GinRaiD_Notifications.urls'))
+    path('notification-api/', include('GinRaiD_Notifications.urls')),
+    path('report-api/', include('GinRaiD_Reports.urls'))
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

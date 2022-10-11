@@ -158,7 +158,7 @@ class UserFollowListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.UserFollowModule
-        fields = ('id','following','followingname','followingpic')
+        fields = ('following','followingname','followingpic')
 
 
 class FollowerSerializer(serializers.ModelSerializer):
@@ -167,13 +167,14 @@ class FollowerSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.UserFollowModule
-        fields = ('id','follower','followername','followerpic')
+        fields = ('follower','followername','followerpic')
 
 
     
 
 class UserAllDataSerializer(serializers.ModelSerializer):
 
+    is_follow = serializers.SerializerMethodField()
     menu = MenuSerializer(many=True, read_only=True)
     favorite = FavListSerializer(many=True, read_only=True)
     following = UserFollowListSerializer(many=True, read_only=True)
@@ -184,4 +185,14 @@ class UserAllDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserProfile
-        fields = ('id', 'email', 'username','userslug', 'menu', 'favorite', 'follower','follower_count' ,'following', 'following_count','Notifications') 
+        fields = ('id', 'email', 'username','userpic', 'is_follow' ,'menu', 'favorite', 'follower','follower_count' ,'following', 'following_count','Notifications') 
+
+    def get_is_follow(self,obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        following = list(models.UserFollowModule.objects.values_list('following',flat=True).filter(follower=user.id))
+        if obj.id in following:
+            return True
+        return False

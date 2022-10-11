@@ -87,6 +87,7 @@ class UserFollowListViewSet(viewsets.ModelViewSet):
     )
     filter_backends = (filters.SearchFilter,)
     http_method_names = ['get', 'delete']
+    lookup_field = 'following'
 
     def perform_create(self, serializer):
         serializer.save(follower=self.request.user)

@@ -40,7 +40,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=255, unique=True)
     userslug = models.SlugField()
-    userpic = models.ImageField(upload_to = image_file_path, null = True)
+    userpic = models.ImageField(upload_to = image_file_path, null = True, blank = True)
     is_activate = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -79,3 +79,6 @@ class UserFollowModule(models.Model):
 
     class Meta:
         unique_together = ('follower', 'following',)
+
+    def __str__(self):
+        return 'follower :'+self.follower.username+' |following :'+self.following.username

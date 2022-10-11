@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'GinRaiD_UserAPI',
     'GinRaiD_Recipes',
     'GinRaiD_Notifications',
+    'GinRaiD_Reports',
 ]
 
 MIDDLEWARE = [

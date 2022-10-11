@@ -107,6 +107,7 @@ class FavoriteListViewSet(viewsets.ModelViewSet):
     )
     filter_backends = (filters.SearchFilter,)
     search_fields = ('fav_menu__Foodname', 'user__username')
+    lookup_field = 'fav_menu'
     http_method_names = ['get','delete']
 
     def perform_create(self, serializer):

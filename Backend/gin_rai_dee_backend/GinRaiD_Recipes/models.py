@@ -74,3 +74,6 @@ class Favorite(models.Model):
 
     class Meta:
         unique_together = ('user', 'fav_menu',)
+
+    def __str__(self):
+        return 'user :'+self.user.username+' |favorite :'+self.fav_menu.Foodname
