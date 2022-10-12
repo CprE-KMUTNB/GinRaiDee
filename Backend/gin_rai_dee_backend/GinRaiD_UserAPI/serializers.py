@@ -165,9 +165,10 @@ class PasswordSerializer(serializers.ModelSerializer):
 class UserFollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserFollowModule
-        fields = ('id','follower','following')
+        fields = ('id','follower','following','created')
         extra_kwargs = {
             'follower': {'read_only':True},
+            'created': {'read_only':True},
         }
     
 
@@ -178,7 +179,10 @@ class UserFollowListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.UserFollowModule
-        fields = ('following','followingname','followingpic')
+        fields = ('following','followingname','followingpic','created')
+        extra_kwargs = {
+            'created': {'read_only':True},
+        }
 
 
 class FollowerSerializer(serializers.ModelSerializer):
@@ -187,8 +191,10 @@ class FollowerSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.UserFollowModule
-        fields = ('follower','followername','followerpic')
-
+        fields = ('follower','followername','followerpic','created')
+        extra_kwargs = {
+            'created': {'read_only':True},
+        }
 
     
 

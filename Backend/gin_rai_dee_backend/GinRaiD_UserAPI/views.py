@@ -12,8 +12,6 @@ class UserRegisterViewSet(viewsets.ModelViewSet):
     queryset = models.UserProfile.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('username', 'email',)
     http_method_names = ['post']
 
     def perform_create(self, serializer):
@@ -29,7 +27,8 @@ class UserPicViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnProfile,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
+    ordering_fields = ['username']
     search_fields = ('username')
 
 
@@ -42,8 +41,9 @@ class UserNameViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnProfile,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
     search_fields = ('username')
+    ordering_fields = ['username']
 
 
 class UserPasswordViewSet(viewsets.ModelViewSet):
@@ -69,7 +69,8 @@ class UserFollowViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnFollow,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
+    ordering_fields = ['follower__username','following__username','created']
     search_fields = ('follower__username','following__username')
     http_method_names = ['post','get', 'delete']
 
@@ -85,7 +86,9 @@ class UserFollowListViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnFollow,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
+    ordering_fields = ['following__username','created']
+    search_fields = ('following__username')
     http_method_names = ['get', 'delete']
     lookup_field = 'following'
 
@@ -105,7 +108,8 @@ class UserAllDataViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnProfile,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
+    ordering_fields = ['username','email']
     search_fields = ('username','email')
     http_method_names = ['get', 'delete']
 

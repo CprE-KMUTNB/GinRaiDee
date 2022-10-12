@@ -13,8 +13,9 @@ class MenuViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnMenu,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter,)
     search_fields = ('Owner__username','Foodname', 'ingredient','recipes')
+    ordering_fields = ['Owner__username', 'Foodname', 'ingredient','recipes','created']
     http_method_names = ['get']
 
     def perform_create(self, serializer):
@@ -42,8 +43,9 @@ class MenuPicViewSet(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     http_method_names = ['get','put']
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
     search_fields = ('Owner__username',)
+    ordering_fields = ['Owner__username','created']
 
     def perform_create(self, serializer):
         serializer.save(Owner=self.request.user)
@@ -63,8 +65,9 @@ class SelfViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnMenu,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter,)
     search_fields = ('Foodname', 'ingredient','recipes')
+    ordering_fields = ['Foodname', 'ingredient','recipes','created']
     http_method_names = ['get','put','post','delete']
     def perform_create(self, serializer):
         serializer.save(Owner=self.request.user)
@@ -89,8 +92,9 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnFav,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
     search_fields = ('fav_menu__Foodname', 'user__username')
+    ordering_fields = ['fav_menu__Foodname', 'user__username','created']
     http_method_names = ['get','post','delete']
 
     def perform_create(self, serializer):
@@ -105,8 +109,9 @@ class FavoriteListViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnFav,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
     search_fields = ('fav_menu__Foodname', 'user__username')
+    ordering_fields = ['fav_menu__Foodname', 'user__username','created']
     lookup_field = 'fav_menu'
     http_method_names = ['get','delete']
 

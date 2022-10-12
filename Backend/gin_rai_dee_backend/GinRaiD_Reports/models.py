@@ -7,6 +7,7 @@ class Report(models.Model):
     reporter = models.ForeignKey(UserProfile,on_delete=models.CASCADE,related_name='reporter')
     target_object = models.ForeignKey(Menu,on_delete=models.CASCADE,related_name='menu')
     report_text = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 'reporter :'+self.reporter.username+' |cause :'+self.report_text

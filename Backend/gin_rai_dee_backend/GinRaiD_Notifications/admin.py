@@ -5,7 +5,8 @@ class NotificationAdmin(admin.ModelAdmin):
     list_filter = [
         'Sender',
         'Receiver',
-        'Information'
+        'Information',
+        'created'
     ]
 
     search_fields = (

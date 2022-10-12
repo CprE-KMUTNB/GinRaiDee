@@ -17,6 +17,7 @@ class FollowAdmin(admin.ModelAdmin):
     list_filter = [
         'follower',
         'following',
+        'created',
     ]
 
     search_fields = (

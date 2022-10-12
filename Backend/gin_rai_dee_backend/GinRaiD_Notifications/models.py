@@ -17,6 +17,7 @@ class Notification(models.Model):
     Receiver = models.ForeignKey(UserProfile, related_name='Notifications', on_delete = models.CASCADE)
     Information = models.ForeignKey(Menu, related_name='Information', on_delete = models.CASCADE)
     have_read = models.BooleanField(default = False)
+    created = models.DateTimeField(auto_now_add=True)
 
     objects = NotificationManager()
 

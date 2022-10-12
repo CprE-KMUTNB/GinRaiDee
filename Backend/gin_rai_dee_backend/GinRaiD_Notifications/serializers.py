@@ -26,7 +26,8 @@ class NotificationSerializer(serializers.ModelSerializer):
         'Foodname',
         'ingredient',
         'recipes',
-        'Foodpic', 
+        'Foodpic',
+        'created', 
         'have_read')
         extra_kwargs = {
             'Sender': {'read_only': True,},

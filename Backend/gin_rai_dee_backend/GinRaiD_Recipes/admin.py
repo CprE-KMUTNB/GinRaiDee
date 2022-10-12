@@ -7,6 +7,7 @@ class MenuAdmin(admin.ModelAdmin):
         'Foodname',
         'ingredient',
         'recipes',
+        'created',
     ]
 
     search_fields = (
@@ -20,6 +21,7 @@ class FavAdmin(admin.ModelAdmin):
     list_filter = [
         'user',
         'fav_menu',
+        'created',
     ]
 
     search_fields = (

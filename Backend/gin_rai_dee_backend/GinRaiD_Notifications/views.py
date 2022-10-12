@@ -29,7 +29,9 @@ class NotificationViewsets(viewsets.ModelViewSet):
         permissions.UpdateOwnNotification,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
+    ordering_fields = ['Sender__username','Information__Foodname','created']
+    search_fields = ('Sender__username','Information__Foodname')
     http_method_names = ['get','put','delete']
 
     def get_queryset(self):

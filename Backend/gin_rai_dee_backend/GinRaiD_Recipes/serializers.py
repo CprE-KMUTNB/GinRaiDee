@@ -34,6 +34,7 @@ class MenuSerializer(serializers.ModelSerializer):
  
     is_following = serializers.SerializerMethodField()
     owner_name = serializers.CharField(source='Owner', read_only = True)
+    owner_pic = serializers.ImageField(source='Owner.userpic', read_only = True)
     is_favorites = serializers.SerializerMethodField()
     favorites = ListSerializer(many=True, read_only = True)
     favorites_count = serializers.IntegerField(source='favorites.count', read_only=True)
@@ -41,9 +42,10 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Menu
         list_serializer_class = FilterMenuListSerializer
-        fields = ('id', 'Owner' ,'owner_name' , 'is_following' ,'Foodname' , 'Foodpic' , 'ingredient' ,'recipes', 'is_favorites' ,'favorites','favorites_count' ,'is_public')
+        fields = ('id', 'Owner' ,'owner_name', 'owner_pic', 'is_following' ,'Foodname' , 'Foodpic' , 'ingredient' ,'recipes', 'is_favorites' ,'favorites','favorites_count' ,'is_public', 'created')
         extra_kwargs = {
             'Owner': {'read_only': True,},
+            'created': {'read_only': True,},
         }
 
     def get_is_following(self,obj):
@@ -77,10 +79,11 @@ class MenuUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Menu
-        fields = ('id', 'Owner' ,'owner_name' , 'Foodname' , 'Foodpic' , 'ingredient' ,'recipes','favorites','favorites_count' ,'is_public')
+        fields = ('id', 'Owner' ,'owner_name' , 'Foodname' , 'Foodpic' , 'ingredient' ,'recipes','favorites','favorites_count' ,'is_public','created')
         extra_kwargs = {
             'Owner': {'read_only': True,},
             'Foodpic': {'read_only': True},
+            'created': {'read_only': True,},
         }
 
 
@@ -88,11 +91,12 @@ class MenuPicSerializer(serializers.ModelSerializer):
     owner_name = serializers.CharField(source='Owner', read_only = True)
     class Meta:
         model = models.Menu
-        fields = ('id', 'Owner' ,'owner_name', 'Foodname', 'Foodpic')
+        fields = ('id', 'Owner' ,'owner_name', 'Foodname', 'Foodpic','created')
         extra_kwargs = {
             'Owner': {'read_only': True,},
             'Foodpic': {'required': True},
             'Foodname': {'read_only': True},
+            'created': {'read_only': True,},
         }
 
 
@@ -100,9 +104,10 @@ class MenuPicSerializer(serializers.ModelSerializer):
 class FavSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Favorite
-        fields = ('id', 'user' , 'fav_menu')
+        fields = ('id', 'user' , 'fav_menu','created')
         extra_kwargs = {
             'user': {'read_only': True,},
+            'created': {'read_only': True,},
         }
         
 
@@ -116,8 +121,9 @@ class FavListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Favorite
-        fields = ('fav_menu','user', 'Foodname','ingredient','recipes','Foodpic')
+        fields = ('fav_menu','user', 'Foodname','ingredient','recipes','Foodpic','created')
         extra_kwargs = {
             'user': {'read_only': True,},
             'fav_menu': {'read_only': True,},
+            'created': {'read_only': True,},
         }

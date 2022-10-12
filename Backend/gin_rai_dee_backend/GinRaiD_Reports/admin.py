@@ -6,6 +6,7 @@ class ReportAdmin(admin.ModelAdmin):
         'reporter',
         'target_object',
         'report_text',
+        'created',
     ]
 
     search_fields = (
