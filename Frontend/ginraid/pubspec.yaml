@@ -61,12 +61,20 @@ flutter:
     - family: IBMPlexSansThai
       fonts:
         - asset: assets/fonts/IBMPlexSansThai-Bold.ttf
-        - asset: assets/fonts/IBMPlexSansThai-ExtraLight.ttf
-        - asset: assets/fonts/IBMPlexSansThai-Light.ttf
-        - asset: assets/fonts/IBMPlexSansThai-Medium.ttf
-        - asset: assets/fonts/IBMPlexSansThai-Regular.ttf
-        - asset: assets/fonts/IBMPlexSansThai-SemiBold.ttf
-        - asset: assets/fonts/IBMPlexSansThai-Thin.ttf
+          weight: 700
+          
+        # - asset: assets/fonts/IBMPlexSansThai-ExtraLight.ttf
+        #   # weight: 200
+        #   # style: ExtraLight
+        # - asset: assets/fonts/IBMPlexSansThai-Light.ttf
+        #   # weight: 100
+        #   # style: Light
+        # - asset: assets/fonts/IBMPlexSansThai-Medium.ttf
+        #   # weight: 300
+        #   # style: Medium
+        - asset: assets/fonts/IBMPlexSansThai-Regular.ttf          
+        # - asset: assets/fonts/IBMPlexSansThai-SemiBold.ttf
+        # - asset: assets/fonts/IBMPlexSansThai-Thin.ttf
           
     - family: Itim
       fonts:
@@ -76,6 +84,20 @@ flutter:
     - family: Sriracha
       fonts:
         - asset: assets/fonts/Sriracha-Regular.ttf
+
+
+    - family: NotoSansThai
+      fonts:
+        - asset: assets/fonts/NotoSansThai-VariableFont_wdth,wght.ttf
+
+    - family: Mitr
+      fonts:                
+        - asset: assets/fonts/Mitr-Regular.ttf
+
+    - family: MitrBold
+      fonts:
+        - asset: assets/fonts/Mitr-Bold.ttf
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -88,6 +110,7 @@ flutter:
     - assets/image/Home1.png
     - assets/image/Home2.png
     - assets/image/Home3.png
+    - assets/image/krapow.png
     - assets/icons/
     
 

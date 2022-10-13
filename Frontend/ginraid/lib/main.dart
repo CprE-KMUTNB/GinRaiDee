@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';
+import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,8 +22,8 @@ class MyApp extends StatelessWidget {
           // primaryColor: authenPriColor,
           scaffoldBackgroundColor: Color(0xFFF1F7E7),
         ),
-        home: loginScreen());
+        // home: loginScreen());
         // home: signupScreen());
-        // home: homeScreen());
+        home: homeScreen());
   }
 }

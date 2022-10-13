@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:drop_shadow/drop_shadow.dart';
+import 'package:flutter/services.dart';
 import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
+import 'package:ginraid/Screens/HomeScreen/post.dart';
 
 class homeScreen extends StatefulWidget {
   static const routeName = '/';
@@ -50,6 +52,7 @@ class _homeScreenState extends State<homeScreen> {
       body: Stack(
         children: [
           bgHome1().buildBackground(screenWidth, screenHeight),
+
           //search
           Container(
             alignment: Alignment.center,
@@ -92,49 +95,30 @@ class _homeScreenState extends State<homeScreen> {
             ),
           ),
 
-          //post
-          SingleChildScrollView(
-            child: Container(
-              margin: EdgeInsets.only(top: 180, left: 20, right: 20),
-              // color: Colors.amber,
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Container(
-                      color: Colors.green,
-                      padding: EdgeInsets.fromLTRB(16, 10, 16, 24),
-                      // (horizontal: 16.0, vertical: 24.0),
-                      height: 600,
-                      child: ListView.builder(
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.only(top: 20),
-                            color: Colors.blue,
-                            height: MediaQuery.of(context).size.width * 0.5,
-                            child: Card(
-                              color: Colors.deepPurpleAccent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              elevation: 8,
-                              child: Container(
-                                color: Colors.red,
-                                child: Center(),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+          //กล่องใหญ่ไว้ใส่ card
+          Container(
+            margin: EdgeInsets.only(top: 180, left: 15, right: 15),
+            height: 600,
+            width: 500,
+            // color: Colors.blueAccent,
+            child: SingleChildScrollView(
+              child: Column(children: <Widget>[
+                
+                //1post
+                post(context),
+                post(context),
+                post(context),
+              ]
+
+                  //post
+
                   ),
-                ],
-              ),
             ),
           ),
         ],
       ),
     );
   }
+
+
 }
