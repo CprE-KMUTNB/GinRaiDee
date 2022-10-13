@@ -4,20 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:drop_shadow/drop_shadow.dart';
 import 'package:flutter/services.dart';
 import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
+import 'package:ginraid/Screens/HomeScreen/bgHome2.dart';
+import 'package:ginraid/Screens/HomeScreen/bgHome3.dart';
 import 'package:ginraid/Screens/HomeScreen/post.dart';
 
-class homeScreen extends StatefulWidget {
+class homeScreen3 extends StatefulWidget {
   static const routeName = '/';
 
-  const homeScreen({Key? key}) : super(key: key);
+  const homeScreen3({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _homeScreenState();
+    return _homeScreen3State();
   }
 }
 
-class _homeScreenState extends State<homeScreen> {
+class _homeScreen3State extends State<homeScreen3> {
   late double screenWidth, screenHeight;
   @override
   Widget build(BuildContext context) {
@@ -30,20 +32,10 @@ class _homeScreenState extends State<homeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          'Home',
-          style: TextStyle(
-            fontSize: 30.0,
-            fontFamily: "Itim",
-            color: Colors.white,
-          ),
-        ),
       ),
-
-     
       body: Stack(
         children: [
-          bgHome1().buildBackground(screenWidth, screenHeight),
+          bgHome3().buildBackground(screenWidth, screenHeight),
 
           //search
           Container(

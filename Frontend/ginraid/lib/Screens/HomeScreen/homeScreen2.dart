@@ -5,6 +5,7 @@ import 'package:drop_shadow/drop_shadow.dart';
 import 'package:flutter/services.dart';
 import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
 import 'package:ginraid/Screens/HomeScreen/bgHome2.dart';
+import 'package:ginraid/Screens/HomeScreen/homeScreen3.dart';
 import 'package:ginraid/Screens/HomeScreen/post.dart';
 
 class homeScreen2 extends StatefulWidget {
@@ -33,15 +34,7 @@ class _homeScreen2State extends State<homeScreen2> {
         elevation: 0,
       ),
 
-      // body: Container(
-      //   child:
-      //   Container(
-      //   height: 180,
-      //   decoration: BoxDecoration(
-      //     image: DecorationImage(
-      //       image: AssetImage('assets/image/Home1.png'),
-      //     ),
-      //   ),
+      
       body: Stack(
         children: [
           bgHome2().buildBackground(screenWidth, screenHeight),
@@ -89,7 +82,7 @@ class _homeScreen2State extends State<homeScreen2> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const homeScreen2()),
+                                builder: (context) => const homeScreen3()),
                           ),
                         },
                         child: Row(
