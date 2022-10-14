@@ -6,7 +6,7 @@ import 'package:ginraid/Screens/Login/Login_Screen.dart';
 class bgHome3 {
   buildBackground(double screenWidth, double screenHeight) {
     return Container(
-      height: 250,
+      height: 210,
       decoration: BoxDecoration(
         image: DecorationImage(
             image: AssetImage('assets/image/Home1.png'), fit: BoxFit.cover),

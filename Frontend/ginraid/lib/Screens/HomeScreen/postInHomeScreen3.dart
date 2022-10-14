@@ -3,60 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 
-Container post(BuildContext context) {
+Container Userpost(BuildContext context) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
-    height: MediaQuery.of(context).size.height * 0.35,
+    height: MediaQuery.of(context).size.height * 0.27,
     width: MediaQuery.of(context).size.width,
     child: Card(
       // color: Colors.amber,
       // ignore: sort_child_properties_last
       child: Column(
-        children: [
-          Row(
-            children: [
-              //รูปโปร
-              Container(
-                child: Icon(
-                  Icons.account_circle,
-                  size: 45.0,
-                ),
-              ),
-              //ชื่อ
-              Container(
-                child: Text(
-                  '  User 1',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontFamily: "Itim",
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(width: 100.0),
-
-              //followbut
-              Container(                
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    backgroundColor: Color.fromARGB(255, 237, 237, 237),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    '    Follow    ',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontFamily: "Itim",
-                      color: Color.fromARGB(255, 235, 31, 31),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        children: [         
 
           //namemenu
           GestureDetector(
@@ -66,12 +22,13 @@ Container post(BuildContext context) {
                 MaterialPageRoute(builder: (context) => const homeScreen2()),
               ),
             },
-
             
-            child: Stack(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 25, top: 5),
+                  alignment: Alignment.topLeft,
+                  // margin: EdgeInsets.only(top: 20),
                   child: Text(
                     'ผัดกระเพรา',
                     style: TextStyle(
@@ -85,7 +42,8 @@ Container post(BuildContext context) {
 
                 //pic
                 Container(
-                  margin: EdgeInsets.only(top: 35),
+                  alignment: Alignment.center,
+                  // margin: EdgeInsets.only(top: 35),
                   height: 155,
                   decoration: BoxDecoration(
                     image: DecorationImage(
