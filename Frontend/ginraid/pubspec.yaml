@@ -75,7 +75,11 @@ flutter:
         # - asset: assets/fonts/IBMPlexSansThai-Regular.ttf          
         - asset: assets/fonts/IBMPlexSansThai-SemiBold.ttf
         # - asset: assets/fonts/IBMPlexSansThai-Thin.ttf
-          
+    
+    - family: IBMPlexSansThaiReg
+      fonts:
+      - asset: assets/fonts/IBMPlexSansThai-Regular.ttf    
+    
     - family: Itim
       fonts:
         - asset: assets/fonts/Itim-Regular.ttf
@@ -112,6 +116,13 @@ flutter:
     - assets/image/Home3.png
     - assets/image/krapow.png
     - assets/icons/
+    - assets/image/cook2.png
+    - assets/image/cook1.png
+    - assets/image/fav1.png
+    - assets/image/fav2.png
+    - assets/image/fav3.png
+    - assets/image/noti.png
+    - assets/image/setting.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
