@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
           // primaryColor: authenPriColor,
           scaffoldBackgroundColor: Color(0xFFF1F7E7),
         ),
-        // home: loginScreen());
+        home: loginScreen());
         // home: signupScreen());
         // home: homeScreen());
         // home: favScreen());
-         home: followingScreen());
+        //  home: followingScreen());
   }
 }

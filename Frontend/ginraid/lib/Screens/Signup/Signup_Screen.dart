@@ -3,6 +3,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:ginraid/Screens/Signup/regis.dart';
+import 'package:ginraid/Screens/Signup/register.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +14,7 @@ import 'package:ginraid/Screens/componants/AnimatedSign.dart';
 
 import 'Signup_Screen.dart';
 import '../componants/test.dart';
+import 'package:http/http.dart' as http;
 
 class signupScreen extends StatefulWidget {
   const signupScreen({Key? key}) : super(key: key);
@@ -21,6 +24,12 @@ class signupScreen extends StatefulWidget {
 }
 
 class _signupScreenState extends State<signupScreen> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpasswordController =
+      TextEditingController();
+
   bool _isObscure = true;
   bool _isObscure1 = true;
   late double screenWidth, screenHeight;
@@ -111,6 +120,7 @@ class _signupScreenState extends State<signupScreen> {
                         alignment: Alignment.center,
                         margin: EdgeInsets.only(top: 10),
                         child: TextField(
+                          controller: usernameController,
                           decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -140,6 +150,7 @@ class _signupScreenState extends State<signupScreen> {
                         alignment: Alignment.center,
                         margin: EdgeInsets.only(top: 10),
                         child: TextField(
+                          controller: emailController,
                           decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -171,6 +182,7 @@ class _signupScreenState extends State<signupScreen> {
                         alignment: Alignment.center,
                         margin: EdgeInsets.only(top: 10),
                         child: TextField(
+                          controller: passwordController,
                           obscureText: _isObscure,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
@@ -210,6 +222,7 @@ class _signupScreenState extends State<signupScreen> {
                         alignment: Alignment.center,
                         margin: EdgeInsets.only(top: 10),
                         child: TextField(
+                          controller: confirmpasswordController,
                           obscureText: _isObscure1,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
@@ -256,7 +269,21 @@ class _signupScreenState extends State<signupScreen> {
                             ),
                             backgroundColor: Color.fromARGB(255, 166, 198, 6),
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            print('hi');
+                            var user = Register(
+                              username: usernameController.text,
+                              email: emailController.text,
+                              password: passwordController.text,
+                              confirmPassword: confirmpasswordController.text,
+                            );
+
+                            var response = await RegisterService()
+                                .post('/register', user)
+                                .catchError((err) {});
+                            if (response == null) return;
+                            debugPrint('successful:');
+                          },
                           child: const Text(
                             '       Confirm       ',
                             style: TextStyle(
