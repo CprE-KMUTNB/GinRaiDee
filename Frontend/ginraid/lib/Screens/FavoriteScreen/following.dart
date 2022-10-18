@@ -136,14 +136,47 @@ class _followingScreenState extends State<followingScreen> {
                   ),
                   height: screenHeight * 0.7,
                   width: screenWidth,
-
                   child: Column(
                     children: [
-                      Card(
-                        child: Row(
-                          
+                      SingleChildScrollView(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 1.0, vertical: 1.0),
+                          height: 120,
+                          width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            color: Color.fromARGB(255, 248, 248, 248),
+                            child: Row(
+                              children: [
+                                //profile pic
+                                Container(
+                                  margin: EdgeInsets.only(left: 15,right: 15),
+                                  child: Icon(
+                                    Icons.account_circle,
+                                    size: 50,
+                                  ),
+                                ),
+
+                                //user name
+                                Container(
+                                  child: Text(
+                                    'User 3',
+                                    style: TextStyle(
+                                      fontSize: 25.0,
+                                      fontFamily: "Itim",
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
