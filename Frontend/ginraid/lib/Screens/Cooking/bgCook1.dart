@@ -2,15 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-
 class bgCook1 {
   buildBackground(double screenWidth, double screenHeight) {
     return Container(
-      height: 260,
+      height: 200,
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/image/cook1.png'), 
-            fit: BoxFit.fill),
+            image: AssetImage('assets/image/cook1.png'), fit: BoxFit.cover),
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(47.0),
           bottomLeft: Radius.circular(47.0),

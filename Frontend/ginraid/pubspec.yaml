@@ -34,13 +34,14 @@ dependencies:
   google_fonts: ^3.0.1
   drop_shadow: ^0.0.1+4
   http: ^0.13.5
+  
   # flutter_secure_storage: ^6.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_svg: ^0.17.4
+  flutter_svg: ^1.1.5
   get: ^4.6.5
   flutter_secure_storage: ^6.0.0
   shared_preferences: ^2.0.15
@@ -119,7 +120,7 @@ flutter:
     - assets/image/Home2.png
     - assets/image/Home3.png
     - assets/image/krapow.png
-    - assets/icons/
+    - assets/icons/addFood.png
     - assets/image/cook2.png
     - assets/image/cook3.png
     - assets/image/cook1.png

@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/bgCook1.dart';
-
-
-
+import 'package:ginraid/Screens/Cooking/myFood.dart';
 
 class myFoodScreen extends StatefulWidget {
   static const routeName = '/';
@@ -39,241 +38,160 @@ class _myFoodScreenState extends State<myFoodScreen> {
           ),
         ),
       ),
+
+      //ปุ่มเพิ่มเมนู
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const addFoodScreen()),
+          ),
+        },
+        child: ImageIcon(
+          AssetImage('assets/icons/addFood.png'),
+          size: 50,
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
+        backgroundColor: Color.fromARGB(255, 226, 137, 22),
+      ),
+
       body: Stack(
         children: [
           bgCook1().buildBackground(screenWidth, screenHeight),
-      //     Container(
-      //       alignment: Alignment.center,
-      //       margin: EdgeInsets.only(top: 90, ),
-      //       child: Column(
-      //         children: [
-      //           Container(
-      //             margin: EdgeInsets.only(left:20),
-      //             //แถวแรก
-      //             child: Row(
-      //               children: [
-      //                 //profile pic
-      //                 Icon(
-      //                   Icons.account_circle,
-      //                   size: 60,
-      //                 ),
+          Container(
+            margin: EdgeInsets.only(top: 80),
+            child: Column(
+              children: [
+                //แถว1
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    //ชื่อหัวข้อ รายการอาหารของฉัน
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Text(
+                            'รายการอาหารของฉัน',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "NotoSansThai",
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
 
-      //                 //ข้อมูลชื่อไฟล์
-      //                 Column(
-      //                   mainAxisAlignment: MainAxisAlignment.center,
-      //                   children: [
-      //                     //name profile
-      //                     Container(
-      //                       margin: EdgeInsets.only(left: 20),
-      //                       child: Text(
-      //                         'My User',
-      //                         style: TextStyle(
-      //                           fontSize: 30.0,
-      //                           fontFamily: "Itim",
-      //                           color: Colors.white,
-      //                         ),
-      //                       ),
-      //                     ),
+                        //รับค่า จำนวนเมนูอาหารที่อัปโหลดของเจ้าของ
+                        Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Text(
+                            '4',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "NotoSansThai",
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
 
-      //                     //edit profile button
-      //                     Container(
-      //                       alignment: Alignment.center,
-      //                       margin: EdgeInsets.only(top: 5, left: 22),
-      //                       height: 30,
-      //                       child: TextButton(
-      //                         style: TextButton.styleFrom(
-      //                           shape: RoundedRectangleBorder(
-      //                             borderRadius: BorderRadius.circular(30),
-      //                           ),
-      //                           backgroundColor:
-      //                               Color.fromARGB(255, 255, 255, 255),
-      //                         ),
-      //                         onPressed: () {},
-      //                         child: const Text(
-      //                           ' Edit Profile ',
-      //                           style: TextStyle(
-      //                             fontSize: 15.0,
-      //                             fontFamily: "Itim",
-      //                             color: Color.fromARGB(255, 0, 0, 0),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
+                    // GestureDetector(
+                    //   onTap: () => {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //           builder: (context) => const addFoodScreen()),
+                    //     ),
+                    //   },
+                    //   child: Container(
+                    //     margin: EdgeInsets.only(right: 15),
+                    //     width: 60,
+                    //     height: 60,
+                    //     decoration: ShapeDecoration(
+                    //         color: Color.fromARGB(255, 226, 137, 22),
+                    //         shape: CircleBorder()),
+                    //     child: ImageIcon(
+                    //       AssetImage('assets/icons/addFood.png'),
+                    //       size: 50,
+                    //       color: Color.fromARGB(255, 255, 255, 255),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
 
-      //           //แถว2
-      //           Container(
-      //             margin: EdgeInsets.only(top: 10),
-      //             child: Row(
-      //               mainAxisAlignment: MainAxisAlignment.center,
-      //               children: [
-      //                 //จำนวน กำลังติดตาม
-      //                 Container(
-      //                   width: screenWidth * 0.5,
-      //                   child: Text(
-      //                     '2',
-      //                     style: TextStyle(
-      //                       fontSize: 20.0,
-      //                       fontFamily: "Itim",
-      //                       color: Colors.white,
-      //                     ),
-      //                   ),
-      //                 ),
+                //searchFood แถว 2
+                Container(
+                  // alignment: Alignment.center,
+                  margin: EdgeInsets.only(top: 15, left: 20, right: 20),
+                  height: 40,
+                  child: TextField(
+                    textAlignVertical: TextAlignVertical.bottom,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 255, 255, 255),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Color.fromARGB(255, 179, 190, 190),
+                      ),
+                      hintText: 'Search Foods',
+                      hintStyle: TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: "Itim",
+                        color: Color.fromARGB(255, 179, 190, 190),
+                      ),
+                      labelStyle: TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: "Itim",
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                  ),
+                ),
 
-      //                 //จำนวน อาหารที่ชอบ
-      //                 Container(
-      //                   child: Text(
-      //                     '4',
-      //                     style: TextStyle(
-      //                       fontSize: 20.0,
-      //                       fontFamily: "Itim",
-      //                       color: Colors.white,
-      //                     ),
-      //                   ),
-      //                 )
-      //               ],
-      //             ),
-      //           ),
-
-      //           //แถว 3
-      //           Container(
-      //             child: Row(
-      //               mainAxisAlignment: MainAxisAlignment.center,
-      //               children: [
-      //                 //ปุ่มกำลังติดตาม
-      //                 Container(
-      //                   margin: EdgeInsets.only(top: 5),
-      //                   height: 39,
-      //                   width: 130,
-      //                   child: TextButton(
-      //                     style: TextButton.styleFrom(
-      //                       shape: RoundedRectangleBorder(
-      //                         borderRadius: BorderRadius.circular(13),
-      //                       ),
-      //                       backgroundColor: Color.fromARGB(255, 251, 147, 117),
-      //                     ),
-      //                     onPressed: () {
-      //                       Navigator.push(
-      //                         context,
-      //                         MaterialPageRoute(
-      //                           builder: (context) => const followingScreen(),
-      //                         ),
-      //                       );
-      //                     },
-      //                     child: const Text(
-      //                       ' กำลังติดตาม ',
-      //                       style: TextStyle(
-      //                         fontSize: 20.0,
-      //                         fontFamily: "IBMPlexSansThai",
-      //                         color: Color.fromARGB(255, 255, 255, 255),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ),
-      //                 SizedBox(
-      //                   width: screenWidth * 0.15,
-      //                 ),
-
-      //                 //ปุ่มรายการอาหารที่ชอบ
-      //                 Container(
-      //                   margin: EdgeInsets.only(top: 5),
-      //                   height: 39,
-      //                   width: 130,
-      //                   child: TextButton(
-      //                     style: TextButton.styleFrom(
-      //                       shape: RoundedRectangleBorder(
-      //                         borderRadius: BorderRadius.circular(13),
-      //                       ),
-      //                       backgroundColor: Color.fromARGB(255, 251, 147, 117),
-      //                     ),
-      //                     onPressed: () {
-      //                       Navigator.push(
-      //                         context,
-      //                         MaterialPageRoute(
-      //                           builder: (context) => const favFoodScreen(),
-      //                         ),
-      //                       );
-      //                     },
-      //                     child: const Text(
-      //                       ' อาหารที่ชอบ ',
-      //                       style: TextStyle(
-      //                         fontSize: 20.0,
-      //                         fontFamily: "IBMPlexSansThai",
-      //                         color: Color.fromARGB(255, 255, 255, 255),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-
-      //           //แถวที่ 4
-
-      //           Container(
-      //             margin: EdgeInsets.only(top: 35,left: 20),
-      //             child: Row(
-      //               // ignore: prefer_const_literals_to_create_immutables
-      //               children: [
-      //                 Text(
-      //                   'My favorites ',
-      //                   style: TextStyle(
-      //                     fontSize: 25.0,
-      //                     fontFamily: "Itim",
-      //                     color: Color.fromARGB(255, 0, 0, 0),
-      //                   ),
-      //                 ),
-      //                 Text(
-      //                   '4',
-      //                   style: TextStyle(
-      //                     fontSize: 25.0,
-      //                     fontFamily: "Itim",
-      //                     color: Color.fromARGB(255, 0, 0, 0),
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-
-      //           //post
-      //           Container(
-      //             margin: EdgeInsets.only(top: 5),
-      //             decoration: BoxDecoration(
-      //               color: Colors.white,
-      //               // borderRadius: BorderRadius.only(
-      //               //   topRight: Radius.circular(47),
-      //               //   topLeft: Radius.circular(47),
-      //               // ),
-      //             ),
-      //             height: screenHeight * 0.56,
-      //             width: screenWidth,
-      //             child:
-      //                 //กล่องที่ใส่เมนูที่ถูกใจไว้ กล่องใหญ่
-      //                 Container(
-      //               margin: EdgeInsets.only(top: 5, left: 10, right: 10),
-      //               child: SingleChildScrollView(
-      //                 child: Column(
-      //                   // ignore: prefer_const_literals_to_create_immutables
-      //                   children: <Widget>[
-      //                     //post ที่ถูกใจ
-      //                     favfood(),
-      //                     favfood(),
-      //                     favfood(),
-      //                     favfood(),
-      //                     favfood(),
-      //                     favfood(),
-      //                   ],
-      //                 ),
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
+                //กล่องใหญ่
+                Container(
+                  margin: EdgeInsets.only(top: 35),
+                  
+                  height: screenHeight * 0.7,
+                  width: screenWidth,
+                  child:
+                      //กล่องที่ใส่เมนู กล่องใหญ่
+                      Container(
+                    margin: EdgeInsets.only(left: 10, right: 10),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: <Widget>[
+                          //เมนูของฉัน
+                          myFood(context),
+                          myFood(context),
+                          myFood(context),
+                          myFood(context),
+                          myFood(context),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
