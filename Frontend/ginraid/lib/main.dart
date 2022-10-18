@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/src/material/progress_indicator.dart';
 
 import 'Screens/Signup/Signup_Screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/src/material/progress_indicator.dart';
 
 void main() {
   runApp(NotAuthen());
@@ -45,17 +47,15 @@ class NotAuthen extends StatelessWidget {
           if (widget.hasData) {
             return widget.data ?? loginScreen();
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
+            // loginScreen());
+            // home: signupScreen());
+            // home: homeScreen());
+            // home: favScreen());
+            //  home: followingScreen());
           }
         },
       ),
     );
   }
-  // home: signupScreen());
-  // home: homeScreen());
-  // home: favScreen());
-  //  home: followingScreen());
-
 }
