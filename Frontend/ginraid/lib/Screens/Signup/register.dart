@@ -1,39 +1,26 @@
-// To parse this JSON data, do
-//
-//     final register = registerFromJson(jsonString);
-
 import 'dart:convert';
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
-Register registerFromJson(String str) => Register.fromJson(json.decode(str));
-
-String registerToJson(Register data) => json.encode(data.toJson());
+const String baseUrl = 'https://ginraid.herokuapp.com/user-api';
 
 class Register {
-    Register({
-        this.email,
-        this.username,
-        this.password,
-        this.confirmPassword,
-    });
-
-    String? email;
-    String? username;
-    String? password;
-    String? confirmPassword;
-
-    factory Register.fromJson(Map<String, dynamic> json) => Register(
-        email: json["email"],
-        username: json["username"],
-        password: json["password"],
-        confirmPassword: json["confirm_password"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "email": email,
-        "username": username,
-        "password": password,
-        "confirm_password": confirmPassword,
+  Client client = http.Client();
+  Future<dynamic> post(String api, dynamic object) async {
+    var url = Uri.parse(baseUrl + api);
+    var _userdata = json.encode(object);
+    var _headers = {
+      'Content-Type': 'application/json',
     };
-
-    
+    var response = await client.post(url, body: _userdata, headers: _headers);
+    if (response.statusCode == 201) {
+      return response;
+    }
+    if (response.statusCode == 400) {
+      return response;
+    } else {
+      print('fail');
+      //throw exception and catch it in UI
+    }
+  }
 }

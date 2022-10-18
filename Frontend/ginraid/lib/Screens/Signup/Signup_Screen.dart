@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new
 
 import 'dart:ui';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/Signup/regis.dart';
 import 'package:ginraid/Screens/Signup/register.dart';
+import 'package:ginraid/Screens/Signup/registermodel.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,7 +14,6 @@ import 'package:ginraid/Screens/componants/AnimatedSign.dart';
 
 import 'Signup_Screen.dart';
 import '../componants/test.dart';
-import 'package:http/http.dart' as http;
 
 class signupScreen extends StatefulWidget {
   const signupScreen({Key? key}) : super(key: key);
@@ -24,11 +23,14 @@ class signupScreen extends StatefulWidget {
 }
 
 class _signupScreenState extends State<signupScreen> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmpasswordController =
-      TextEditingController();
+  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmpasswordController = TextEditingController();
+  String email_error = "";
+  String username_error = "";
+  String password_error = "";
+  String confirmPassword_error = "";
 
   bool _isObscure = true;
   bool _isObscure1 = true;
@@ -270,19 +272,60 @@ class _signupScreenState extends State<signupScreen> {
                             backgroundColor: Color.fromARGB(255, 166, 198, 6),
                           ),
                           onPressed: () async {
-                            print('hi');
-                            var user = Register(
-                              username: usernameController.text,
-                              email: emailController.text,
-                              password: passwordController.text,
-                              confirmPassword: confirmpasswordController.text,
-                            );
+                            var user = {
+                              "email": emailController.text,
+                              "username": usernameController.text,
+                              "password": passwordController.text,
+                              "confirm_password":
+                                  confirmpasswordController.text,
+                            };
+                            var response =
+                                await Register().post('/register/', user);
 
-                            var response = await RegisterService()
-                                .post('/register', user)
-                                .catchError((err) {});
-                            if (response == null) return;
-                            debugPrint('successful:');
+                            if (response.statusCode == 201) {
+                              print('success');
+                            } else {
+                              email_error = Registermodel.fromJson(
+                                              json.decode(response.body))
+                                          .email!
+                                          .isNotEmpty ==
+                                      true
+                                  ? Registermodel.fromJson(
+                                          json.decode(response.body))
+                                      .email![0]
+                                  : "";
+                              username_error = Registermodel.fromJson(
+                                              json.decode(response.body))
+                                          .username!
+                                          .isNotEmpty ==
+                                      true
+                                  ? Registermodel.fromJson(
+                                          json.decode(response.body))
+                                      .username![0]
+                                  : "";
+                              password_error = Registermodel.fromJson(
+                                              json.decode(response.body))
+                                          .password!
+                                          .isNotEmpty ==
+                                      true
+                                  ? Registermodel.fromJson(
+                                          json.decode(response.body))
+                                      .password![0]
+                                  : "";
+                              confirmPassword_error = Registermodel.fromJson(
+                                              json.decode(response.body))
+                                          .confirmPassword!
+                                          .isNotEmpty ==
+                                      true
+                                  ? Registermodel.fromJson(
+                                          json.decode(response.body))
+                                      .confirmPassword![0]
+                                  : "";
+                              print(email_error);
+                              print(username_error);
+                              print(password_error);
+                              print(confirmPassword_error);
+                            }
                           },
                           child: const Text(
                             '       Confirm       ',

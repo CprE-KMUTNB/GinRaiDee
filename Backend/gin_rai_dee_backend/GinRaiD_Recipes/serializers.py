@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from . import models
 from GinRaiD_UserAPI.models import UserFollowModule
+from rest_framework.exceptions import ValidationError
 
 
 class ListSerializer(serializers.ModelSerializer):
@@ -109,6 +110,16 @@ class FavSerializer(serializers.ModelSerializer):
             'user': {'read_only': True,},
             'created': {'read_only': True,},
         }
+    def validate(self,data):
+        menu = data.get('fav_menu')
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        menus = list(models.Favorite.objects.values_list('fav_menu',flat=True).filter(user=user.id))
+        if menu.id in menus:
+            raise ValidationError({'fav_menu':'This menu has been favorited!'})
+        return data
         
 
 

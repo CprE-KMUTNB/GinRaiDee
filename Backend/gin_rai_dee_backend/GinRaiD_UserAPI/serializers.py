@@ -170,6 +170,16 @@ class UserFollowSerializer(serializers.ModelSerializer):
             'follower': {'read_only':True},
             'created': {'read_only':True},
         }
+    def validate(self,data):
+        following = data.get('following')
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        followings = list(models.UserFollowModule.objects.values_list('following',flat=True).filter(follower=user.id))
+        if following.id in followings:
+            raise ValidationError({'following':'This user has been followed!'})
+        return data
     
 
 class UserFollowListSerializer(serializers.ModelSerializer):
