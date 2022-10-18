@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/FavoriteScreen/favoriteScreen.dart';
-import 'package:ginraid/Screens/FavoriteScreen/following.dart';
+import 'package:ginraid/Screens/FavoriteScreen/followingScreen.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen3.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         // home: loginScreen());
         // home: signupScreen());
         // home: homeScreen());
-        // home: favScreen());
-         home: followingScreen());
+        home: favScreen());
+        //  home: followingScreen());
   }
 }

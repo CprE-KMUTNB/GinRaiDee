@@ -1,189 +1,108 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:drop_shadow/drop_shadow.dart';
-import 'package:flutter/services.dart';
-import 'package:ginraid/Screens/FavoriteScreen/bgFav1.dart';
-import 'package:ginraid/Screens/FavoriteScreen/bgFav2.dart';
-import 'package:ginraid/Screens/FavoriteScreen/postfav.dart';
-import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
-import 'package:ginraid/Screens/HomeScreen/post.dart';
+import 'followingScreen.dart';
 
-class followingScreen extends StatefulWidget {
+class follow extends StatefulWidget {
   static const routeName = '/';
 
-  const followingScreen({Key? key}) : super(key: key);
+  const follow({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _followingScreenState();
+    return _followState();
   }
 }
 
-class _followingScreenState extends State<followingScreen> {
-  late double screenWidth, screenHeight;
-  @override
+class _followState extends State<follow> {
+  bool isFollowedByMe = true;
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          'กำลังติดตาม',
-          style: TextStyle(
-            fontSize: 30.0,
-            fontFamily: "Itim",
-            color: Colors.white,
-          ),
+    return Container(
+      margin: EdgeInsets.only(top: 5, left: 20, right: 20),
+      padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
         ),
-      ),
-      body: Stack(
-        children: [
-          bgfav2().buildBackground(screenWidth, screenHeight),
-          Container(
-            margin: EdgeInsets.only(
-              top: 90,
-            ),
-            child: Column(
+        color: Color.fromARGB(255, 248, 248, 248),
+        // ignore: sort_child_properties_last
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
               children: [
-                //row 1
-                Row(
-                  children: [
-                    //กำลังติดตาม text
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      child: Text(
-                        'กำลังติดตาม ',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: "IBMPlexSansThaiReg",
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
-                      ),
-                    ),
-
-                    //จำนวนกำลังติดตาม
-                    Container(
-                      child: Text(
-                        ' 4',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: "IBMPlexSansThaiReg",
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                //searchUser
+                //profile pic
                 Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(top: 15, left: 20, right: 20),
-                  height: 40,
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical.bottom,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 255, 255, 255),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Color.fromARGB(255, 179, 190, 190),
-                      ),
-                      hintText: 'Search User',
-                      hintStyle: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: "Itim",
-                        color: Color.fromARGB(255, 179, 190, 190),
-                      ),
-                      labelStyle: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: "Itim",
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
-                    ),
+                  margin: EdgeInsets.only(left: 10, right: 5),
+                  child: Icon(
+                    Icons.account_circle,
+                    size: 50,
                   ),
                 ),
 
-                //กล่องใหญ่
+                //user name
                 Container(
-                  margin: EdgeInsets.only(top: 25),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(47),
-                      topLeft: Radius.circular(47),
+                  child: Text(
+                    'User 3',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontFamily: "Itim",
+                      color: Color.fromARGB(255, 0, 0, 0),
                     ),
-                  ),
-                  height: screenHeight * 0.7,
-                  width: screenWidth,
-                  child: Column(
-                    children: [
-                      SingleChildScrollView(
-                        child: Container(
-                          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 1.0, vertical: 1.0),
-                          height: 120,
-                          width: MediaQuery.of(context).size.width,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            color: Color.fromARGB(255, 248, 248, 248),
-                            child: Row(
-                              children: [
-                                //profile pic
-                                Container(
-                                  margin: EdgeInsets.only(left: 15,right: 15),
-                                  child: Icon(
-                                    Icons.account_circle,
-                                    size: 50,
-                                  ),
-                                ),
-
-                                //user name
-                                Container(
-                                  child: Text(
-                                    'User 3',
-                                    style: TextStyle(
-                                      fontSize: 25.0,
-                                      fontFamily: "Itim",
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],
             ),
-          )
-        ],
+
+            //ปุ่มฟอล
+            Container(
+              margin: EdgeInsets.only(right: 10),
+              alignment: Alignment.center,
+              child: GestureDetector(
+                onTap: () {
+                  setState(
+                    () {
+                      isFollowedByMe = !isFollowedByMe;
+                      //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                    },
+                  );
+                },
+                child: AnimatedContainer(
+                  height: 35,
+                  width: 110,
+                  duration: Duration(milliseconds: 300),
+                  decoration: BoxDecoration(
+                    color: isFollowedByMe
+                        ? Colors.transparent
+                        : Color.fromARGB(255, 224, 132, 106),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: isFollowedByMe
+                          ? Color.fromARGB(255, 224, 132, 106)
+                          : Colors.transparent,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      isFollowedByMe ? 'Following' : 'Follow',
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        fontFamily: "IBMPlexSansThaiReg",
+                        color: isFollowedByMe
+                            ? Color.fromARGB(255, 224, 132, 106)
+                            : Color.fromARGB(255, 255, 255, 255),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        elevation: 0,
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 
 Container postFav(BuildContext context) {
   return Container(
+    
     padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
     height: MediaQuery.of(context).size.height * 0.28,
     width: MediaQuery.of(context).size.width,
