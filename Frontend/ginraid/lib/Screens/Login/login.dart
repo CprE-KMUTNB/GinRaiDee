@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 const String baseUrl = 'https://ginraid.herokuapp.com/user-api';
 
-class Register {
+class Login {
   Client client = http.Client();
   Future<dynamic> post(String api, dynamic object) async {
     var url = Uri.parse(baseUrl + api);
@@ -13,7 +13,7 @@ class Register {
       'Content-Type': 'application/json',
     };
     var response = await client.post(url, body: _userdata, headers: _headers);
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return response;
     }
     if (response.statusCode == 400) {

@@ -4,16 +4,20 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ginraid/Screens/Login/login.dart';
+import 'package:ginraid/Screens/Login/loginmodel.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:ginraid/Screens/componants/background.dart';
 import 'package:ginraid/Screens/componants/AnimatedLog.dart';
 import 'package:ginraid/Screens/componants/AnimatedSign.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Signup/Signup_Screen.dart';
 import '../componants/test.dart';
 import 'WidLog.dart';
+import 'dart:convert';
 
 class loginScreen extends StatefulWidget {
   const loginScreen({Key? key}) : super(key: key);
@@ -22,7 +26,34 @@ class loginScreen extends StatefulWidget {
   State<loginScreen> createState() => _loginScreenState();
 }
 
+Future<dynamic> setToken(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString('token', value);
+}
+
+Future<dynamic> setUserID(int value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setInt('user_id', value);
+}
+
+Future<dynamic> setUsername(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString('username', value);
+}
+
+Future<String> getToken() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String token = await prefs.getString('token').toString();
+  return token;
+}
+
 class _loginScreenState extends State<loginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  String email_error = "";
+  String password_error = "";
+  String error = "";
+
   bool _isObscure = true;
   late double screenWidth, screenHeight;
   int _toggleValue = 0;
@@ -66,8 +97,8 @@ class _loginScreenState extends State<loginScreen> {
               child:
                   //กล่องใหญ่
                   Container(
-                
-                margin: const EdgeInsets.only(top: 225.0, left: 20.0, right: 20.0),
+                margin:
+                    const EdgeInsets.only(top: 225.0, left: 20.0, right: 20.0),
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255),
@@ -109,6 +140,7 @@ class _loginScreenState extends State<loginScreen> {
                       Container(
                         child: Center(
                           child: TextField(
+                            controller: emailController,
                             decoration: InputDecoration(
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -140,6 +172,7 @@ class _loginScreenState extends State<loginScreen> {
                       Container(
                         child: Center(
                           child: TextField(
+                            controller: passwordController,
                             obscureText: _isObscure,
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
@@ -204,7 +237,65 @@ class _loginScreenState extends State<loginScreen> {
                               ),
                               backgroundColor: Color.fromARGB(255, 166, 198, 6),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              var user = {
+                                "username": emailController.text,
+                                "password": passwordController.text,
+                              };
+                              var response =
+                                  await Login().post('/login/', user);
+
+                              if (response.statusCode == 200) {
+                                int userid = Loginmodel.fromJson(
+                                        json.decode(response.body))
+                                    .userId!;
+                                String username = Loginmodel.fromJson(
+                                        json.decode(response.body))
+                                    .name!;
+                                String token = Loginmodel.fromJson(
+                                        json.decode(response.body))
+                                    .token!;
+                                setToken(token);
+                                setUserID(userid);
+                                setUsername(username);
+                                print(userid);
+                                print(username);
+                                print(await getToken());
+                                print('success');
+                              } else {
+                                email_error = Loginmodel.fromJson(
+                                                json.decode(response.body))
+                                            .email!
+                                            .isNotEmpty ==
+                                        true
+                                    ? Loginmodel.fromJson(
+                                            json.decode(response.body))
+                                        .email![0]
+                                    : "";
+                                password_error = Loginmodel.fromJson(
+                                                json.decode(response.body))
+                                            .password!
+                                            .isNotEmpty ==
+                                        true
+                                    ? Loginmodel.fromJson(
+                                            json.decode(response.body))
+                                        .password![0]
+                                    : "";
+
+                                error = Loginmodel.fromJson(
+                                                json.decode(response.body))
+                                            .error!
+                                            .isNotEmpty ==
+                                        true
+                                    ? Loginmodel.fromJson(
+                                            json.decode(response.body))
+                                        .error![0]
+                                    : "";
+                                print(email_error);
+                                print(password_error);
+                                print(error);
+                              }
+                            },
                             child: const Text(
                               '       Login       ',
                               style: TextStyle(
