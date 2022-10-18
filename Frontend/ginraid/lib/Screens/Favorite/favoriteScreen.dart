@@ -1,15 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:drop_shadow/drop_shadow.dart';
-import 'package:flutter/services.dart';
-import 'package:ginraid/Screens/FavoriteScreen/bgFav1.dart';
-import 'package:ginraid/Screens/FavoriteScreen/favoriteFoodScreen.dart';
-import 'package:ginraid/Screens/FavoriteScreen/followingScreen.dart';
-import 'package:ginraid/Screens/FavoriteScreen/postfav.dart';
-import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
-import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
-import 'package:ginraid/Screens/HomeScreen/post.dart';
+
+
+import 'package:ginraid/Screens/Favorite/bgFav1.dart';
+import 'package:ginraid/Screens/Favorite/favfood.dart';
+import 'package:ginraid/Screens/Favorite/favoriteFoodScreen.dart';
+import 'package:ginraid/Screens/Favorite/followingScreen.dart';
 
 class favScreen extends StatefulWidget {
   static const routeName = '/';
@@ -47,14 +44,13 @@ class _favScreenState extends State<favScreen> {
       body: Stack(
         children: [
           bgfav1().buildBackground(screenWidth, screenHeight),
-
-          
           Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 90, left: 20, right: 20),
+            margin: EdgeInsets.only(top: 90, ),
             child: Column(
               children: [
                 Container(
+                  margin: EdgeInsets.only(left:20),
                   //แถวแรก
                   child: Row(
                     children: [
@@ -221,7 +217,7 @@ class _favScreenState extends State<favScreen> {
                 //แถวที่ 4
 
                 Container(
-                  margin: EdgeInsets.only(top: 35),
+                  margin: EdgeInsets.only(top: 35,left: 20),
                   child: Row(
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
@@ -247,19 +243,33 @@ class _favScreenState extends State<favScreen> {
 
                 //post
                 Container(
-                  // color: Colors.amber,
-                  // margin: EdgeInsets.only(left: 15, right: 15),
-                  height: 470,
+                  margin: EdgeInsets.only(top: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    // borderRadius: BorderRadius.only(
+                    //   topRight: Radius.circular(47),
+                    //   topLeft: Radius.circular(47),
+                    // ),
+                  ),
+                  height: screenHeight * 0.56,
                   width: screenWidth,
-                  // color: Colors.blueAccent,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        //1post
-                        postFav(context),
-                        postFav(context),
-                        postFav(context),
-                      ],
+                  child:
+                      //กล่องที่ใส่เมนูที่ถูกใจไว้ กล่องใหญ่
+                      Container(
+                    margin: EdgeInsets.only(top: 5, left: 10, right: 10),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: <Widget>[
+                          //post ที่ถูกใจ
+                          favfood(),
+                          favfood(),
+                          favfood(),
+                          favfood(),
+                          favfood(),
+                          favfood(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

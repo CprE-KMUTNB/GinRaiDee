@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:drop_shadow/drop_shadow.dart';
-import 'package:flutter/services.dart';
-import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
 import 'package:ginraid/Screens/HomeScreen/bgHome2.dart';
+
+
 import 'package:ginraid/Screens/HomeScreen/homeScreen3.dart';
-import 'package:ginraid/Screens/HomeScreen/post.dart';
+
 
 class homeScreen2 extends StatefulWidget {
   static const routeName = '/';

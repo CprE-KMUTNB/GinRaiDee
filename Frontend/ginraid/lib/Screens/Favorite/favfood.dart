@@ -1,26 +1,31 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 import '../HomeScreen/homeScreen3.dart';
-
-class post extends StatefulWidget {
+class favfood extends StatefulWidget {
   static const routeName = '/';
 
-  const post({Key? key}) : super(key: key);
+  const favfood({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _postState();
+    return _favfoodState();
   }
 }
 
-class _postState extends State<post> {
+class _favfoodState extends State<favfood> {
   bool isFollowedByMe = true;
   Widget build(BuildContext context) {
     return Container(
+      // margin: EdgeInsets.only(top: 10),
       padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
       height: MediaQuery.of(context).size.height * 0.35,
       width: MediaQuery.of(context).size.width,
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
         // color: Colors.amber,
         // ignore: sort_child_properties_last
         child: Column(
@@ -80,11 +85,11 @@ class _postState extends State<post> {
                       decoration: BoxDecoration(
                         color: isFollowedByMe
                             ? Colors.transparent
-                            : Color.fromARGB(255, 166, 198, 6),
+                            : Color.fromARGB(255, 224, 132, 106),
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(
                           color: isFollowedByMe
-                              ? Color.fromARGB(255, 166, 198, 6)
+                              ? Color.fromARGB(255, 224, 132, 106)
                               : Colors.transparent,
                         ),
                       ),
@@ -95,7 +100,7 @@ class _postState extends State<post> {
                             fontSize: 17.0,
                             fontFamily: "IBMPlexSansThaiReg",
                             color: isFollowedByMe
-                                ? Color.fromARGB(255, 166, 198, 6)
+                                ? Color.fromARGB(255, 224, 132, 106)
                                 : Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),

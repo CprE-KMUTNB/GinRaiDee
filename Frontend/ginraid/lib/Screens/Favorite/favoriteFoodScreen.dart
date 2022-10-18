@@ -1,36 +1,30 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:drop_shadow/drop_shadow.dart';
-import 'package:flutter/services.dart';
-import 'package:ginraid/Screens/FavoriteScreen/bgFav1.dart';
-import 'package:ginraid/Screens/FavoriteScreen/bgFav2.dart';
-import 'package:ginraid/Screens/FavoriteScreen/following.dart';
-import 'package:ginraid/Screens/FavoriteScreen/postfav.dart';
-import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
-import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
-import 'package:ginraid/Screens/HomeScreen/post.dart';
+import 'package:ginraid/Screens/Favorite/bgFav3.dart';
+import 'package:ginraid/Screens/Favorite/favfood.dart';
 
-class followingScreen extends StatefulWidget {
+
+
+
+class favFoodScreen extends StatefulWidget {
   static const routeName = '/';
 
-  const followingScreen({Key? key}) : super(key: key);
+  const favFoodScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _followingScreenState();
+    return _favFoodScreenState();
   }
 }
 
-class _followingScreenState extends State<followingScreen> {
-  bool isFollowedByMe = true;
+class _favFoodScreenState extends State<favFoodScreen> {
   late double screenWidth, screenHeight;
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
 
-    var choice;
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -40,7 +34,7 @@ class _followingScreenState extends State<followingScreen> {
       ),
       body: Stack(
         children: [
-          bgfav2().buildBackground(screenWidth, screenHeight),
+          bgfav3().buildBackground(screenWidth, screenHeight),
           Container(
             margin: EdgeInsets.only(
               top: 75,
@@ -54,7 +48,7 @@ class _followingScreenState extends State<followingScreen> {
                     Container(
                       margin: EdgeInsets.only(left: 20),
                       child: Text(
-                        'กำลังติดตาม ',
+                        'อาหารที่ชอบ ',
                         style: TextStyle(
                           fontSize: 25.0,
                           fontFamily: "IBMPlexSansThaiReg",
@@ -63,7 +57,7 @@ class _followingScreenState extends State<followingScreen> {
                       ),
                     ),
 
-                    //จำนวนกำลังติดตาม
+                    //จำนวนที่กดถูกใจ
                     Container(
                       child: Text(
                         ' 4',
@@ -77,7 +71,7 @@ class _followingScreenState extends State<followingScreen> {
                   ],
                 ),
 
-                //searchUser
+                //searchFood
                 Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(top: 15, left: 20, right: 20),
@@ -104,7 +98,7 @@ class _followingScreenState extends State<followingScreen> {
                         Icons.search,
                         color: Color.fromARGB(255, 179, 190, 190),
                       ),
-                      hintText: 'Search User',
+                      hintText: 'Search Foods',
                       hintStyle: TextStyle(
                         fontSize: 20.0,
                         fontFamily: "Itim",
@@ -132,26 +126,20 @@ class _followingScreenState extends State<followingScreen> {
                   height: screenHeight * 0.7,
                   width: screenWidth,
                   child: 
-                  //กล่องที่ใส่คนที่ฟอล กล่องใหญ่
+                  //กล่องที่ใส่เมนูที่ถูกใจไว้ กล่องใหญ่
                   Container(
-                    margin: EdgeInsets.only(top: 10),
+                    margin: EdgeInsets.only(top: 15 ,left: 10,right: 10),
                     child: SingleChildScrollView(
                       child: Column(
                         // ignore: prefer_const_literals_to_create_immutables
                         children: <Widget>[
-                          //คนที่ฟอล
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
-                          follow(),
+                          //post ที่ถูกใจ
+                          favfood(),
+                          favfood(),
+                          favfood(),
+                          favfood(),
+                          favfood(),
+                          favfood(),
                         ],
                       ),
                     ),

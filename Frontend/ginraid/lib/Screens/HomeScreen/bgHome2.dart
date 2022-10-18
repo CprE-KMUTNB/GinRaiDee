@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/Login/Login_Screen.dart';
+
 
 class bgHome2 {
   buildBackground(double screenWidth, double screenHeight) {

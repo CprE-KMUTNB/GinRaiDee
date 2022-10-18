@@ -97,9 +97,9 @@ class _homeScreenState extends State<homeScreen> {
               child: Column(children: <Widget>[
                 
                 //1post
-                post(context),
-                post(context),
-                post(context),
+                post(),
+                post(),
+                post(),
               ]
 
                   //post

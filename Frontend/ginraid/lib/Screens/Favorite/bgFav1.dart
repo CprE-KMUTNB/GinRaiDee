@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/Login/Login_Screen.dart';
+
 
 class bgfav1 {
   buildBackground(double screenWidth, double screenHeight) {

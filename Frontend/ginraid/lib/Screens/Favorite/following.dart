@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
-import 'followingScreen.dart';
+import '../HomeScreen/homeScreen3.dart';
+
 
 class follow extends StatefulWidget {
   static const routeName = '/';
@@ -19,7 +19,7 @@ class _followState extends State<follow> {
   bool isFollowedByMe = true;
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 5, left: 20, right: 20),
+      margin: EdgeInsets.only(top: 2, left: 5, right: 5),
       padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
       height: 100,
       width: MediaQuery.of(context).size.width,
@@ -32,29 +32,37 @@ class _followState extends State<follow> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                //profile pic
-                Container(
-                  margin: EdgeInsets.only(left: 10, right: 5),
-                  child: Icon(
-                    Icons.account_circle,
-                    size: 50,
-                  ),
+            GestureDetector(
+              onTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const homeScreen3()),
                 ),
-
-                //user name
-                Container(
-                  child: Text(
-                    'User 3',
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: "Itim",
-                      color: Color.fromARGB(255, 0, 0, 0),
+              },
+              child: Row(
+                children: [
+                  //profile pic
+                  Container(
+                    margin: EdgeInsets.only(left: 10, right: 5),
+                    child: Icon(
+                      Icons.account_circle,
+                      size: 50,
                     ),
                   ),
-                ),
-              ],
+
+                  //user name
+                  Container(
+                    child: Text(
+                      'User 3',
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        fontFamily: "Itim",
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
 
             //ปุ่มฟอล

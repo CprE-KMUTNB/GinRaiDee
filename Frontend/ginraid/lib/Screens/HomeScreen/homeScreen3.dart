@@ -23,6 +23,7 @@ class homeScreen3 extends StatefulWidget {
 }
 
 class _homeScreen3State extends State<homeScreen3> {
+  bool isFollowedByMe = true;
   late double screenWidth, screenHeight;
   @override
   Widget build(BuildContext context) {
@@ -46,61 +47,84 @@ class _homeScreen3State extends State<homeScreen3> {
               children: [
                 //แถวแรก
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // Align(
                     //   alignment: Alignment.center,
                     // ),
                     //name user icon
-                    Container(
-                      child: Icon(
-                        Icons.account_circle,
-                        size: 45,
-                      ),
-                    ),
-
-                    //name user
-                    Container(
-                      child: Text(
-                        '  User 1',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: "Itim",
-                          color: Colors.white,
+                    Row(
+                      children: [
+                        Container(
+                          child: Icon(
+                            Icons.account_circle,
+                            size: 45,
+                          ),
                         ),
-                      ),
+
+                        //name user
+                        Container(
+                          child: Text(
+                            '  User 1',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontFamily: "Itim",
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
 
                     //follow buttom
-                    Container(
-                      // color: Colors.amber,
-                      margin: EdgeInsets.only(left: screenWidth * 0.2),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          alignment: Alignment.center,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(
+                                () {
+                                  isFollowedByMe = !isFollowedByMe;
+                                  //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                                },
+                              );
+                            },
+                            child: AnimatedContainer(
+                              height: 35,
+                              width: 110,
+                              duration: Duration(milliseconds: 300),
+                              decoration: BoxDecoration(
+                                color:Colors.white,
+                                borderRadius: BorderRadius.circular(30),
+                                
+                              ),
+                              child: Center(
+                                child: Text(
+                                  isFollowedByMe ? 'Following' : 'Follow',
+                                  style: TextStyle(
+                                    fontSize: 17.0,
+                                    fontFamily: "IBMPlexSansThaiReg",
+                                    color: isFollowedByMe
+                                        ? Color.fromARGB(255, 166, 198, 6)
+                                        : Color.fromARGB(255, 251, 0, 0),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                          backgroundColor: Color.fromARGB(255, 237, 237, 237),
                         ),
-                        onPressed: () {},
-                        child: const Text(
-                          '    Follow    ',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: "Itim",
-                            color: Color.fromARGB(255, 235, 31, 31),
-                          ),
-                        ),
-                      ),
-                    ),
 
-                    //report buttom
-                    Container(
-                      margin: EdgeInsets.only(left: 2),
-                      child: Icon(
-                        Icons.report,
-                        size: 30,
-                      ),
+                        //report buttom
+                        Container(
+                          margin: EdgeInsets.only(left: 2),
+                          child: Icon(
+                            Icons.report,
+                            size: 30,
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
