@@ -47,6 +47,18 @@ Future<String> getToken() async {
   return token;
 }
 
+Future<String> getUsername() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String username = await prefs.getString('username').toString();
+  return username;
+}
+
+Future<int> getID() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final int userID = await prefs.getInt('user_id')!;
+  return userID;
+}
+
 class _loginScreenState extends State<loginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -258,8 +270,8 @@ class _loginScreenState extends State<loginScreen> {
                                 setToken(token);
                                 setUserID(userid);
                                 setUsername(username);
-                                print(userid);
-                                print(username);
+                                print(await getID());
+                                print(await getUsername());
                                 print(await getToken());
                                 print('success');
                               } else {
