@@ -2,18 +2,79 @@ import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 import '../HomeScreen/homeScreen3.dart';
 
-class post extends StatefulWidget {
+class Post extends StatefulWidget {
   static const routeName = '/';
-
-  const post({Key? key}) : super(key: key);
+  int id;
+  int owner;
+  String ownerName;
+  String ownerPic;
+  bool isFollowing;
+  String foodname;
+  String foodpic;
+  String ingredient;
+  String recipes;
+  bool isFavorites;
+  int favoritesCount;
+  DateTime created;
+  Post({
+    required this.id,
+    required this.owner,
+    required this.ownerName,
+    required this.ownerPic,
+    required this.isFollowing,
+    required this.foodname,
+    required this.foodpic,
+    required this.ingredient,
+    required this.recipes,
+    required this.isFavorites,
+    required this.favoritesCount,
+    required this.created,
+  });
 
   @override
-  State<StatefulWidget> createState() {
-    return _postState();
-  }
+  _PostState createState() => _PostState(
+      id: id,
+      owner: owner,
+      ownerName: ownerName,
+      ownerPic: ownerPic,
+      isFollowing: isFollowing,
+      foodname: foodname,
+      foodpic: foodpic,
+      ingredient: ingredient,
+      recipes: recipes,
+      isFavorites: isFavorites,
+      favoritesCount: favoritesCount,
+      created: created);
 }
 
-class _postState extends State<post> {
+class _PostState extends State<Post> {
+  int id;
+  int owner;
+  String ownerName;
+  String ownerPic;
+  bool isFollowing;
+  String foodname;
+  String foodpic;
+  String ingredient;
+  String recipes;
+  bool isFavorites;
+  int favoritesCount;
+  DateTime created;
+  _PostState({
+    required this.id,
+    required this.owner,
+    required this.ownerName,
+    required this.ownerPic,
+    required this.isFollowing,
+    required this.foodname,
+    required this.foodpic,
+    required this.ingredient,
+    required this.recipes,
+    required this.isFavorites,
+    required this.favoritesCount,
+    required this.created,
+  });
+
   bool isFollowedByMe = true;
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +109,7 @@ class _postState extends State<post> {
                       //ชื่อ
                       Container(
                         child: Text(
-                          '  User 1',
+                          ownerName,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontFamily: "Itim",
@@ -119,7 +180,7 @@ class _postState extends State<post> {
                   Container(
                     margin: EdgeInsets.only(left: 25, top: 5),
                     child: Text(
-                      'ผัดกระเพรา',
+                      foodname,
                       style: TextStyle(
                         fontSize: 18.0,
                         fontFamily: "NotoSansThai",
@@ -135,10 +196,7 @@ class _postState extends State<post> {
                     height: 155,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(
-                            'assets/image/krapow.png',
-                          ),
-                          fit: BoxFit.cover),
+                          image: NetworkImage(foodpic), fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(13),
                     ),
                   ),

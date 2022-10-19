@@ -1,10 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:drop_shadow/drop_shadow.dart';
 import 'package:flutter/services.dart';
 import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
+import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
+import 'package:ginraid/Screens/HomeScreen/menu_data.dart';
 import 'package:ginraid/Screens/HomeScreen/post.dart';
+import 'package:http/http.dart';
 
 class homeScreen extends StatefulWidget {
   static const routeName = '/';
@@ -19,6 +25,30 @@ class homeScreen extends StatefulWidget {
 
 class _homeScreenState extends State<homeScreen> {
   late double screenWidth, screenHeight;
+  final searchController = TextEditingController();
+  List item = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchdata();
+  }
+
+  fetchdata() async {
+    var response = await Allmenu().get('?search=' + searchController.text);
+
+    if (response.statusCode == 200) {
+      var data = json.decode(utf8.decode(response.bodyBytes));
+      setState(() {
+        item = data;
+      });
+    } else {
+      setState(() {
+        item = [];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
@@ -40,8 +70,6 @@ class _homeScreenState extends State<homeScreen> {
           ),
         ),
       ),
-
-     
       body: Stack(
         children: [
           bgHome1().buildBackground(screenWidth, screenHeight),
@@ -52,6 +80,13 @@ class _homeScreenState extends State<homeScreen> {
             margin: EdgeInsets.only(top: 110, left: 25, right: 25),
             height: 40,
             child: TextField(
+              controller: searchController,
+              onChanged: (text) {
+                fetchdata();
+                setState(() {
+                  item = [];
+                });
+              },
               textAlignVertical: TextAlignVertical.bottom,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -90,28 +125,40 @@ class _homeScreenState extends State<homeScreen> {
 
           //กล่องใหญ่ไว้ใส่ card
           Container(
-            margin: EdgeInsets.only(top: 180, left: 15, right: 15),
+            margin: EdgeInsets.only(top: 170, left: 15, right: 15),
             height: 600,
             width: 500,
-            // color: Colors.blueAccent,
+            //color: Colors.blueAccent,
+
             child: SingleChildScrollView(
-              child: Column(children: <Widget>[
-                
-                //1post
-                post(),
-                post(),
-                post(),
-              ]
-
-                  //post
-
-                  ),
-            ),
+                child: Column(children: <Widget>[getBody()])),
           ),
         ],
       ),
     );
   }
 
-
+  Widget getBody() {
+    return ListView.builder(
+        padding: EdgeInsets.zero,
+        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: item.length,
+        itemBuilder: (context, index) {
+          return Post(
+              id: MenuAll.fromJson(item[index]).id,
+              owner: MenuAll.fromJson(item[index]).owner,
+              ownerName: MenuAll.fromJson(item[index]).ownerName,
+              ownerPic: MenuAll.fromJson(item[index]).ownerPic,
+              isFollowing: MenuAll.fromJson(item[index]).isFollowing,
+              foodname: MenuAll.fromJson(item[index]).foodname,
+              foodpic: MenuAll.fromJson(item[index]).foodpic,
+              ingredient: MenuAll.fromJson(item[index]).ingredient,
+              recipes: MenuAll.fromJson(item[index]).recipes,
+              isFavorites: MenuAll.fromJson(item[index]).isFavorites,
+              favoritesCount: MenuAll.fromJson(item[index]).favoritesCount,
+              created: MenuAll.fromJson(item[index]).created);
+        });
+  }
 }
