@@ -44,7 +44,7 @@ class MenuAll {
         owner: json["Owner"],
         ownerName: json["owner_name"],
         ownerPic: json["owner_pic"] == null
-            ? 'https://img.freepik.com/premium-vector/system-software-update-upgrade-concept-loading-process-screen-vector-illustration_175838-2182.jpg?w=2000'
+            ? 'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'
             : json["owner_pic"],
         isFollowing: json["is_following"],
         foodname: json["Foodname"],
@@ -63,7 +63,7 @@ class MenuAll {
         "Owner": owner,
         "owner_name": ownerName,
         "owner_pic": ownerPic == null
-            ? 'https://img.freepik.com/premium-vector/system-software-update-upgrade-concept-loading-process-screen-vector-illustration_175838-2182.jpg?w=2000'
+            ? 'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'
             : ownerPic,
         "is_following": isFollowing,
         "Foodname": foodname,
