@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/Cooking/EditFoodScreen.dart';
+import 'package:ginraid/Screens/Cooking/mycookgotoEditScreen.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 
 
@@ -22,7 +23,7 @@ Container myFood(BuildContext context) {
             onTap: () => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const EditFoodScreen()),
+                MaterialPageRoute(builder: (context) => const mycookScreen()),
               ),
             },
             child: Stack(
