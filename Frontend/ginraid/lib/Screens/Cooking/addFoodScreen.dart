@@ -263,6 +263,7 @@ class _addFoodScreenState extends State<addFoodScreen> {
                     ),
                   ),
 
+                  //เลือกความเป็นส่วนตัว
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: Form(
