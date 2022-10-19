@@ -1,6 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 import '../HomeScreen/homeScreen3.dart';
+import 'dart:convert';
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+const String baseUrl = 'https://ginraid.herokuapp.com/user-api/';
+
+Future<String> getToken() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String token = await prefs.getString('token').toString();
+  return token;
+}
+
+class follow {
+  Client client = http.Client();
+  Future<dynamic> post(dynamic object) async {
+    var url = Uri.parse('${baseUrl}follow/');
+    var _headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ${await getToken()}',
+    };
+    var _body = json.encode(object);
+    print(_body);
+    var response = await client.post(url, body: _body, headers: _headers);
+    if (response.statusCode == 201) {
+      return response;
+    }
+    if (response.statusCode == 400) {
+      print('Authentication credentials were not provided.');
+    } else {
+      print('fail');
+    }
+  }
+
+  Future<dynamic> delete(int user) async {
+    var url = Uri.parse('${baseUrl}followlist/${user}/');
+    var _headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ${await getToken()}',
+    };
+    var response = await client.delete(url, headers: _headers);
+    if (response.statusCode == 204) {
+      return response;
+    }
+    if (response.statusCode == 400) {
+      print('Authentication credentials were not provided.');
+    } else {
+      print('fail');
+    }
+  }
+}
 
 class Post extends StatefulWidget {
   static const routeName = '/';
@@ -126,36 +178,58 @@ class _PostState extends State<Post> {
                   margin: EdgeInsets.only(right: 10),
                   alignment: Alignment.center,
                   child: GestureDetector(
-                    onTap: () {
-                      setState(
-                        () {
-                          isFollowedByMe = !isFollowedByMe;
-                          //ฟอลอยู่           ไม่ฟอล อัลฟอล
-                        },
-                      );
+                    onTap: () async {
+                      if (isFollowing == false) {
+                        var followid = {"following": owner};
+                        var response = await follow().post(followid);
+                        if (response.statusCode == 201) {
+                          print('follow');
+                          setState(
+                            () {
+                              isFollowing = !isFollowing;
+                              //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                            },
+                          );
+                        } else {
+                          print('server down');
+                        }
+                      } else {
+                        var response = await follow().delete(owner);
+                        if (response.statusCode == 204) {
+                          print('unfollow');
+                          setState(
+                            () {
+                              isFollowing = !isFollowing;
+                              //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                            },
+                          );
+                        } else {
+                          print('server down');
+                        }
+                      }
                     },
                     child: AnimatedContainer(
                       height: 35,
                       width: 110,
                       duration: Duration(milliseconds: 300),
                       decoration: BoxDecoration(
-                        color: isFollowedByMe
+                        color: isFollowing
                             ? Colors.transparent
                             : Color.fromARGB(255, 166, 198, 6),
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(
-                          color: isFollowedByMe
+                          color: isFollowing
                               ? Color.fromARGB(255, 166, 198, 6)
                               : Colors.transparent,
                         ),
                       ),
                       child: Center(
                         child: Text(
-                          isFollowedByMe ? 'Following' : 'Follow',
+                          isFollowing ? 'Following' : 'Follow',
                           style: TextStyle(
                             fontSize: 17.0,
                             fontFamily: "IBMPlexSansThaiReg",
-                            color: isFollowedByMe
+                            color: isFollowing
                                 ? Color.fromARGB(255, 166, 198, 6)
                                 : Color.fromARGB(255, 255, 255, 255),
                           ),
