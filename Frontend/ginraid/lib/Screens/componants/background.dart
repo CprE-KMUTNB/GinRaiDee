@@ -1,36 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/Login/Login_Screen.dart';
 
-
 class Mybackground {
-  SafeArea buildBackground(double screenWidth, double screenHeight) {
-    return SafeArea(
-      child: Container(
-        width: screenWidth,
-        height: screenHeight,
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            // Container(
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image: AssetImage('assets/image/loginbacktrans.png'),
-            //     ),
-            //   ),
-            // )
-            Positioned(
-              top: 0,
-              child:
-              Image.asset(
-                "assets/image/loginbacktrans.png",
-
-              ),
-            ),
-            
-          ],
+  buildBackground(double screenWidth, double screenHeight) {
+    return Container(
+      height: 350,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/image/loginbacktrans.png'),
+            fit: BoxFit.cover),
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(47.0),
+          bottomLeft: Radius.circular(47.0),
         ),
         // ignore: dead_code
       ),
+      // ignore: dead_code
     );
   }
 

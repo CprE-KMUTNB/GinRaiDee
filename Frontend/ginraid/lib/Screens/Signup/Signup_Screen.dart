@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/Screens/Signup/register.dart';
 import 'package:ginraid/Screens/Signup/registermodel.dart';
 import 'package:ionicons/ionicons.dart';
@@ -46,247 +47,252 @@ class _signupScreenState extends State<signupScreen> {
     }
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: Color(0xFFF1F7E7),
-      body: SafeArea(
-        child: Stack(
-          // child: Column(
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            Mybackground().buildBackground(screenWidth, screenHeight),
-            SizedBox(height: 40),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Stack(
+        children: [
+          Mybackground().buildBackground(screenWidth, screenHeight),
 
-            Container(
-              alignment: Alignment.topCenter,
-              // width: screenWidth * 0.75,
-              child:
-                  //กินไรดี
-                  Text(
-                'กินไรดี \n GinRaiD',
-                style: TextStyle(
-                  fontSize: 60.0,
-                  fontFamily: "Sriracha",
-                  color: Color.fromARGB(255, 84, 96, 17),
-                  fontStyle: FontStyle.italic,
-                ),
+          Container(
+            margin: EdgeInsets.only(top: 30),
+            alignment: Alignment.topCenter,
+            // width: screenWidth * 0.75,
+            child:
+                //กินไรดี
+                Text(
+              'กินไรดี \n GinRaiD',
+              style: TextStyle(
+                fontSize: 60.0,
+                fontFamily: "Sriracha",
+                color: Color.fromARGB(255, 84, 96, 17),
+                fontStyle: FontStyle.italic,
               ),
             ),
+          ),
 
-            // SizedBox(height: 100),
-            Container(
-              child:
+          // SizedBox(height: 100),
 
-                  //กล่องใหญ่
+          //กล่องใหญ่
+          Container(
+            height: screenHeight * 0.64,
+            margin: const EdgeInsets.only(left: 20, right: 20, top: 240),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              borderRadius: BorderRadius.circular(47),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  //signup
                   Container(
-                margin:
-                    const EdgeInsets.only(top: 225.0, left: 20.0, right: 20.0),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(47),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      //signup
-                      Container(
-                        // color: Colors.black26,
-                        alignment: Alignment.topLeft,
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text(
-                          'SIGN UP,',
-                          style: TextStyle(
-                            fontSize: 45.0,
-                            fontFamily: "Itim",
-                            color: Color.fromARGB(255, 84, 96, 17),
-                          ),
+                    // color: Colors.black26,
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(top: 10),
+                    child: Text(
+                      'SIGN UP,',
+                      style: TextStyle(
+                        fontSize: 45.0,
+                        fontFamily: "Itim",
+                        color: Color.fromARGB(255, 84, 96, 17),
+                      ),
+                    ),
+                  ),
+
+                  //Sign up to get start!
+                  Container(
+                    // color: Colors.black26,
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      'Sign up to get start!',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: "Itim",
+                        color: Color.fromARGB(255, 179, 190, 190),
+                      ),
+                    ),
+                  ),
+
+                  // กรอกusername
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 179, 190, 190)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        hintText: 'Username',
+                        hintStyle: TextStyle(
+                          fontSize: 25.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 179, 190, 190),
+                        ),
+                        labelStyle: TextStyle(
+                          fontSize: 30.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
+                    ),
+                  ),
 
-                      //Sign up to get start!
-                      Container(
-                        // color: Colors.black26,
-                        alignment: Alignment.topLeft,
-                        margin: EdgeInsets.only(bottom: 20),
-                        child: Text(
-                          'Sign up to get start!',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: "Itim",
-                            color: Color.fromARGB(255, 179, 190, 190),
-                          ),
+                  //email
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 179, 190, 190)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          fontSize: 25.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 179, 190, 190),
+                        ),
+                        labelStyle: TextStyle(
+                          fontSize: 30.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
+                    ),
+                  ),
 
-                      // กรอกusername
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(top: 10),
-                        child: TextField(
-                          controller: usernameController,
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 179, 190, 190)),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 0, 0, 0)),
-                            ),
-                            hintText: 'Username',
-                            hintStyle: TextStyle(
-                              fontSize: 25.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 179, 190, 190),
-                            ),
-                            labelStyle: TextStyle(
-                              fontSize: 30.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
+                  // SizedBox(height: 60),
+
+                  //กรอกpass
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: _isObscure,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: Icon(_isObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            }),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 179, 190, 190)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          fontSize: 25.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 179, 190, 190),
+                        ),
+                        labelStyle: TextStyle(
+                          fontSize: 30.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
+                    ),
+                  ),
 
-                      //email
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(top: 10),
-                        child: TextField(
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 179, 190, 190)),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 0, 0, 0)),
-                            ),
-                            hintText: 'Email',
-                            hintStyle: TextStyle(
-                              fontSize: 25.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 179, 190, 190),
-                            ),
-                            labelStyle: TextStyle(
-                              fontSize: 30.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
+                  //comfirm pass
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      controller: confirmpasswordController,
+                      obscureText: _isObscure1,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: Icon(_isObscure1
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure1 = !_isObscure1;
+                              });
+                            }),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 179, 190, 190)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        hintText: 'Confirm Password',
+                        hintStyle: TextStyle(
+                          fontSize: 25.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 179, 190, 190),
+                        ),
+                        labelStyle: TextStyle(
+                          fontSize: 30.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
+                    ),
+                  ),
 
-                      // SizedBox(height: 60),
-
-                      //กรอกpass
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(top: 10),
-                        child: TextField(
-                          controller: passwordController,
-                          obscureText: _isObscure,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                icon: Icon(_isObscure
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isObscure = !_isObscure;
-                                  });
-                                }),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 179, 190, 190)),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 0, 0, 0)),
-                            ),
-                            hintText: 'Password',
-                            hintStyle: TextStyle(
-                              fontSize: 25.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 179, 190, 190),
-                            ),
-                            labelStyle: TextStyle(
-                              fontSize: 30.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
+                  //confirmbutton
+                  Container(
+                    //color: Colors.black,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 30),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
+                        backgroundColor: Color.fromARGB(255, 166, 198, 6),
                       ),
+                      onPressed: () async {
+                        var user = {
+                          "email": emailController.text,
+                          "username": usernameController.text,
+                          "password": passwordController.text,
+                          "confirm_password": confirmpasswordController.text,
+                        };
+                        var response =
+                            await Register().post('/register/', user);
 
-                      //comfirm pass
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(top: 10),
-                        child: TextField(
-                          controller: confirmpasswordController,
-                          obscureText: _isObscure1,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                icon: Icon(_isObscure1
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isObscure1 = !_isObscure1;
-                                  });
-                                }),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 179, 190, 190)),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 0, 0, 0)),
-                            ),
-                            hintText: 'Confirm Password',
-                            hintStyle: TextStyle(
-                              fontSize: 25.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 179, 190, 190),
-                            ),
-                            labelStyle: TextStyle(
-                              fontSize: 30.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //confirmbutton
-                      Container(
-                        //color: Colors.black,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(top: 30),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            backgroundColor: Color.fromARGB(255, 166, 198, 6),
-                          ),
-                          onPressed: () async {
-                            var user = {
-                              "email": emailController.text,
-                              "username": usernameController.text,
-                              "password": passwordController.text,
-                              "confirm_password":
-                                  confirmpasswordController.text,
-                            };
-                            var response =
-                                await Register().post('/register/', user);
-
-                            if (response.statusCode == 201) {
-                              print('success');
-                            } else {
-                              email_error = Registermodel.fromJson(
-                                              json.decode(response.body))
+                        if (response.statusCode == 201) {
+                          print('success');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const loginScreen()),
+                          );
+                        } else {
+                          email_error =
+                              Registermodel.fromJson(json.decode(response.body))
                                           .email!
                                           .isNotEmpty ==
                                       true
@@ -294,8 +300,8 @@ class _signupScreenState extends State<signupScreen> {
                                           json.decode(response.body))
                                       .email![0]
                                   : "";
-                              username_error = Registermodel.fromJson(
-                                              json.decode(response.body))
+                          username_error =
+                              Registermodel.fromJson(json.decode(response.body))
                                           .username!
                                           .isNotEmpty ==
                                       true
@@ -303,8 +309,8 @@ class _signupScreenState extends State<signupScreen> {
                                           json.decode(response.body))
                                       .username![0]
                                   : "";
-                              password_error = Registermodel.fromJson(
-                                              json.decode(response.body))
+                          password_error =
+                              Registermodel.fromJson(json.decode(response.body))
                                           .password!
                                           .isNotEmpty ==
                                       true
@@ -312,8 +318,8 @@ class _signupScreenState extends State<signupScreen> {
                                           json.decode(response.body))
                                       .password![0]
                                   : "";
-                              confirmPassword_error = Registermodel.fromJson(
-                                              json.decode(response.body))
+                          confirmPassword_error =
+                              Registermodel.fromJson(json.decode(response.body))
                                           .confirmPassword!
                                           .isNotEmpty ==
                                       true
@@ -321,58 +327,56 @@ class _signupScreenState extends State<signupScreen> {
                                           json.decode(response.body))
                                       .confirmPassword![0]
                                   : "";
-                              print(email_error);
-                              print(username_error);
-                              print(password_error);
-                              print(confirmPassword_error);
-                            }
-                          },
-                          child: const Text(
-                            '       Confirm       ',
+                          print(email_error);
+                          print(username_error);
+                          print(password_error);
+                          print(confirmPassword_error);
+                        }
+                      },
+                      child: const Text(
+                        '       Confirm       ',
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 20),
+
+                  GestureDetector(
+                    onTap: () => {Navigator.pop(context)},
+                    child: RichText(
+                      text: TextSpan(
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          TextSpan(
+                            text: 'I\’m already a member. ',
                             style: TextStyle(
-                              fontSize: 25.0,
+                              fontSize: 18.0,
                               fontFamily: "Itim",
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: Color.fromARGB(255, 179, 190, 190),
                             ),
                           ),
-                        ),
-                      ),
-
-                      SizedBox(height: 30),
-
-                      GestureDetector(
-                        onTap: () => {Navigator.pop(context)},
-                        child: RichText(
-                          text: TextSpan(
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              TextSpan(
-                                text: 'I\’m already a member. ',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "Itim",
-                                  color: Color.fromARGB(255, 179, 190, 190),
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'Login',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "Itim",
-                                  color: Color.fromARGB(255, 166, 198, 6),
-                                ),
-                              ),
-                            ],
+                          TextSpan(
+                            text: 'Login',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontFamily: "Itim",
+                              color: Color.fromARGB(255, 166, 198, 6),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
