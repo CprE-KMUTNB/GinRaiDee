@@ -188,11 +188,11 @@ class _addFoodScreenState extends State<addFoodScreen> {
 
                   if (imageFile == null)
                     Container(
-                      height: 180,
-                      width: screenWidth,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
+                      // height: 180,
+                      // width: screenWidth,
+                      // decoration: BoxDecoration(
+                      //   color: Color.fromARGB(255, 255, 255, 255),
+                      // ),
                     ),
 
                   //วัตถุดิบ
