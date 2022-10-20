@@ -1,21 +1,146 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../HomeScreen/homeScreen3.dart';
+
+const String baseUrl = 'https://ginraid.herokuapp.com/user-api/';
+
+Future<String> getToken() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String token = await prefs.getString('token').toString();
+  return token;
+}
+
+Future<bool> setReset(bool state) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setBool('reset', state);
+}
+
+Future<bool> checkReset() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool reset = await prefs.getBool('reset') ?? false;
+  return reset;
+}
+
+class follow {
+  Client client = http.Client();
+  Future<dynamic> post(dynamic object) async {
+    var url = Uri.parse('${baseUrl}follow/');
+    var _headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ${await getToken()}',
+    };
+    var _body = json.encode(object);
+    var response = await client.post(url, body: _body, headers: _headers);
+    if (response.statusCode == 201) {
+      return response;
+    }
+    if (response.statusCode == 400) {
+      print('Authentication credentials were not provided.');
+    } else {
+      print('fail');
+    }
+  }
+
+  Future<dynamic> delete(int user) async {
+    var url = Uri.parse('${baseUrl}followlist/${user}/');
+    var _headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ${await getToken()}',
+    };
+    var response = await client.delete(url, headers: _headers);
+    if (response.statusCode == 204) {
+      return response;
+    }
+    if (response.statusCode == 400) {
+      print('Authentication credentials were not provided.');
+    } else {
+      print('fail');
+    }
+  }
+}
+
 class favfood extends StatefulWidget {
   static const routeName = '/';
 
-  const favfood({Key? key}) : super(key: key);
+  int id;
+  int owner;
+  String ownerName;
+  String ownerPic;
+  bool isFollowing;
+  String foodname;
+  String foodpic;
+  String ingredient;
+  String recipes;
+  bool isFavorites;
+  int favoritesCount;
+  DateTime created;
+  favfood({
+    required this.id,
+    required this.owner,
+    required this.ownerName,
+    required this.ownerPic,
+    required this.isFollowing,
+    required this.foodname,
+    required this.foodpic,
+    required this.ingredient,
+    required this.recipes,
+    required this.isFavorites,
+    required this.favoritesCount,
+    required this.created,
+  });
 
   @override
   State<StatefulWidget> createState() {
-    return _favfoodState();
+    return _favfoodState(
+        id: id,
+        owner: owner,
+        ownerName: ownerName,
+        ownerPic: ownerPic,
+        isFollowing: isFollowing,
+        foodname: foodname,
+        foodpic: foodpic,
+        ingredient: ingredient,
+        recipes: recipes,
+        isFavorites: isFavorites,
+        favoritesCount: favoritesCount,
+        created: created);
   }
 }
 
 class _favfoodState extends State<favfood> {
-  bool isFollowedByMe = true;
+  int id;
+  int owner;
+  String ownerName;
+  String ownerPic;
+  bool isFollowing;
+  String foodname;
+  String foodpic;
+  String ingredient;
+  String recipes;
+  bool isFavorites;
+  int favoritesCount;
+  DateTime created;
+  _favfoodState({
+    required this.id,
+    required this.owner,
+    required this.ownerName,
+    required this.ownerPic,
+    required this.isFollowing,
+    required this.foodname,
+    required this.foodpic,
+    required this.ingredient,
+    required this.recipes,
+    required this.isFavorites,
+    required this.favoritesCount,
+    required this.created,
+  });
   Widget build(BuildContext context) {
     return Container(
       // margin: EdgeInsets.only(top: 10),
@@ -38,7 +163,12 @@ class _favfoodState extends State<favfood> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const homeScreen3()),
+                          builder: (context) => homeScreen3(
+                                owner: owner,
+                                ownerName: ownerName,
+                                ownerPic: ownerPic,
+                                isFollowing: isFollowing,
+                              )),
                     ),
                   },
                   child: Row(
@@ -53,7 +183,7 @@ class _favfoodState extends State<favfood> {
                       //ชื่อ
                       Container(
                         child: Text(
-                          '  User 1',
+                          ownerName,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontFamily: "Itim",
@@ -70,36 +200,60 @@ class _favfoodState extends State<favfood> {
                   margin: EdgeInsets.only(right: 10),
                   alignment: Alignment.center,
                   child: GestureDetector(
-                    onTap: () {
-                      setState(
-                        () {
-                          isFollowedByMe = !isFollowedByMe;
-                          //ฟอลอยู่           ไม่ฟอล อัลฟอล
-                        },
-                      );
+                    onTap: () async {
+                      if (isFollowing == false) {
+                        var followid = {"following": owner};
+                        var response = await follow().post(followid);
+                        if (response.statusCode == 201) {
+                          print('follow');
+                          await setReset(true);
+                          setState(
+                            () {
+                              isFollowing = !isFollowing;
+                              //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                            },
+                          );
+                        } else {
+                          print('server down');
+                        }
+                      } else {
+                        var response = await follow().delete(owner);
+                        if (response.statusCode == 204) {
+                          await setReset(true);
+                          print('unfollow');
+                          setState(
+                            () {
+                              isFollowing = !isFollowing;
+                              //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                            },
+                          );
+                        } else {
+                          print('server down');
+                        }
+                      }
                     },
                     child: AnimatedContainer(
                       height: 35,
                       width: 110,
                       duration: Duration(milliseconds: 300),
                       decoration: BoxDecoration(
-                        color: isFollowedByMe
+                        color: isFollowing
                             ? Colors.transparent
                             : Color.fromARGB(255, 224, 132, 106),
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(
-                          color: isFollowedByMe
+                          color: isFollowing
                               ? Color.fromARGB(255, 224, 132, 106)
                               : Colors.transparent,
                         ),
                       ),
                       child: Center(
                         child: Text(
-                          isFollowedByMe ? 'Following' : 'Follow',
+                          isFollowing ? 'Following' : 'Follow',
                           style: TextStyle(
                             fontSize: 17.0,
                             fontFamily: "IBMPlexSansThaiReg",
-                            color: isFollowedByMe
+                            color: isFollowing
                                 ? Color.fromARGB(255, 224, 132, 106)
                                 : Color.fromARGB(255, 255, 255, 255),
                           ),
@@ -116,7 +270,20 @@ class _favfoodState extends State<favfood> {
               onTap: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const homeScreen2()),
+                  MaterialPageRoute(
+                      builder: (context) => homeScreen2(
+                          id: id,
+                          owner: owner,
+                          ownerName: ownerName,
+                          ownerPic: ownerPic,
+                          isFollowing: isFollowing,
+                          foodname: foodname,
+                          foodpic: foodpic,
+                          ingredient: ingredient,
+                          recipes: recipes,
+                          isFavorites: isFavorites,
+                          favoritesCount: favoritesCount,
+                          created: created)),
                 ),
               },
               child: Stack(
@@ -124,7 +291,7 @@ class _favfoodState extends State<favfood> {
                   Container(
                     margin: EdgeInsets.only(left: 25, top: 5),
                     child: Text(
-                      'ผัดกระเพรา',
+                      foodname,
                       style: TextStyle(
                         fontSize: 18.0,
                         fontFamily: "NotoSansThai",
@@ -140,10 +307,7 @@ class _favfoodState extends State<favfood> {
                     height: 155,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(
-                            'assets/image/krapow.png',
-                          ),
-                          fit: BoxFit.cover),
+                          image: NetworkImage(foodpic), fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(13),
                     ),
                   ),

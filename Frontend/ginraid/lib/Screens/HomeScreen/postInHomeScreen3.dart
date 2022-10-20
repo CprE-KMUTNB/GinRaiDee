@@ -3,7 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 
-Container Userpost(BuildContext context) {
+Container Userpost(
+    BuildContext context,
+    int id,
+    int owner,
+    String ownerName,
+    String ownerPic,
+    bool isFollowing,
+    String foodname,
+    String foodpic,
+    String ingredient,
+    String recipes,
+    bool isFavorites,
+    int favoritesCount,
+    DateTime created) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
     height: MediaQuery.of(context).size.height * 0.27,
@@ -12,17 +25,28 @@ Container Userpost(BuildContext context) {
       // color: Colors.amber,
       // ignore: sort_child_properties_last
       child: Column(
-        children: [         
-
+        children: [
           //namemenu
           GestureDetector(
             onTap: () => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const homeScreen2()),
+                MaterialPageRoute(
+                    builder: (context) => homeScreen2(
+                        id: id,
+                        owner: owner,
+                        ownerName: ownerName,
+                        ownerPic: ownerPic,
+                        isFollowing: isFollowing,
+                        foodname: foodname,
+                        foodpic: foodpic,
+                        ingredient: ingredient,
+                        recipes: recipes,
+                        isFavorites: isFavorites,
+                        favoritesCount: favoritesCount,
+                        created: created)),
               ),
             },
-            
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -30,7 +54,7 @@ Container Userpost(BuildContext context) {
                   alignment: Alignment.topLeft,
                   // margin: EdgeInsets.only(top: 20),
                   child: Text(
-                    'ผัดกระเพรา',
+                    foodname,
                     style: TextStyle(
                       fontSize: 18.0,
                       fontFamily: "NotoSansThai",
@@ -47,10 +71,7 @@ Container Userpost(BuildContext context) {
                   height: 155,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(
-                          'assets/image/krapow.png',
-                        ),
-                        fit: BoxFit.cover),
+                        image: NetworkImage(foodpic), fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(13),
                   ),
                 ),

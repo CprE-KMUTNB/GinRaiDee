@@ -12,18 +12,17 @@ Container noti(BuildContext context) {
 
     //ไปหน้า Home 2
     child: GestureDetector(
-      onTap: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const homeScreen2()),
-        ),
-      },
+      // onTap: () => {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const homeScreen2()),
+      //   ),
+      // },
       child: Card(
         color: Color.fromARGB(255, 248, 248, 248),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        
         child: Column(
           children: [
             Expanded(
@@ -97,7 +96,6 @@ Container noti(BuildContext context) {
             ),
           ],
         ),
-
         elevation: 0,
       ),
     ),

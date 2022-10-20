@@ -156,7 +156,12 @@ class _PostState extends State<Post> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const homeScreen3()),
+                          builder: (context) => homeScreen3(
+                                owner: owner,
+                                ownerName: ownerName,
+                                ownerPic: ownerPic,
+                                isFollowing: isFollowing,
+                              )),
                     ),
                   },
                   child: Row(
@@ -258,7 +263,20 @@ class _PostState extends State<Post> {
               onTap: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const homeScreen2()),
+                  MaterialPageRoute(
+                      builder: (context) => homeScreen2(
+                          id: id,
+                          owner: owner,
+                          ownerName: ownerName,
+                          ownerPic: ownerPic,
+                          isFollowing: isFollowing,
+                          foodname: foodname,
+                          foodpic: foodpic,
+                          ingredient: ingredient,
+                          recipes: recipes,
+                          isFavorites: isFavorites,
+                          favoritesCount: favoritesCount,
+                          created: created)),
                 ),
               },
               child: Stack(
