@@ -1,10 +1,13 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:ginraid/Screens/%E0%B9%8C%E0%B9%8CNotification/NotiScreen.dart';
+import 'package:ginraid/Screens/Cooking/myfoodScreen.dart';
+import 'package:ginraid/Screens/Favorite/favoriteScreen.dart';
+import 'package:ginraid/Screens/SettingScreen/SettingScreen.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'homeScreen.dart';
-// import 'contact.dart';
-// import 'profile.dart';
-// import 'about.dart';
-// import 'settings.dart';
+import '../HomeScreen/homeScreen.dart';
+
   
 class Launcher extends StatefulWidget {
     static const routeName = '/';
@@ -21,33 +24,33 @@ class _LauncherState extends State<Launcher> {
     int _selectedIndex = 0;
     final List<Widget> _pageWidget = <Widget>[
         const homeScreen(),
-        // const About(),
-        // const Profile(),
-        // const Contact(),
-        // const Settings(),
+        const favScreen(),
+        const myFoodScreen(),
+        const NotiScreen(),
+        const SettingScreen(),
     ];
     final List<BottomNavigationBarItem> _menuBar
     =  <BottomNavigationBarItem>[
         BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            // label: 'Home',
         ),
-        // BottomNavigationBarItem(
-        //     icon: Icon(FontAwesomeIcons.infoCircle),
-        //     label: 'About',
-        // ),
-        // BottomNavigationBarItem(
-        //     icon: Icon(FontAwesomeIcons.userAlt),
-        //     label: 'Profile',
-        // ),
-        // BottomNavigationBarItem(
-        //     icon: Icon(FontAwesomeIcons.addressCard),
-        //     label: 'Contact',
-        // ),
-        // BottomNavigationBarItem(
-        //     icon: Icon(FontAwesomeIcons.cog),
-        //     label: 'Settings',
-        // ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            // label: 'About',
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.fastfood_rounded),
+            // label: 'Profile',
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            // label: 'Contact',
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+        ),
     ];
   
     void _onItemTapped(int index) {

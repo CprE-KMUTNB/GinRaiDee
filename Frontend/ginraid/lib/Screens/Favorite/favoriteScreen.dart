@@ -9,7 +9,7 @@ import 'package:ginraid/Screens/Favorite/favoriteFoodScreen.dart';
 import 'package:ginraid/Screens/Favorite/followingScreen.dart';
 
 class favScreen extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = 'favoriteScreen';
 
   const favScreen({Key? key}) : super(key: key);
 
