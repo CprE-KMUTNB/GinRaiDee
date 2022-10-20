@@ -6,6 +6,8 @@ import 'package:ginraid/Screens/%E0%B9%8C%E0%B9%8CNotification/notiCard.dart';
 import 'package:ginraid/Screens/Favorite/bgFav3.dart';
 import 'package:ginraid/Screens/Favorite/favfood.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
+import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
+import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
 
 class SettingScreen extends StatefulWidget {
   static const routeName = '/';
@@ -63,81 +65,223 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
 
                 //profile
-                Container(
-                  width: screenWidth * 0.9,
-                  height: 100,
-                  margin: EdgeInsets.only(top: 40),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 118, 99, 41),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    'โปรไฟล์ของฉัน',
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: "NotoSansThai",
-                      color: Color.fromARGB(255, 255, 255, 255),
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EditProfileScreen()),
+                    ),
+                  },
+                  child: Container(
+                    width: screenWidth * 0.9,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 40),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 227, 227, 227),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        //แถว1
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                //รูปโปร
+                                Container(
+                                  child: Icon(
+                                    Icons.account_circle,
+                                    size: 50.0,
+                                  ),
+                                ),
+                                //ชื่อ
+                                Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: Text(
+                                    'User 1',
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: "NotoSansThai",
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              child: Text(
+                                'แก้ไขโปรไฟล์',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "NotoSansThai",
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        //แถว2
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              children: [
+
+                                Container(
+                                  child: Text(
+                                    'ผู้ติดตาม : ',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "NotoSansThai",
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+
+                                //รับค่าจำนวนผู้ติดตาม
+                                Container(
+                                  child: Text(
+                                    '4',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "NotoSansThai",
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
+                                  child: Text(
+                                    ' คน',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "NotoSansThai",
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Row(
+                              children: [
+                                Container(
+                                  child: Text(
+                                    'เมนูอาหาร : ',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "NotoSansThai",
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+
+                                //รับค่าจำนวนเมนูอาหาร
+                                Container(
+                                  child: Text(
+                                    '1',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "NotoSansThai",
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+                                
+                                Container(
+                                  child: Text(
+                                    ' รายการ',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "NotoSansThai",
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ),
 
-                Container(
-                  width: screenWidth * 0.9,
-                  height: 100,
-                  margin: EdgeInsets.only(top: 15),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 227, 227, 227),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.lock_outline_rounded,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Text(
-                        'รหัสผ่านและความปลอดภัย',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontFamily: "NotoSansThai",
-                          color: Color.fromARGB(255, 0, 0, 0),
+                //รหัสผ่าน
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EditPasswordScreen()),
+                    ),
+                  },
+                  child: Container(
+                    width: screenWidth * 0.9,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 227, 227, 227),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.lock_outline_rounded,
+                          size: 50,
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          'รหัสผ่านและความปลอดภัย',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontFamily: "NotoSansThai",
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
-                Container(
-                  width: screenWidth * 0.9,
-                  height: 100,
-                  margin: EdgeInsets.only(top: 15),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 227, 227, 227),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.logout_outlined,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Text(
-                        'ออกจากระบบ',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontFamily: "NotoSansThai",
-                          color: Color.fromARGB(255, 0, 0, 0),
+                //ออกจากระบบ
+                GestureDetector(
+                  onTap: () => {},
+                  child: Container(
+                    width: screenWidth * 0.9,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 227, 227, 227),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.logout_outlined,
+                          size: 50,
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          'ออกจากระบบ',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontFamily: "NotoSansThai",
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 

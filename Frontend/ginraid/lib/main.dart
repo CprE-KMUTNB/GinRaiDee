@@ -11,6 +11,8 @@ import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen3.dart';
 import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/Screens/SettingScreen/SettingScreen.dart';
+import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
+import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
 import 'package:ginraid/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,12 +30,12 @@ class NotAuthen extends StatelessWidget {
   // This widget is the root of your application.
   Future<Widget> getWidget() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //final success = await prefs.remove('token');
+    // final success = await prefs.remove('token');
     String token = await prefs.getString('token') ?? '';
     if (token == '') {
       return loginScreen();
     } else {
-      return homeScreen();
+      return EditPasswordScreen();
     }
   }
 
