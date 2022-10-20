@@ -45,10 +45,10 @@ class NotAuthen extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      initialRoute: '/', // สามารถใช้ home แทนได้
-      routes: {
-        Launcher.routeName: (context) => Launcher(),
-      },
+      // initialRoute: '/', // สามารถใช้ home แทนได้
+      // routes: {
+      //   Launcher.routeName: (context) => Launcher(),
+      // },
       theme: ThemeData(
         // primaryColor: authenPriColor,
         scaffoldBackgroundColor: Color(0xFFF1F7E7),
