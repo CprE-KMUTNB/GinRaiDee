@@ -1,10 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/Cooking/EditFoodScreen.dart';
+import 'package:ginraid/Screens/Cooking/foodrequest.dart';
 import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
+import 'package:ginraid/Screens/Cooking/myfoodmodel.dart';
 import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/myFood.dart';
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class myFoodScreen extends StatefulWidget {
   static const routeName = '/';
@@ -18,7 +26,55 @@ class myFoodScreen extends StatefulWidget {
 }
 
 class _myFoodScreenState extends State<myFoodScreen> {
+  List item = [];
+  final searchController = TextEditingController();
   late double screenWidth, screenHeight;
+
+  Timer? timer;
+
+  fetchdata() async {
+    var response = await Cooking().search(searchController.text);
+    if (response.statusCode == 200) {
+      var data = json.decode(utf8.decode(response.bodyBytes));
+      setState(() {
+        item = data;
+      });
+    } else {
+      setState(() {
+        item = [];
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(milliseconds: 1), (Timer t) => isreset());
+    fetchdata();
+  }
+
+  Future<bool> setcookReset(bool state) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('cookreset', state);
+  }
+
+  Future<bool> checkcookReset() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool reset = await prefs.getBool('cookreset') ?? false;
+    return reset;
+  }
+
+  isreset() async {
+    if (await checkcookReset() == true) {
+      fetchdata();
+
+      setState(() {
+        item = [];
+      });
+      await setcookReset(false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
@@ -87,7 +143,7 @@ class _myFoodScreenState extends State<myFoodScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 20),
                           child: Text(
-                            '4',
+                            '${item.length}',
                             style: TextStyle(
                               fontSize: 25.0,
                               fontFamily: "NotoSansThai",
@@ -129,6 +185,13 @@ class _myFoodScreenState extends State<myFoodScreen> {
                   margin: EdgeInsets.only(top: 15, left: 20, right: 20),
                   height: 40,
                   child: TextField(
+                    controller: searchController,
+                    onChanged: (text) {
+                      fetchdata();
+                      setState(() {
+                        item = [];
+                      });
+                    },
                     textAlignVertical: TextAlignVertical.bottom,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -180,11 +243,7 @@ class _myFoodScreenState extends State<myFoodScreen> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: <Widget>[
                           //เมนูของฉัน
-                          myFood(context),
-                          myFood(context),
-                          myFood(context),
-                          myFood(context),
-                          myFood(context),
+                          getBody(context)
                         ],
                       ),
                     ),
@@ -196,5 +255,26 @@ class _myFoodScreenState extends State<myFoodScreen> {
         ],
       ),
     );
+  }
+
+  Widget getBody(context) {
+    return ListView.builder(
+        padding: EdgeInsets.zero,
+        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: item.length,
+        itemBuilder: (context, index) {
+          return myFood(
+              context,
+              Selfmenu.fromJson(item[index]).id!,
+              Selfmenu.fromJson(item[index]).foodname!,
+              Selfmenu.fromJson(item[index]).foodpic!,
+              Selfmenu.fromJson(item[index]).ingredient!,
+              Selfmenu.fromJson(item[index]).recipes!,
+              Selfmenu.fromJson(item[index]).isFavorites!,
+              Selfmenu.fromJson(item[index]).favoritesCount!,
+              Selfmenu.fromJson(item[index]).isPublic!);
+        });
   }
 }

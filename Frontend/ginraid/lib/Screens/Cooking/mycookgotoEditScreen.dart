@@ -8,19 +8,52 @@ import 'package:ginraid/Screens/HomeScreen/bgHome2.dart';
 
 import 'package:ginraid/Screens/HomeScreen/homeScreen3.dart';
 
-//เป็นหน้าที่เอาไว้ไปหน้าแก้ไขเมนูอาหาร จะคล้ายๆหน้า home2 แต่จะมีปุ่มให้ไปสู่หน้าแก้ไข 
+//เป็นหน้าที่เอาไว้ไปหน้าแก้ไขเมนูอาหาร จะคล้ายๆหน้า home2 แต่จะมีปุ่มให้ไปสู่หน้าแก้ไข
 class mycookScreen extends StatefulWidget {
   static const routeName = '/';
 
-  const mycookScreen({Key? key}) : super(key: key);
+  int id;
+  String foodname;
+  String foodpic;
+  String ingredient;
+  String recipes;
+  bool isPublic;
+  mycookScreen({
+    required this.id,
+    required this.foodname,
+    required this.foodpic,
+    required this.ingredient,
+    required this.recipes,
+    required this.isPublic,
+  });
 
   @override
   State<StatefulWidget> createState() {
-    return _mycookScreenState();
+    return _mycookScreenState(
+        id: id,
+        foodname: foodname,
+        foodpic: foodpic,
+        ingredient: ingredient,
+        recipes: recipes,
+        isPublic: isPublic);
   }
 }
 
 class _mycookScreenState extends State<mycookScreen> {
+  int id;
+  String foodname;
+  String foodpic;
+  String ingredient;
+  String recipes;
+  bool isPublic;
+  _mycookScreenState({
+    required this.id,
+    required this.foodname,
+    required this.foodpic,
+    required this.ingredient,
+    required this.recipes,
+    required this.isPublic,
+  });
   late double screenWidth, screenHeight;
   @override
   Widget build(BuildContext context) {
@@ -61,7 +94,7 @@ class _mycookScreenState extends State<mycookScreen> {
                       alignment: Alignment.topLeft,
                       margin: EdgeInsets.only(top: 80, left: 20),
                       child: Text(
-                        'ผัดกระเพรา',
+                        foodname,
                         style: TextStyle(
                           fontSize: 30.0,
                           fontFamily: "Sriracha",
@@ -81,7 +114,13 @@ class _mycookScreenState extends State<mycookScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const EditFoodScreen()),
+                                builder: (context) => EditFoodScreen(
+                                    id: id,
+                                    foodname: foodname,
+                                    foodpic: foodpic,
+                                    ingredient: ingredient,
+                                    recipes: recipes,
+                                    isPublic: isPublic)),
                           ),
                         },
                         child: Row(
@@ -115,46 +154,43 @@ class _mycookScreenState extends State<mycookScreen> {
                   margin: EdgeInsets.only(top: 10, left: 20, right: 20),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(
-                          'assets/image/krapow.png',
-                        ),
-                        fit: BoxFit.cover),
+                        image: NetworkImage(foodpic), fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(13),
                   ),
                 ),
 
                 //ประเภท
 
-                Container(
-                  margin: EdgeInsets.only(top: 10, left: 20),
-                  child: Row(
-                    children: [
-                      //ประเภทหัวข้อ
-                      Container(
-                        child: Text(
-                          'ประเภท : ',
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              fontFamily: "IBMPlexSansThai",
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                // Container(
+                //   margin: EdgeInsets.only(top: 10, left: 20),
+                //   child: Row(
+                //     children: [
+                //       //ประเภทหัวข้อ
+                //       Container(
+                //         child: Text(
+                //           'ประเภท : ',
+                //           style: TextStyle(
+                //               fontSize: 25.0,
+                //               fontFamily: "IBMPlexSansThai",
+                //               color: Colors.black,
+                //               fontWeight: FontWeight.bold),
+                //         ),
+                //       ),
 
-                      //ประเภท รับค่า
-                      Container(
-                        child: Text(
-                          'ผัด , กับข้าว',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: "IBMPlexSansThai",
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                //       //ประเภท รับค่า
+                //       Container(
+                //         child: Text(
+                //           'ผัด , กับข้าว',
+                //           style: TextStyle(
+                //             fontSize: 20.0,
+                //             fontFamily: "IBMPlexSansThai",
+                //             color: Colors.black,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
                 //วัตถุดิบ
                 Container(
@@ -182,7 +218,7 @@ class _mycookScreenState extends State<mycookScreen> {
                         alignment: Alignment.topLeft,
                         margin: EdgeInsets.only(left: 20),
                         child: Text(
-                          '1.เนื้อไก่ 2 ขีด\n2.น้ำมันพืช 2 ช้อนโต๊ะ\n3.ใบกะเพรา 100 กรัม\n4.ซีอิ้วขาว 1 ช้อนชา\n5.น้ำตาลทราย 1/2 ช้อนชา\n6.พริกชี้ฟ้า 2 เม็ด',
+                          ingredient,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontFamily: "IBMPlexSansThai",
@@ -220,7 +256,7 @@ class _mycookScreenState extends State<mycookScreen> {
                         alignment: Alignment.topLeft,
                         margin: EdgeInsets.only(left: 20),
                         child: Text(
-                          '1.ใส่น้ำมันลงกระทะ\n2.รอน้ำมันร้อนแล้วใส่ไก่ลงไปผัด\n3.ใส่ซีอิ้ว พริก น้ำตาลทรายลงไปผัด\n4.ผัดจนทุกอย่างเข้ากันแล้วใส่ใบกะเพราปิดท้าย\n5.ผัดจนใบกะเพราหดแล้วนำใส่จาน',
+                          recipes,
                           style: TextStyle(
                             fontSize: 20.0,
                             fontFamily: "IBMPlexSansThai",

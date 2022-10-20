@@ -45,8 +45,9 @@ dependencies:
   get: ^4.6.5
   flutter_secure_storage: ^6.0.0
   shared_preferences: ^2.0.15
-  image_picker: ^0.8.6
+  image_picker: ^0.8.6 
   salomon_bottom_bar: ^3.3.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

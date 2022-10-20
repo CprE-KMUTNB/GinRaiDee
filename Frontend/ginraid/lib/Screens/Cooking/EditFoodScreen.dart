@@ -17,20 +17,54 @@ import '../Favorite/user.dart';
 class EditFoodScreen extends StatefulWidget {
   static const routeName = '/';
 
-  const EditFoodScreen({Key? key}) : super(key: key);
+  int id;
+  String foodname;
+  String foodpic;
+  String ingredient;
+  String recipes;
+  bool isPublic;
+  EditFoodScreen({
+    required this.id,
+    required this.foodname,
+    required this.foodpic,
+    required this.ingredient,
+    required this.recipes,
+    required this.isPublic,
+  });
 
   @override
   State<StatefulWidget> createState() {
-    return _EditFoodScreenState();
+    return _EditFoodScreenState(
+        id: id,
+        foodname: foodname,
+        foodpic: foodpic,
+        ingredient: ingredient,
+        recipes: recipes,
+        isPublic: isPublic);
   }
 }
 
 class _EditFoodScreenState extends State<EditFoodScreen> {
+  int id;
+  String foodname;
+  String foodpic;
+  String ingredient;
+  String recipes;
+  bool isPublic;
+  _EditFoodScreenState({
+    required this.id,
+    required this.foodname,
+    required this.foodpic,
+    required this.ingredient,
+    required this.recipes,
+    required this.isPublic,
+  });
   String? _retrieveDataError;
   Food food = FoodEdit.myFood;
   File? imageFile;
 
   String? selectedValue = '';
+
   final _dropdownFormKey = GlobalKey<FormState>();
 
   List<DropdownMenuItem<String>> get dropdownItems {
@@ -65,6 +99,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
+    String privacy = isPublic ? "สาธารณะ" : "ส่วนตัว";
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -127,7 +162,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                   TextFieldWidget(
                     maxLines: 1,
                     label: 'ชื่อเมนู',
-                    text: food.name,
+                    text: foodname,
                     onChanged: (name) {},
                   ),
 
@@ -158,7 +193,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
 
                   //รูป ติดตรงถ้าเลือกจากโทรศัพท์ให้เปลี่ยนค่าไม่ได้ คิดว่าน่าจะต้องเชื่อ backend เป็นลิ้งก่อน
                   ProfileWidget(
-                    imagePath: food.imagePath,
+                    imagePath: foodpic,
                     isEdit: true,
                     onClicked: () async {},
                   ),
@@ -169,7 +204,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                   TextFieldWidget(
                     maxLines: null,
                     label: 'วัตถุดิบ',
-                    text: food.Ingred,
+                    text: ingredient,
                     onChanged: (Ingred) {},
                   ),
 
@@ -179,7 +214,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                   TextFieldWidget(
                     maxLines: null,
                     label: 'วิธีทำ',
-                    text: food.cookMethod,
+                    text: recipes,
                     onChanged: (cookMethod) {},
                   ),
 
@@ -220,7 +255,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                               validator: (value) =>
                                   value == null ? "ความเป็นส่วนตัว" : null,
                               dropdownColor: Color.fromARGB(255, 255, 255, 255),
-                              value: food.privacy,
+                              value: privacy,
                               onChanged: (String? newValue) {
                                 setState(
                                   () {
@@ -300,11 +335,10 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
             title: const Text(
               'ลบเมนู',
               style: TextStyle(
-                fontSize: 20.0,
-                fontFamily: "NotoSansThai",
-                color: Color.fromARGB(255, 0, 0, 0),
-                fontWeight: FontWeight.bold
-              ),
+                  fontSize: 20.0,
+                  fontFamily: "NotoSansThai",
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  fontWeight: FontWeight.bold),
             ),
             content: const Text(
               'คุณต้องการที่จะลบเมนูนี้',
@@ -312,7 +346,6 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                 fontSize: 18.0,
                 fontFamily: "NotoSansThai",
                 color: Color.fromARGB(255, 0, 0, 0),
-                
               ),
             ),
             actions: [

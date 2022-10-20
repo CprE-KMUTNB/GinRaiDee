@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/%E0%B9%8C%E0%B9%8CNotification/bgNoti.dart';
-import 'package:ginraid/Screens/%E0%B9%8C%E0%B9%8CNotification/notiCard.dart';
+import 'package:ginraid/Screens/Notification/bgNoti.dart';
+import 'package:ginraid/Screens/Notification/notiCard.dart';
 import 'package:ginraid/Screens/Favorite/bgFav3.dart';
 import 'package:ginraid/Screens/Favorite/favfood.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
@@ -130,7 +130,6 @@ class _SettingScreenState extends State<SettingScreen> {
                           children: [
                             Row(
                               children: [
-
                                 Container(
                                   child: Text(
                                     'ผู้ติดตาม : ',
@@ -166,7 +165,6 @@ class _SettingScreenState extends State<SettingScreen> {
                                 ),
                               ],
                             ),
-
                             Row(
                               children: [
                                 Container(
@@ -191,7 +189,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                     ),
                                   ),
                                 ),
-                                
+
                                 Container(
                                   child: Text(
                                     ' รายการ',

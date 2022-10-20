@@ -11,10 +11,8 @@ import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
 import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
 import 'package:ginraid/Screens/HomeScreen/menu_data.dart';
 import 'package:ginraid/Screens/HomeScreen/post.dart';
-import 'package:ginraid/Screens/componants/salmon.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class homeScreen extends StatefulWidget {
   static const routeName = '/';
@@ -32,7 +30,6 @@ class _homeScreenState extends State<homeScreen> {
   final searchController = TextEditingController();
   Timer? timer;
   List item = [];
-  int _currentIndex = 0;
 
   Future<bool> setReset(bool state) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -89,7 +86,6 @@ class _homeScreenState extends State<homeScreen> {
     screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      // bottomNavigationBar: SalomonBottomNavBar(),
       extendBodyBehindAppBar: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(

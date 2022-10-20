@@ -3,13 +3,18 @@ import 'package:ginraid/Screens/Cooking/EditFoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/mycookgotoEditScreen.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 
-
-
-
-
-Container myFood(BuildContext context) {
-  return Container(   
-    
+Container myFood(
+  BuildContext context,
+  int id,
+  String foodname,
+  String foodpic,
+  String ingredient,
+  String recipes,
+  bool isFavorites,
+  int favoritesCount,
+  bool isPublic,
+) {
+  return Container(
     padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
     height: MediaQuery.of(context).size.height * 0.28,
     width: MediaQuery.of(context).size.width,
@@ -23,7 +28,15 @@ Container myFood(BuildContext context) {
             onTap: () => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const mycookScreen()),
+                MaterialPageRoute(
+                    builder: (context) => mycookScreen(
+                          id: id,
+                          foodname: foodname,
+                          foodpic: foodpic,
+                          ingredient: ingredient,
+                          recipes: recipes,
+                          isPublic: isPublic,
+                        )),
               ),
             },
             child: Stack(
@@ -31,7 +44,7 @@ Container myFood(BuildContext context) {
                 Container(
                   margin: EdgeInsets.only(left: 25, top: 5),
                   child: Text(
-                    'ผัดกระเพรา',
+                    foodname,
                     style: TextStyle(
                       fontSize: 18.0,
                       fontFamily: "NotoSansThai",
@@ -47,10 +60,7 @@ Container myFood(BuildContext context) {
                   height: 155,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(
-                          'assets/image/krapow.png',
-                        ),
-                        fit: BoxFit.cover),
+                        image: NetworkImage(foodpic), fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(13),
                   ),
                 ),
