@@ -15,7 +15,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class homeScreen extends StatefulWidget {
-  static const routeName = 'homeScreen';
+  // static const routeName = 'homeScreen';
 
   const homeScreen({Key? key}) : super(key: key);
 
