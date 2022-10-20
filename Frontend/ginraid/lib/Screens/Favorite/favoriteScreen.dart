@@ -193,7 +193,7 @@ class _favScreenState extends State<favScreen> {
                   child: Row(
                     children: [
                       //profile pic
-                       Container(
+                      Container(
                         // margin: EdgeInsets.only(top: 35),
                         height: 60,
                         width: 60,
@@ -400,13 +400,13 @@ class _favScreenState extends State<favScreen> {
                 Container(
                   margin: EdgeInsets.only(top: 5),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 255, 255, 255),
                     // borderRadius: BorderRadius.only(
                     //   topRight: Radius.circular(47),
                     //   topLeft: Radius.circular(47),
                     // ),
                   ),
-                  height: screenHeight * 0.56,
+                  height: screenHeight * 0.555,
                   width: screenWidth,
                   child:
                       //กล่องที่ใส่เมนูที่ถูกใจไว้ กล่องใหญ่
