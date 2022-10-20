@@ -7,7 +7,7 @@ import 'package:ginraid/Screens/Favorite/bgFav3.dart';
 import 'package:ginraid/Screens/Favorite/favfood.dart';
 
 class NotiScreen extends StatefulWidget {
-  // static const routeName = 'NotiScreen';
+  static const routeName = '/';
 
   const NotiScreen({Key? key}) : super(key: key);
 

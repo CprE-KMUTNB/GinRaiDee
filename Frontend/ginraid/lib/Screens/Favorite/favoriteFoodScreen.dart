@@ -40,7 +40,7 @@ class Favoritelist {
 }
 
 class favFoodScreen extends StatefulWidget {
-  // static const routeName = '/';
+  static const routeName = '/';
 
   const favFoodScreen({Key? key}) : super(key: key);
 

@@ -68,7 +68,7 @@ class Followinglist {
 }
 
 class favScreen extends StatefulWidget {
-  static const routeName = 'favoriteScreen';
+  static const routeName = '/';
 
   const favScreen({Key? key}) : super(key: key);
 

@@ -13,7 +13,6 @@ import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/Screens/SettingScreen/SettingScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
-import 'package:ginraid/Screens/componants/navigation.dart';
 import 'package:ginraid/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,10 +44,6 @@ class NotAuthen extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      // initialRoute: '/', // สามารถใช้ home แทนได้
-      // routes: {
-      //   Launcher.routeName: (context) => Launcher(),
-      // },
       theme: ThemeData(
         // primaryColor: authenPriColor,
         scaffoldBackgroundColor: Color(0xFFF1F7E7),

@@ -10,7 +10,7 @@ import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
 
 class SettingScreen extends StatefulWidget {
-  // static const routeName = 'SettingScreen';
+  static const routeName = '/';
 
   const SettingScreen({Key? key}) : super(key: key);
 
@@ -191,7 +191,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                     ),
                                   ),
                                 ),
-
+                                
                                 Container(
                                   child: Text(
                                     ' รายการ',

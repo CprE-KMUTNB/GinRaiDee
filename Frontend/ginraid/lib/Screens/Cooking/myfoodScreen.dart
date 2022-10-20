@@ -7,7 +7,7 @@ import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/myFood.dart';
 
 class myFoodScreen extends StatefulWidget {
-  // static const routeName = 'myfoodScreen';
+  static const routeName = '/';
 
   const myFoodScreen({Key? key}) : super(key: key);
 

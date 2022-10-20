@@ -27,21 +27,12 @@ class EditPasswordScreen extends StatefulWidget {
 }
 
 class _EditPasswordScreenState extends State<EditPasswordScreen> {
-  final _formKey = GlobalKey<FormState>();
-  var _text = '';
-  var focusTextField = false;
-  final _controller = TextEditingController();
   bool _isObscure = true;
   bool _isObscure2 = true;
   bool _isObscure3 = true;
   String? _retrieveDataError;
   User user = UserPreferences.myUser;
   File? imageFile;
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      // TODO SAVE DATA
-    }
-  }
 
   late double screenWidth, screenHeight;
 
@@ -102,187 +93,165 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
               child: Column(
                 children: <Widget>[
                   //รหัสเก่า
-                  Form(
-                    key: _formKey,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            // Validation Logic
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-
-                        controller: _controller,
-
-                        // controller: confirmpasswordController,
-                        obscureText: _isObscure,
-                        textAlignVertical: TextAlignVertical.bottom,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            icon: Icon(_isObscure
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  // (text) => setState(() => _text);
-                                  // focusTextField == true;
-                                  _isObscure = !_isObscure;
-                                },
-                              );
-                            },
-                          ),
-                          // errorStyle: TextStyle(),
-                          // errorText: validateName,
-                          // errorBorder: OutlineInputBorder(
-                          //   borderRadius: BorderRadius.circular(15),
-                          //   borderSide:
-                          //       BorderSide(color: Color.fromARGB(255, 255, 0, 0)),
-                          // ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 179, 190, 190)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-                          ),
-                          hintText: 'รหัสผ่านเก่า',
-                          hintStyle: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: "NotoSansThai",
-                            color: Color.fromARGB(255, 179, 190, 190),
-                          ),
-                          labelText: 'รหัสผ่านเก่า',
-                          labelStyle: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: "NotoSansThai",
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: TextField(
+                      // controller: confirmpasswordController,
+                      obscureText: _isObscure,
+                      textAlignVertical: TextAlignVertical.bottom,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(
+                              () {
+                                _isObscure = !_isObscure;
+                              },
+                            );
+                          },
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 179, 190, 190)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        hintText: 'รหัสผ่านเก่า',
+                        hintStyle: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "NotoSansThai",
+                          color: Color.fromARGB(255, 179, 190, 190),
+                        ),
+                        labelText: 'รหัสผ่านเก่า',
+                        labelStyle: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "NotoSansThai",
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                     ),
                   ),
 
                   //รหัสใหม่
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 20),
-                  //   child: TextField(
-                  //     // controller: confirmpasswordController,
-                  //     obscureText: _isObscure2,
-                  //     textAlignVertical: TextAlignVertical.bottom,
-                  //     decoration: InputDecoration(
-                  //       suffixIcon: IconButton(
-                  //         icon: Icon(_isObscure2
-                  //             ? Icons.visibility
-                  //             : Icons.visibility_off),
-                  //         onPressed: () {
-                  //           setState(
-                  //             () {
-                  //               _isObscure2 = !_isObscure2;
-                  //             },
-                  //           );
-                  //         },
-                  //       ),
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(15),
-                  //         borderSide: BorderSide(
-                  //             color: Color.fromARGB(255, 179, 190, 190)),
-                  //       ),
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(15),
-                  //         borderSide:
-                  //             BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-                  //       ),
-                  //       hintText: 'รหัสผ่านใหม่',
-                  //       hintStyle: TextStyle(
-                  //         fontSize: 20.0,
-                  //         fontFamily: "NotoSansThai",
-                  //         color: Color.fromARGB(255, 179, 190, 190),
-                  //       ),
-                  //       labelText: 'รหัสผ่านใหม่',
-                  //       labelStyle: TextStyle(
-                  //         fontSize: 20.0,
-                  //         fontFamily: "NotoSansThai",
-                  //         color: Color.fromARGB(255, 0, 0, 0),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: TextField(
+                      // controller: confirmpasswordController,
+                      obscureText: _isObscure2,
+                      textAlignVertical: TextAlignVertical.bottom,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(_isObscure2
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(
+                              () {
+                                _isObscure2 = !_isObscure2;
+                              },
+                            );
+                          },
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 179, 190, 190)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        hintText: 'รหัสผ่านใหม่',
+                        hintStyle: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "NotoSansThai",
+                          color: Color.fromARGB(255, 179, 190, 190),
+                        ),
+                        labelText: 'รหัสผ่านใหม่',
+                        labelStyle: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "NotoSansThai",
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                    ),
+                  ),
 
-                  // //ยืนยันรหัสใหม่
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 20),
-                  //   child: TextField(
-                  //     // controller: confirmpasswordController,
-                  //     obscureText: _isObscure3,
-                  //     textAlignVertical: TextAlignVertical.bottom,
-                  //     decoration: InputDecoration(
-                  //       suffixIcon: IconButton(
-                  //         icon: Icon(_isObscure3
-                  //             ? Icons.visibility
-                  //             : Icons.visibility_off),
-                  //         onPressed: () {
-                  //           setState(
-                  //             () {
-                  //               _isObscure3 = !_isObscure3;
-                  //             },
-                  //           );
-                  //         },
-                  //       ),
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(15),
-                  //         borderSide: BorderSide(
-                  //             color: Color.fromARGB(255, 179, 190, 190)),
-                  //       ),
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(15),
-                  //         borderSide:
-                  //             BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-                  //       ),
-                  //       hintText: 'ยืนยันรหัสผ่านใหม่',
-                  //       hintStyle: TextStyle(
-                  //         fontSize: 20.0,
-                  //         fontFamily: "NotoSansThai",
-                  //         color: Color.fromARGB(255, 179, 190, 190),
-                  //       ),
-                  //       labelText: 'ยืนยันรหัสผ่านใหม่',
-                  //       labelStyle: TextStyle(
-                  //         fontSize: 20.0,
-                  //         fontFamily: "NotoSansThai",
-                  //         color: Color.fromARGB(255, 0, 0, 0),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  //ยืนยันรหัสใหม่
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: TextField(
+                      // controller: confirmpasswordController,
+                      obscureText: _isObscure3,
+                      textAlignVertical: TextAlignVertical.bottom,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(_isObscure3
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(
+                              () {
+                                _isObscure3 = !_isObscure3;
+                              },
+                            );
+                          },
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 179, 190, 190)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        hintText: 'ยืนยันรหัสผ่านใหม่',
+                        hintStyle: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "NotoSansThai",
+                          color: Color.fromARGB(255, 179, 190, 190),
+                        ),
+                        labelText: 'ยืนยันรหัสผ่านใหม่',
+                        labelStyle: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "NotoSansThai",
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                    ),
+                  ),
 
-                  // //ปุ่มบันทึก
-                  // Container(
-                  //   width: 120,
-                  //   margin: EdgeInsets.symmetric(vertical: 40),
-                  //   child: TextButton(
-                  //     style: TextButton.styleFrom(
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(30),
-                  //       ),
-                  //       backgroundColor: Color.fromARGB(255, 136, 68, 106),
-                  //     ),
-                  //     onPressed: () async {},
-                  //     child: const Text(
-                  //       'บันทึก',
-                  //       style: TextStyle(
-                  //         fontSize: 25.0,
-                  //         fontFamily: "NotoSansThai",
-                  //         color: Color.fromARGB(255, 255, 255, 255),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  //ปุ่มบันทึก
+                  Container(
+                    width: 120,
+                    margin: EdgeInsets.symmetric(vertical: 40),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        backgroundColor: Color.fromARGB(255, 136, 68, 106),
+                      ),
+                      onPressed: () async {},
+                      child: const Text(
+                        'บันทึก',
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          fontFamily: "NotoSansThai",
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -290,29 +259,5 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
         ],
       ),
     );
-  }
-
-  String? get _errorText {
-    // at any time, we can get the text from _controller.value.text
-    final text = _controller.value.text;
-    // Note: you can do your own custom validation here
-    // Move this logic this outside the widget for more testable code
-    if (text.isEmpty) {
-      return 'Can\'t be empty';
-    }
-    if (text.length < 4) {
-      return 'Too short';
-    }
-    // return null if the text is valid
-    return null;
-  }
-
-  String? validateName(String? value) {
-    // final text = _controller.value.text;
-
-    if (value!.length < 3)
-      return 'Name must be more than 2 charater';
-    else
-      return null;
   }
 }
