@@ -28,12 +28,12 @@ class NotAuthen extends StatelessWidget {
   // This widget is the root of your application.
   Future<Widget> getWidget() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // final success = await prefs.remove('token');
+    //final success = await prefs.remove('token');
     String token = await prefs.getString('token') ?? '';
     if (token == '') {
       return loginScreen();
     } else {
-      return SettingScreen();
+      return homeScreen();
     }
   }
 

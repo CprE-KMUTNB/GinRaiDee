@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -11,6 +12,7 @@ import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
 import 'package:ginraid/Screens/HomeScreen/menu_data.dart';
 import 'package:ginraid/Screens/HomeScreen/post.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class homeScreen extends StatefulWidget {
   static const routeName = '/';
@@ -26,12 +28,31 @@ class homeScreen extends StatefulWidget {
 class _homeScreenState extends State<homeScreen> {
   late double screenWidth, screenHeight;
   final searchController = TextEditingController();
+  Timer? timer;
   List item = [];
+
+  Future<bool> setReset(bool state) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('reset', state);
+  }
+
+  Future<bool> checkReset() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool reset = await prefs.getBool('reset') ?? false;
+    return reset;
+  }
 
   @override
   void initState() {
     super.initState();
+    timer = Timer.periodic(Duration(milliseconds: 1), (Timer t) => isreset());
     fetchdata();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   fetchdata() async {
@@ -46,6 +67,16 @@ class _homeScreenState extends State<homeScreen> {
       setState(() {
         item = [];
       });
+    }
+  }
+
+  isreset() async {
+    if (await checkReset() == true) {
+      fetchdata();
+      setState(() {
+        item = [];
+      });
+      await setReset(false);
     }
   }
 

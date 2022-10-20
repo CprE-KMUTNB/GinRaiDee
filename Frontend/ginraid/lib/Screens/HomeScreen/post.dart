@@ -15,6 +15,17 @@ Future<String> getToken() async {
   return token;
 }
 
+Future<bool> setReset(bool state) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setBool('reset', state);
+}
+
+Future<bool> checkReset() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool reset = await prefs.getBool('reset') ?? false;
+  return reset;
+}
+
 class follow {
   Client client = http.Client();
   Future<dynamic> post(dynamic object) async {
@@ -24,7 +35,6 @@ class follow {
       'Authorization': 'Token ${await getToken()}',
     };
     var _body = json.encode(object);
-    print(_body);
     var response = await client.post(url, body: _body, headers: _headers);
     if (response.statusCode == 201) {
       return response;
@@ -184,6 +194,7 @@ class _PostState extends State<Post> {
                         var response = await follow().post(followid);
                         if (response.statusCode == 201) {
                           print('follow');
+                          await setReset(true);
                           setState(
                             () {
                               isFollowing = !isFollowing;
@@ -196,6 +207,7 @@ class _PostState extends State<Post> {
                       } else {
                         var response = await follow().delete(owner);
                         if (response.statusCode == 204) {
+                          await setReset(true);
                           print('unfollow');
                           setState(
                             () {
