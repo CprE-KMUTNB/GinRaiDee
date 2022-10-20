@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/Notification/NotiScreen.dart';
+import 'package:ginraid/Screens/%E0%B9%8C%E0%B9%8CNotification/NotiScreen.dart';
 import 'package:ginraid/Screens/Cooking/EditFoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/mycookgotoEditScreen.dart';
@@ -13,6 +13,7 @@ import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/Screens/SettingScreen/SettingScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
+import 'package:ginraid/Screens/componants/test.dart';
 import 'package:ginraid/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,12 +23,20 @@ import 'Screens/Signup/Signup_Screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/src/material/progress_indicator.dart';
 
+import 'Screens/componants/homeinhome.dart';
+
 void main() {
   runApp(NotAuthen());
 }
 
-class NotAuthen extends StatelessWidget {
+class NotAuthen extends StatefulWidget {
+  static final title = 'salomon_bottom_bar';
+  _NotAuthenState createState() => _NotAuthenState();
   // This widget is the root of your application.
+  
+}
+
+class _NotAuthenState extends State<NotAuthen> {
   Future<Widget> getWidget() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // final success = await prefs.remove('token');
@@ -35,9 +44,10 @@ class NotAuthen extends StatelessWidget {
     if (token == '') {
       return loginScreen();
     } else {
-      return myFoodScreen();
+      return homeinScreen();
     }
   }
+  var _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +58,7 @@ class NotAuthen extends StatelessWidget {
         // primaryColor: authenPriColor,
         scaffoldBackgroundColor: Color(0xFFF1F7E7),
       ),
-      home: FutureBuilder(
+      home: FutureBuilder(        
         future: getWidget(),
         builder: (BuildContext context, AsyncSnapshot<Widget> widget) {
           if (widget.hasData) {
@@ -63,6 +73,7 @@ class NotAuthen extends StatelessWidget {
           }
         },
       ),
+      
     );
   }
 }

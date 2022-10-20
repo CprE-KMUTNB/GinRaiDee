@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';
 import 'package:ginraid/Screens/Login/login.dart';
 import 'package:ginraid/Screens/Login/loginmodel.dart';
+import 'package:ginraid/Screens/componants/homeinhome.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -279,7 +280,7 @@ class _loginScreenState extends State<loginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const homeScreen()),
+                                  builder: (context) => const homeinScreen()),
                             );
                           } else {
                             email_error =

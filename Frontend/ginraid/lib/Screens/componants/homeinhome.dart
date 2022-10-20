@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -54,46 +56,75 @@ class _homeinScreenState extends State<homeinScreen> {
       backgroundColor: Colors.white,
       body: _pageWidget[_selectIndex],
       bottomNavigationBar: SalomonBottomBar(
-      currentIndex: _selectIndex,
-      onTap: (index) => setState(() => _selectIndex = index),
-      items: [
-        /// Home
-        SalomonBottomBarItem(
-          icon: Icon(Icons.home),
-          title: Text("Home"),
-          selectedColor: Color.fromARGB(255, 166, 198, 6),          
-        ),
+        currentIndex: _selectIndex,
+        onTap: (index) => setState(() => _selectIndex = index),
+        items: [
+          /// Home
+          SalomonBottomBarItem(
+            icon: Icon(Icons.home),
+            title: Text(
+              "Home",
+              style: TextStyle(
+                fontSize: 15.0,
+                fontFamily: "Itim",
+              ),
+            ),
+            selectedColor: Color.fromARGB(255, 166, 198, 6),
+          ),
 
-        /// Fav
-        SalomonBottomBarItem(
-          icon: Icon(Icons.favorite_border),
-          title: Text("Likes"),
-          selectedColor: Color.fromARGB(255, 224, 132, 106),
-        ),
+          /// Fav
+          SalomonBottomBarItem(
+            icon: Icon(Icons.favorite_border),
+            title: Text(
+              "Likes",
+              style: TextStyle(
+                fontSize: 15.0,
+                fontFamily: "Itim",
+              ),
+            ),
+            selectedColor: Color.fromARGB(255, 224, 132, 106),
+          ),
 
-        /// cooking
-        SalomonBottomBarItem(
-          icon: Icon(Icons.search),
-          title: Text("Cooking"),
-          selectedColor: Color.fromARGB(255, 246, 170, 72),
-        ),
+          /// cooking
+          SalomonBottomBarItem(
+            icon: Icon(Icons.fastfood_outlined),
+            title: Text(
+              "Cooking",
+              style: TextStyle(
+                fontSize: 15.0,
+                fontFamily: "Itim",
+              ),
+            ),
+            selectedColor: Color.fromARGB(255, 246, 170, 72),
+          ),
 
-        /// Noti
-        SalomonBottomBarItem(
-          icon: Icon(Icons.notifications_none_outlined),
-          title: Text("Notifications"),
-          selectedColor: Color.fromARGB(255, 234, 225, 9),
-        ),
+          /// Noti
+          SalomonBottomBarItem(
+            icon: Icon(Icons.notifications_none_outlined),
+            title: Text(
+              "Notifications",
+              style: TextStyle(
+                fontSize: 10,
+                fontFamily: "Itim",
+              ),
+            ),
+            selectedColor: Color.fromARGB(255, 234, 225, 9),
+          ),
 
-        //Setting
-        SalomonBottomBarItem(
-          icon: Icon(Icons.hail),
-          title: Text("Setting"),
-          selectedColor: Color.fromARGB(255, 72, 99, 81),
-        ),
-      ],
-    ),
-      
+          //Setting
+          SalomonBottomBarItem(
+            icon: Icon(Icons.settings),
+            title: Text(
+              "Setting",
+              style: TextStyle(
+                fontSize: 15.0,
+                fontFamily: "Itim",
+              ),
+            ),
+            selectedColor: Color.fromARGB(255, 122, 57, 88),
+          ),
+        ],
+      ),
     );
   }
 }
