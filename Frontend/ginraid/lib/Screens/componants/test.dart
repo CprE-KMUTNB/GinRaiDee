@@ -1,164 +1,71 @@
 import 'package:flutter/material.dart';
+import 'tab_item.dart';
+import 'tan_navigatot.dart';
+import 'testcomponant.dart';
 
-class ToggleButton extends StatefulWidget {
-  final double width;
-  final double height;
-
-  final String leftDescription;
-  final String rightDescription;
-
-  final Color toggleColor;
-  final Color toggleBackgroundColor;
-  final Color toggleBorderColor;
-
-  final Color inactiveTextColor;
-  final Color activeTextColor;
-
-  final double _leftToggleAlign = -1;
-  final double _rightToggleAlign = 1;
-
-  final VoidCallback onLeftToggleActive;
-  final VoidCallback onRightToggleActive;
-
-  const ToggleButton(
-      {Key? key,
-      required this.width,
-      required this.height,
-      required this.toggleBackgroundColor,
-      required this.toggleBorderColor,
-      required this.toggleColor,
-      required this.activeTextColor,
-      required this.inactiveTextColor,
-      required this.leftDescription,
-      required this.rightDescription,
-      required this.onLeftToggleActive,
-      required this.onRightToggleActive})
-      : super(key: key);
+class App extends StatefulWidget {
+  const App({super.key});
 
   @override
-  _ToggleButtonState createState() => _ToggleButtonState();
+  State<StatefulWidget> createState() => AppState();
 }
 
-class _ToggleButtonState extends State<ToggleButton> {
-  double _toggleXAlign = -1;
+class AppState extends State<App> {
+  var _currentTab = TabItem.gi;
+  final _navigatorKeys = {
+    TabItem.gi: GlobalKey<NavigatorState>(),
+    TabItem.green: GlobalKey<NavigatorState>(),
+    TabItem.blue: GlobalKey<NavigatorState>(),
+  };
 
-  late Color _leftDescriptionColor;
-  late Color _rightDescriptionColor;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _leftDescriptionColor = widget.activeTextColor;
-    _rightDescriptionColor = widget.inactiveTextColor;
+  void _selectTab(TabItem tabItem) {
+    if (tabItem == _currentTab) {
+      // pop to first route
+      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
+    } else {
+      setState(() => _currentTab = tabItem);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.width,
-      height: widget.height,
-      decoration: BoxDecoration(
-        color: widget.toggleBackgroundColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(50.0),
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            !await _navigatorKeys[_currentTab]!.currentState!.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          // if not on the 'main' tab
+          if (_currentTab != TabItem.gi) {
+            // select 'main' tab
+            _selectTab(TabItem.gi);
+            // back button handled by app
+            return false;
+          }
+        }
+        // let system handle back button if we're on the first route
+        return isFirstRouteInCurrentTab;
+      },
+      child: Scaffold(
+        body: Stack(children: <Widget>[
+          // _buildOffstageNavigator(TabItem.red),
+          // _buildOffstageNavigator(TabItem.green),
+          // _buildOffstageNavigator(TabItem.blue),
+        ]),
+        bottomNavigationBar: BottomNavigation(
+          currentTab: _currentTab,
+          onSelectTab: _selectTab,
         ),
-        border: Border.all(color: widget.toggleBorderColor),
-      ),
-      child: Stack(
-        children: [
-          AnimatedAlign(
-            alignment: Alignment(_toggleXAlign, 0),
-            duration: Duration(milliseconds: 300),
-            child: Container(
-              width: widget.width * 0.5,
-              height: widget.height,
-              decoration: BoxDecoration(
-                color: widget.toggleColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(50.0),
-                ),
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(
-                () {
-                  _toggleXAlign = widget._leftToggleAlign;
-
-                  _leftDescriptionColor = widget.inactiveTextColor;
-                  _rightDescriptionColor = widget.activeTextColor;
-                },
-              );
-
-              widget.onLeftToggleActive();
-            },
-
-            child: Align(
-              alignment: Alignment(-1, 0),
-              child: Container(
-                width: widget.width * 0.5,
-                color: Colors.transparent,
-                alignment: Alignment.center,
-                child: Text(
-                  widget.rightDescription,
-                  style: TextStyle(
-                      color: _rightDescriptionColor,
-                      fontWeight: FontWeight.bold),
-                ),
-
-              
-                
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              print('hi');
-              Text(
-                'hi',
-                style: TextStyle(
-                  fontSize: 100.0,
-                  fontFamily: "Sriracha",
-                  color: Color.fromARGB(255, 84, 96, 17),
-                  fontStyle: FontStyle.italic,
-                ),
-              );
-              setState(
-                () {
-                  _toggleXAlign = widget._rightToggleAlign;
-
-                  _leftDescriptionColor = widget.activeTextColor;
-                  _rightDescriptionColor = widget.inactiveTextColor;
-                },
-              );
-              
-              widget.onRightToggleActive();
-
-            },
-            child: Align(
-              alignment: Alignment(1, 0),
-              child: 
-              Container(
-                width: widget.width * 0.5,
-                color: Colors.transparent,
-                alignment: Alignment.center,
-                child: Text(
-                  widget.leftDescription,
-                  style: TextStyle(
-                      color: _leftDescriptionColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                
-              ),
-              
-            ),
-            
-          ),
-          
-        ],
       ),
     );
   }
+
+  // Widget _buildOffstageNavigator(TabItem tabItem) {
+  //   return Offstage(
+  //     offstage: _currentTab != tabItem,
+  //     child: TabNavigator(
+  //       navigatorKey: _navigatorKeys[tabItem],
+  //       tabItem: tabItem,
+  //     ),
+  //   );
+  // }
 }

@@ -97,7 +97,6 @@ class _myFoodScreenState extends State<myFoodScreen> {
                         ),
                       ],
                     ),
-                    
 
                     // GestureDetector(
                     //   onTap: () => {
@@ -168,8 +167,9 @@ class _myFoodScreenState extends State<myFoodScreen> {
 
                 //กล่องใหญ่
                 Container(
+                  // color: Colors.amber,
                   margin: EdgeInsets.only(top: 35),
-                  height: screenHeight * 0.7,
+                  height: screenHeight * 0.675,
                   width: screenWidth,
                   child:
                       //กล่องที่ใส่เมนู กล่องใหญ่

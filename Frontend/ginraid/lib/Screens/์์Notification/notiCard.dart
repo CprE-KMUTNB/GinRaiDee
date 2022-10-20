@@ -2,65 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
-import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-Future<String> getToken() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String token = await prefs.getString('token').toString();
-  return token;
-}
-
-Future<bool> setNotiReset(bool state) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.setBool('notireset', state);
-}
-
-Future<bool> checkNotiReset() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool reset = await prefs.getBool('notireset') ?? false;
-  return reset;
-}
-
-class read {
-  Client client = http.Client();
-  Future<dynamic> delete(int id) async {
-    var url =
-        Uri.parse('https://ginraid.herokuapp.com/notification-api/${id}/');
-    var _headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Token ${await getToken()}',
-    };
-    var response = await client.delete(url, headers: _headers);
-    if (response.statusCode == 204) {
-      return response;
-    }
-    if (response.statusCode == 400) {
-      print('Authentication credentials were not provided.');
-    } else {
-      print('fail');
-    }
-  }
-}
-
-Container noti(
-    BuildContext context,
-    int noti_id,
-    int id,
-    int owner,
-    String ownerName,
-    String ownerPic,
-    bool isFollowing,
-    String foodname,
-    String foodpic,
-    String ingredient,
-    String recipes,
-    bool isFavorites,
-    int favoritesCount,
-    DateTime created) {
-  String time = DateFormat('kk:mm น. dd/MM/yyyy').format(created);
+Container noti(BuildContext context) {
   return Container(
     margin: EdgeInsets.only(top: 5),
     padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
@@ -69,29 +12,12 @@ Container noti(
 
     //ไปหน้า Home 2
     child: GestureDetector(
-      onTap: () async {
-        var response = await read().delete(noti_id);
-        if (response.statusCode == 204) {
-          await setNotiReset(true);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => homeScreen2(
-                    id: id,
-                    owner: owner,
-                    ownerName: ownerName,
-                    ownerPic: ownerPic,
-                    isFollowing: isFollowing,
-                    foodname: foodname,
-                    foodpic: foodpic,
-                    ingredient: ingredient,
-                    recipes: recipes,
-                    isFavorites: isFavorites,
-                    favoritesCount: favoritesCount,
-                    created: created)),
-          );
-        }
-      },
+      // onTap: () => {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const homeScreen2()),
+      //   ),
+      // },
       child: Card(
         color: Color.fromARGB(255, 248, 248, 248),
         shape: RoundedRectangleBorder(
@@ -126,7 +52,7 @@ Container noti(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          ownerName,
+                          'User 1',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 20.0,
@@ -135,7 +61,7 @@ Container noti(
                           ),
                         ),
                         Text(
-                          'ได้เพิ่มเมนูใหม่',
+                          'ได้เพิ่มเมนูอาหารใหม่',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 18.0,
@@ -144,7 +70,7 @@ Container noti(
                           ),
                         ),
                         Text(
-                          time,
+                          'เมื่อ 5 นาทีที่แล้ว',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 16.0,
@@ -163,7 +89,10 @@ Container noti(
                     height: 80,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(foodpic), fit: BoxFit.cover),
+                          image: AssetImage(
+                            'assets/image/krapow.png',
+                          ),
+                          fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(13),
                     ),
                   )
