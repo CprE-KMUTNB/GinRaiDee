@@ -10,6 +10,7 @@ import 'package:ginraid/Screens/Favorite/favfood.dart';
 import 'package:ginraid/Screens/Favorite/favoriteFoodScreen.dart';
 import 'package:ginraid/Screens/Favorite/favoritemodel.dart';
 import 'package:ginraid/Screens/Favorite/followingScreen.dart';
+import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -192,9 +193,18 @@ class _favScreenState extends State<favScreen> {
                   child: Row(
                     children: [
                       //profile pic
-                      Icon(
-                        Icons.account_circle,
-                        size: 60,
+                       Container(
+                        // margin: EdgeInsets.only(top: 35),
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 226, 226, 226),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.all(Radius.circular(360)),
+                        ),
                       ),
 
                       //ข้อมูลชื่อไฟล์
@@ -227,7 +237,14 @@ class _favScreenState extends State<favScreen> {
                                 backgroundColor:
                                     Color.fromARGB(255, 255, 255, 255),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfileScreen(),
+                                  ),
+                                );
+                              },
                               child: const Text(
                                 ' Edit Profile ',
                                 style: TextStyle(

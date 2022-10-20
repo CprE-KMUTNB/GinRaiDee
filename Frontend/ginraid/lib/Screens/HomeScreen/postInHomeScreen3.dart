@@ -19,7 +19,7 @@ Container Userpost(
     DateTime created) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
-    height: MediaQuery.of(context).size.height * 0.27,
+    height: MediaQuery.of(context).size.height * 0.29,
     width: MediaQuery.of(context).size.width,
     child: Card(
       // color: Colors.amber,
@@ -78,21 +78,35 @@ Container Userpost(
               ],
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          // SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              SizedBox(width: 15),
-              Icon(
-                Icons.thumb_up,
-                size: 20.0,
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.thumb_up),
+                    onPressed: () {},
+                  ),
+                  Text(
+                    '4',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: "NotoSansThai",
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: 250),
-              Icon(
-                Icons.report,
-                size: 20.0,
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                child: Icon(
+                  Icons.report,
+                  size: 20.0,
+                ),
               ),
             ],
           )

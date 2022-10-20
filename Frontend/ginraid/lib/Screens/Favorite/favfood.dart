@@ -145,7 +145,7 @@ class _favfoodState extends State<favfood> {
     return Container(
       // margin: EdgeInsets.only(top: 10),
       padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.355,
       width: MediaQuery.of(context).size.width,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -175,13 +175,21 @@ class _favfoodState extends State<favfood> {
                     children: [
                       //รูปโปร
                       Container(
-                        child: Icon(
-                          Icons.account_circle,
-                          size: 45.0,
+                        // margin: EdgeInsets.only(top: 35),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 226, 226, 226),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.all(Radius.circular(360)),
                         ),
                       ),
                       //ชื่อ
                       Container(
+                        margin: EdgeInsets.only(left: 10),
                         child: Text(
                           ownerName,
                           style: TextStyle(
@@ -314,21 +322,37 @@ class _favfoodState extends State<favfood> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                SizedBox(width: 15),
-                Icon(
-                  Icons.thumb_up,
-                  size: 20.0,
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.thumb_up),
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text(
+                      '4',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontFamily: "NotoSansThai",
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 250),
-                Icon(
-                  Icons.report,
-                  size: 20.0,
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: Icon(
+                    Icons.report,
+                    size: 20.0,
+                  ),
                 ),
               ],
             )

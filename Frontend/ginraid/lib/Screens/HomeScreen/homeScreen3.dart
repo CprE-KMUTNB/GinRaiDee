@@ -136,18 +136,27 @@ class _homeScreen3State extends State<homeScreen3> {
                     Row(
                       children: [
                         Container(
-                          child: Icon(
-                            Icons.account_circle,
-                            size: 45,
+                          // margin: EdgeInsets.only(top: 35),
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 226, 226, 226),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'),
+                                fit: BoxFit.cover),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(360)),
                           ),
                         ),
 
                         //name user
                         Container(
+                          margin: EdgeInsets.only(left: 5),
                           child: Text(
                             ownerName,
                             style: TextStyle(
-                              fontSize: 25.0,
+                              fontSize: 20.0,
                               fontFamily: "Itim",
                               color: Colors.white,
                             ),
@@ -158,9 +167,10 @@ class _homeScreen3State extends State<homeScreen3> {
 
                     //follow buttom
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(right: 10),
+                          // margin: EdgeInsets.only(right: 5),
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () async {

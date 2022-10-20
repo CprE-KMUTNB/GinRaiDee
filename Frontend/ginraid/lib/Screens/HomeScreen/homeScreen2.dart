@@ -113,10 +113,11 @@ class _homeScreen2State extends State<homeScreen2> {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       // color: Colors.amberAccent,
-                      alignment: Alignment.topLeft,
+                      // alignment: Alignment.topLeft,
                       margin: EdgeInsets.only(top: 80, left: 20),
                       child: Text(
                         foodname,
@@ -131,9 +132,10 @@ class _homeScreen2State extends State<homeScreen2> {
                     //ไปหน้า user
                     Container(
                       // color: Colors.grey,
-                      alignment: Alignment.topLeft,
-                      margin:
-                          EdgeInsets.only(top: 95, left: screenWidth * 0.25),
+                      // alignment: Alignment.topLeft,
+                      margin: EdgeInsets.only(
+                        top: 80,
+                      ),
                       child: GestureDetector(
                         onTap: () => {
                           Navigator.push(
@@ -150,14 +152,28 @@ class _homeScreen2State extends State<homeScreen2> {
                         child: Row(
                           children: [
                             Container(
-                              child: Icon(Icons.account_circle),
+                              // margin: EdgeInsets.only(top: 35),
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 226, 226, 226),
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'),
+                                    fit: BoxFit.cover),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(360)),
+                              ),
                             ),
-                            Text(
-                              ownerName,
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Itim",
-                                color: Colors.white,
+                            Container(
+                              margin: EdgeInsets.only(left: 10, right: 10),
+                              child: Text(
+                                ownerName,
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontFamily: "Itim",
+                                  color: Colors.white,
+                                ),
                               ),
                             )
                           ],

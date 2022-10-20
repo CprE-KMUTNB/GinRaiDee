@@ -36,7 +36,7 @@ class NotAuthen extends StatelessWidget {
     if (token == '') {
       return loginScreen();
     } else {
-      return favScreen();
+      return NotiScreen();
     }
   }
 

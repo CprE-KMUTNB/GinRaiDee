@@ -123,19 +123,26 @@ class _followState extends State<follow> {
                 children: [
                   //profile pic
                   Container(
-                    margin: EdgeInsets.only(left: 10, right: 5),
-                    child: Icon(
-                      Icons.account_circle,
-                      size: 50,
+                    // margin: EdgeInsets.only(top: 35),
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 226, 226, 226),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'),
+                          fit: BoxFit.cover),
+                      borderRadius: BorderRadius.all(Radius.circular(360)),
                     ),
                   ),
 
                   //user name
                   Container(
+                    margin: EdgeInsets.only(left: 10),
                     child: Text(
                       ownerName,
                       style: TextStyle(
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         fontFamily: "Itim",
                         color: Color.fromARGB(255, 0, 0, 0),
                       ),
