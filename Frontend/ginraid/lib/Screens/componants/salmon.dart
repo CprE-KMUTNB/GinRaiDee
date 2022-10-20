@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/%E0%B9%8C%E0%B9%8CNotification/NotiScreen.dart';
+import 'package:ginraid/Screens/Notification/NotiScreen.dart';
 import 'package:ginraid/Screens/Cooking/myfoodScreen.dart';
 import 'package:ginraid/Screens/Favorite/favoriteScreen.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';

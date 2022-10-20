@@ -12,6 +12,7 @@ import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
 import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
 import 'package:ginraid/Screens/HomeScreen/menu_data.dart';
 import 'package:ginraid/Screens/HomeScreen/post.dart';
+import 'package:ginraid/Screens/Notification/NotiScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/SettingScreen.dart';
 import 'package:ginraid/Screens/componants/salmon.dart';
 import 'package:http/http.dart';
@@ -20,7 +21,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../Cooking/myfoodScreen.dart';
 import '../HomeScreen/homeScreen.dart';
-import '../์์Notification/NotiScreen.dart';
+
 
 class homeinScreen extends StatefulWidget {
   static const routeName = '/';
