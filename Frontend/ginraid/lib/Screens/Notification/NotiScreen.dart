@@ -112,11 +112,11 @@ class _NotiScreenState extends State<NotiScreen> {
     fetchdata();
   }
 
-  // @override
-  // void dispose() {
-  //   timer?.cancel();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   Future<bool> setReset(bool state) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
