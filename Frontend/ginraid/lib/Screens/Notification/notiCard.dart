@@ -13,14 +13,14 @@ Future<String> getToken() async {
   return token;
 }
 
-Future<bool> setNotiReset(bool state) async {
+Future<bool> setReset(bool state) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.setBool('notireset', state);
+  return prefs.setBool('reset', state);
 }
 
-Future<bool> checkNotiReset() async {
+Future<bool> checkReset() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool reset = await prefs.getBool('notireset') ?? false;
+  final bool reset = await prefs.getBool('reset') ?? false;
   return reset;
 }
 
@@ -72,7 +72,7 @@ Container noti(
       onTap: () async {
         var response = await read().delete(noti_id);
         if (response.statusCode == 204) {
-          await setNotiReset(true);
+          await setReset(true);
           Navigator.push(
             context,
             MaterialPageRoute(

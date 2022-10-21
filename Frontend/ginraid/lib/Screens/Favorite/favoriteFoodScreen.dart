@@ -89,11 +89,11 @@ class _favFoodScreenState extends State<favFoodScreen> {
     fetchdata();
   }
 
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   timer?.cancel();
+  //   super.dispose();
+  // }
 
   isreset() async {
     if (await checkReset() == true) {

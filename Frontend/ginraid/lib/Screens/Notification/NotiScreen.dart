@@ -130,12 +130,12 @@ class _NotiScreenState extends State<NotiScreen> {
   }
 
   isreset() async {
-    if (await checkNotiReset() == true) {
+    if (await checkReset() == true) {
       fetchdata();
       setState(() {
         item = [];
       });
-      await setNotiReset(false);
+      await setReset(false);
     }
   }
 

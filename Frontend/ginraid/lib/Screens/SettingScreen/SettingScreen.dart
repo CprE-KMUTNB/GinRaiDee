@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/Screens/Notification/bgNoti.dart';
 import 'package:ginraid/Screens/Notification/notiCard.dart';
 import 'package:ginraid/Screens/Favorite/bgFav3.dart';
@@ -8,6 +9,13 @@ import 'package:ginraid/Screens/Favorite/favfood.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
 import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<dynamic> logout() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final success = await prefs.remove('token');
+  return success;
+}
 
 class SettingScreen extends StatefulWidget {
   static const routeName = '/';
@@ -251,7 +259,14 @@ class _SettingScreenState extends State<SettingScreen> {
 
                 //ออกจากระบบ
                 GestureDetector(
-                  onTap: () => {},
+                  onTap: () async {
+                    await logout();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const loginScreen()),
+                    );
+                  },
                   child: Container(
                     width: screenWidth * 0.9,
                     height: 100,

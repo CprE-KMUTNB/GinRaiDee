@@ -112,9 +112,8 @@ class _loginScreenState extends State<loginScreen> {
 
           //กล่องใหญ่
           Container(
-            height: screenHeight*0.6,
-            margin:
-                const EdgeInsets.only(left: 20,right: 20,top: 240),
+            height: screenHeight * 0.6,
+            margin: const EdgeInsets.only(left: 20, right: 20, top: 240),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
@@ -231,7 +230,7 @@ class _loginScreenState extends State<loginScreen> {
                       style: TextButton.styleFrom(),
                       onPressed: () {},
                       child: const Text(
-                        'Forgot Password',
+                        ' ',
                         style: TextStyle(
                           fontSize: 15.0,
                           fontFamily: "Itim",
