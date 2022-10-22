@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatefulWidget {
-  final  maxLines;
+  final maxLines;
   final String label;
   final String text;
   final ValueChanged<String> onChanged;
@@ -40,9 +40,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [          
+        children: [
           TextField(
             controller: controller,
+            onChanged: widget.onChanged,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),

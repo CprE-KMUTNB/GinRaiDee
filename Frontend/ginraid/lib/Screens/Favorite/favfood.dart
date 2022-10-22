@@ -338,7 +338,7 @@ class _favfoodState extends State<favfood> {
                       },
                     ),
                     Text(
-                      '4',
+                      '$favoritesCount',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontFamily: "NotoSansThai",

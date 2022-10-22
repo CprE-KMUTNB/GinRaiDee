@@ -10,28 +10,35 @@ Future<String> getToken() async {
   return token;
 }
 
-class Cooking {
+Future<dynamic> setUsername(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString('username', value);
+}
+
+Future<String> getUsername() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String username = await prefs.getString('username').toString();
+  return username;
+}
+
+Future<int> getID() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final int userID = await prefs.getInt('user_id')!;
+  return userID;
+}
+
+Future<dynamic> delete() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('user_id');
+  await prefs.remove('username');
+  await prefs.remove('token');
+}
+
+class Userdata {
   Client client = http.Client();
   Future<dynamic> get() async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/menu-api/self/');
-    var _headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Token ${await getToken()}',
-    };
-    var response = await client.get(url, headers: _headers);
-    if (response.statusCode == 200) {
-      return response;
-    }
-    if (response.statusCode == 401) {
-      print('Authentication credentials were not provided.');
-    } else {
-      print('fail');
-    }
-  }
-
-  Future<dynamic> search(String data) async {
     var url = Uri.parse(
-        'https://ginraid.herokuapp.com/menu-api/self/?search=${data}');
+        'https://ginraid.herokuapp.com/user-api/all-data/${await getID()}/');
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',
@@ -47,56 +54,14 @@ class Cooking {
     }
   }
 
-  Future<dynamic> post(String foodname, String ingredient, String recipe,
-      bool isPublic, dynamic picture) async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/menu-api/self/');
+  Future<dynamic> changeusername(String username) async {
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/user-api/username/${await getID()}/');
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',
     };
-    var request = http.MultipartRequest("POST", url);
-    request.headers.addAll(_headers);
-    request.fields["Foodname"] = foodname;
-    request.fields["ingredient"] = ingredient;
-    request.fields["recipes"] = recipe;
-    request.fields["is_public"] = isPublic.toString();
-    request.files.add(await http.MultipartFile.fromPath("Foodpic", picture));
-    var response = await request.send();
-    if (response.statusCode == 201) {
-      return response;
-    }
-    if (response.statusCode == 401) {
-      print('Authentication credentials were not provided.');
-      return response;
-    } else {
-      print('fail');
-      return response;
-    }
-  }
-
-  Future<dynamic> getbeforepost(int id) async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/menu-api/self/$id/');
-    var _headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Token ${await getToken()}',
-    };
-    var response = await client.get(url, headers: _headers);
-    if (response.statusCode == 200) {
-      return response;
-    }
-    if (response.statusCode == 401) {
-      print('Authentication credentials were not provided.');
-    } else {
-      print('fail');
-    }
-  }
-
-  Future<dynamic> put(int id, dynamic data) async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/menu-api/self/$id/');
-    var _headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Token ${await getToken()}',
-    };
+    var data = {"username": username};
     var _body = json.encode(data);
     var response = await client.put(url, headers: _headers, body: _body);
     if (response.statusCode == 200) {
@@ -110,14 +75,15 @@ class Cooking {
     }
   }
 
-  Future<dynamic> putimage(int id, dynamic data) async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/menu-api/pic/$id/');
+  Future<dynamic> putimage(dynamic picture) async {
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/user-api/picture/${await getID()}/');
     var _headers = {
       'Authorization': 'Token ${await getToken()}',
     };
     var request = http.MultipartRequest('PUT', url);
     request.headers.addAll(_headers);
-    request.files.add(await http.MultipartFile.fromPath("Foodpic", data));
+    request.files.add(await http.MultipartFile.fromPath("userpic", picture));
     var response = await request.send();
     if (response.statusCode == 200) {
       return response;
@@ -130,13 +96,59 @@ class Cooking {
     }
   }
 
-  Future<dynamic> delete(int id) async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/menu-api/self/$id/');
+  Future<dynamic> deleteimage() async {
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/user-api/picture/${await getID()}/');
+    var _headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ${await getToken()}',
+    };
+    var data = {"userpic": null};
+    var _body = json.encode(data);
+    var response = await client.put(url, headers: _headers, body: _body);
+    if (response.statusCode == 200) {
+      return response;
+    }
+    if (response.statusCode == 401) {
+      print('Authentication credentials were not provided.');
+    } else {
+      print('fail');
+      return response;
+    }
+  }
+
+  Future<dynamic> changepassword(dynamic data) async {
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/user-api/password/${await getID()}/');
+    var _headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ${await getToken()}',
+    };
+    var _body = json.encode(data);
+    var response = await client.put(url, headers: _headers, body: _body);
+    if (response.statusCode == 200) {
+      return response;
+    }
+    if (response.statusCode == 401) {
+      print('Authentication credentials were not provided.');
+    }
+    if (response.statusCode == 400) {
+      print('password error');
+      return response;
+    } else {
+      print('fail');
+    }
+  }
+
+  Future<dynamic> deleteaccount() async {
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/user-api/all-data/${await getID()}/');
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',
     };
     var response = await client.delete(url, headers: _headers);
+    await delete();
     if (response.statusCode == 204) {
       return response;
     }
@@ -144,6 +156,7 @@ class Cooking {
       print('Authentication credentials were not provided.');
     } else {
       print('fail');
+      return response;
     }
   }
 }

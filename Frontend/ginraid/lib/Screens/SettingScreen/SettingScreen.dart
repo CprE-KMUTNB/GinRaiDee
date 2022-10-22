@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:ginraid/Screens/Notification/bgNoti.dart';
@@ -9,12 +12,32 @@ import 'package:ginraid/Screens/Favorite/favfood.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
 import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
+import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<dynamic> logout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final success = await prefs.remove('token');
+  await prefs.remove('user_id');
+  await prefs.remove('username');
+  var success = await prefs.remove('token');
   return success;
+}
+
+Future<dynamic> setUsername(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString('username', value);
+}
+
+Future<String> getUsername() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String username = await prefs.getString('username').toString();
+  return username;
+}
+
+Future<int> getID() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final int userID = await prefs.getInt('user_id')!;
+  return userID;
 }
 
 class SettingScreen extends StatefulWidget {
@@ -30,6 +53,59 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   late double screenWidth, screenHeight;
+  Timer? timer;
+  String username = "";
+  int follower = 0;
+  int food = 0;
+  String? userpic;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(milliseconds: 1), (Timer t) => isreset());
+    fetchdata();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  fetchdata() async {
+    var response = await Userdata().get();
+
+    if (response.statusCode == 200) {
+      var data = json.decode(utf8.decode(response.bodyBytes));
+      setState(() {
+        username = data["username"];
+        follower = data["follower_count"];
+        food = data["menu"].length;
+        userpic = data["userpic"] == null
+            ? 'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'
+            : data["userpic"];
+      });
+    }
+  }
+
+  Future<bool> setReset(bool state) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('reset', state);
+  }
+
+  Future<bool> checkReset() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool reset = await prefs.getBool('reset') ?? false;
+    return reset;
+  }
+
+  isreset() async {
+    if (await checkReset() == true) {
+      fetchdata();
+      await setReset(false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
@@ -78,7 +154,8 @@ class _SettingScreenState extends State<SettingScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const EditProfileScreen()),
+                          builder: (context) => EditProfileScreen(
+                              username: username, userPic: userpic!)),
                     ),
                   },
                   child: Container(
@@ -110,7 +187,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 Container(
                                   margin: EdgeInsets.only(left: 20),
                                   child: Text(
-                                    'User 1',
+                                    username,
                                     style: TextStyle(
                                       fontSize: 18.0,
                                       fontFamily: "NotoSansThai",
@@ -152,7 +229,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 //รับค่าจำนวนผู้ติดตาม
                                 Container(
                                   child: Text(
-                                    '4',
+                                    '$follower',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontFamily: "NotoSansThai",
@@ -189,7 +266,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 //รับค่าจำนวนเมนูอาหาร
                                 Container(
                                   child: Text(
-                                    '1',
+                                    '$food',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontFamily: "NotoSansThai",
@@ -261,11 +338,10 @@ class _SettingScreenState extends State<SettingScreen> {
                 GestureDetector(
                   onTap: () async {
                     await logout();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const loginScreen()),
-                    );
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => loginScreen()),
+                        (Route<dynamic> route) => false);
                   },
                   child: Container(
                     width: screenWidth * 0.9,
@@ -379,8 +455,15 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: Colors.red),
-              onPressed: () {
-                // Write code to delete item
+              onPressed: () async {
+                var response = await Userdata().deleteaccount();
+                if (response.statusCode == 204) {
+                  print('delete is success');
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => loginScreen()),
+                      (Route<dynamic> route) => false);
+                }
               },
               child: const Text(
                 'ลบบัญชี',

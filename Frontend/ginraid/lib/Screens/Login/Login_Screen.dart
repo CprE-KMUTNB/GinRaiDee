@@ -282,34 +282,37 @@ class _loginScreenState extends State<loginScreen> {
                                   builder: (context) => const homeinScreen()),
                             );
                           } else {
-                            email_error =
-                                Loginmodel.fromJson(json.decode(response.body))
-                                            .email!
-                                            .isNotEmpty ==
-                                        true
-                                    ? Loginmodel.fromJson(
-                                            json.decode(response.body))
-                                        .email![0]
-                                    : "";
-                            password_error =
-                                Loginmodel.fromJson(json.decode(response.body))
-                                            .password!
-                                            .isNotEmpty ==
-                                        true
-                                    ? Loginmodel.fromJson(
-                                            json.decode(response.body))
-                                        .password![0]
-                                    : "";
+                            setState(() {
+                              email_error = Loginmodel.fromJson(
+                                              json.decode(response.body))
+                                          .email!
+                                          .isNotEmpty ==
+                                      true
+                                  ? Loginmodel.fromJson(
+                                          json.decode(response.body))
+                                      .email![0]
+                                  : "";
+                              password_error = Loginmodel.fromJson(
+                                              json.decode(response.body))
+                                          .password!
+                                          .isNotEmpty ==
+                                      true
+                                  ? Loginmodel.fromJson(
+                                          json.decode(response.body))
+                                      .password![0]
+                                  : "";
 
-                            error =
-                                Loginmodel.fromJson(json.decode(response.body))
-                                            .error!
-                                            .isNotEmpty ==
-                                        true
-                                    ? Loginmodel.fromJson(
-                                            json.decode(response.body))
-                                        .error![0]
-                                    : "";
+                              error = Loginmodel.fromJson(
+                                              json.decode(response.body))
+                                          .error!
+                                          .isNotEmpty ==
+                                      true
+                                  ? Loginmodel.fromJson(
+                                          json.decode(response.body))
+                                      .error![0]
+                                  : "";
+                            });
+
                             print(email_error);
                             print(password_error);
                             print(error);

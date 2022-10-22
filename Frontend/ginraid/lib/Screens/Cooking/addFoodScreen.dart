@@ -5,7 +5,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/bgCook2.dart';
+import 'package:ginraid/Screens/Cooking/foodrequest.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class addFoodScreen extends StatefulWidget {
   static const routeName = '/';
@@ -25,7 +27,19 @@ class _addFoodScreenState extends State<addFoodScreen> {
   String? _retrieveDataError;
 
   String? selectedValue = null;
+
+  String error = '';
   final _dropdownFormKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final ingredientController = TextEditingController();
+  final recipeController = TextEditingController();
+
+  bool isPublic = true;
+
+  Future<bool> setReset(bool state) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('reset', state);
+  }
 
   // String selectedValue = "สาธารณะ";
 
@@ -60,6 +74,7 @@ class _addFoodScreenState extends State<addFoodScreen> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
+    String privacy = isPublic ? "สาธารณะ" : "ส่วนตัว";
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -120,6 +135,7 @@ class _addFoodScreenState extends State<addFoodScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: TextField(
+                      controller: nameController,
                       // maxLines: null,
                       textAlignVertical: TextAlignVertical.bottom,
                       // controller: emailController,
@@ -188,17 +204,18 @@ class _addFoodScreenState extends State<addFoodScreen> {
 
                   if (imageFile == null)
                     Container(
-                      // height: 180,
-                      // width: screenWidth,
-                      // decoration: BoxDecoration(
-                      //   color: Color.fromARGB(255, 255, 255, 255),
-                      // ),
-                    ),
+                        // height: 180,
+                        // width: screenWidth,
+                        // decoration: BoxDecoration(
+                        //   color: Color.fromARGB(255, 255, 255, 255),
+                        // ),
+                        ),
 
                   //วัตถุดิบ
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: TextField(
+                      controller: ingredientController,
                       maxLines: null,
                       textAlignVertical: TextAlignVertical.bottom,
                       // controller: emailController,
@@ -233,6 +250,7 @@ class _addFoodScreenState extends State<addFoodScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: TextField(
+                      controller: recipeController,
                       maxLines: null,
                       textAlignVertical: TextAlignVertical.bottom,
                       // controller: emailController,
@@ -300,11 +318,11 @@ class _addFoodScreenState extends State<addFoodScreen> {
                               validator: (value) =>
                                   value == null ? "ความเป็นส่วนตัว" : null,
                               dropdownColor: Color.fromARGB(255, 255, 255, 255),
-                              value: selectedValue,
+                              value: privacy,
                               onChanged: (String? newValue) {
                                 setState(
                                   () {
-                                    selectedValue = newValue!;
+                                    isPublic = !isPublic;
                                   },
                                 );
                               },
@@ -325,7 +343,37 @@ class _addFoodScreenState extends State<addFoodScreen> {
                         ),
                         backgroundColor: Color.fromARGB(255, 246, 170, 72),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        if (imageFile != null) {
+                          // var menu = {
+                          //   "Foodname": nameController.text,
+                          //   "ingredient": ingredientController.text,
+                          //   "recipes": recipeController.text,
+                          //   "is_public": isPublic,
+                          // };
+                          var response = await Cooking().post(
+                              nameController.text,
+                              ingredientController.text,
+                              recipeController.text,
+                              isPublic,
+                              imageFile!.path);
+                          if (response.statusCode == 201) {
+                            print('success create menu');
+                            await setReset(true);
+                            int count = 0;
+                            Navigator.of(context).popUntil((_) => count++ >= 1);
+                          } else {
+                            setState(() {
+                              error = 'Field could not be blank';
+                            });
+                          }
+                        } else {
+                          setState(() {
+                            error = 'Field could not be blank';
+                          });
+                        }
+                        print(error);
+                      },
                       child: const Text(
                         'ยืนยัน',
                         style: TextStyle(

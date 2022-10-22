@@ -8,9 +8,13 @@ import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/bgCook3.dart';
 import 'package:ginraid/Screens/Cooking/food.dart';
+import 'package:ginraid/Screens/Cooking/foodrequest.dart';
 import 'package:ginraid/Screens/Cooking/myFood.dart';
+import 'package:ginraid/Screens/Cooking/myfoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/textFieldwid.dart';
+import 'package:ginraid/Screens/componants/homeinhome.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Favorite/user.dart';
 
@@ -62,8 +66,18 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
   String? _retrieveDataError;
   Food food = FoodEdit.myFood;
   File? imageFile;
+  bool isedit = false;
 
+  Future<bool> setReset(bool state) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('reset', state);
+  }
+
+  // String? newfoodname = '';
+  // String? newingredient = '';
+  // String? newrecipe = '';
   String? selectedValue = '';
+  String error = '';
 
   final _dropdownFormKey = GlobalKey<FormState>();
 
@@ -163,7 +177,11 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                     maxLines: 1,
                     label: 'ชื่อเมนู',
                     text: foodname,
-                    onChanged: (name) {},
+                    onChanged: (text) {
+                      setState(() {
+                        foodname = text;
+                      });
+                    },
                   ),
 
                   //iconเลือกรูปจากกล้อง แกล
@@ -173,19 +191,25 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                       children: [
                         Container(
                           child: IconButton(
-                            iconSize: 35,
-                            icon: Icon(Icons.image_outlined),
-                            onPressed: () =>
-                                getImage(source: ImageSource.gallery),
-                          ),
+                              iconSize: 35,
+                              icon: Icon(Icons.image_outlined),
+                              onPressed: () {
+                                setState(() {
+                                  isedit = true;
+                                });
+                                getImage(source: ImageSource.gallery);
+                              }),
                         ),
                         Container(
                           child: IconButton(
-                            iconSize: 35,
-                            icon: Icon(Icons.camera_alt_rounded),
-                            onPressed: () =>
-                                getImage(source: ImageSource.camera),
-                          ),
+                              iconSize: 35,
+                              icon: Icon(Icons.camera_alt_rounded),
+                              onPressed: () {
+                                setState(() {
+                                  isedit = true;
+                                });
+                                getImage(source: ImageSource.camera);
+                              }),
                         )
                       ],
                     ),
@@ -194,7 +218,8 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                   //รูป ติดตรงถ้าเลือกจากโทรศัพท์ให้เปลี่ยนค่าไม่ได้ คิดว่าน่าจะต้องเชื่อ backend เป็นลิ้งก่อน
                   ProfileWidget(
                     imagePath: foodpic,
-                    isEdit: true,
+                    imageFile: imageFile,
+                    isEdit: isedit,
                     onClicked: () async {},
                   ),
 
@@ -205,7 +230,11 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                     maxLines: null,
                     label: 'วัตถุดิบ',
                     text: ingredient,
-                    onChanged: (Ingred) {},
+                    onChanged: (text) {
+                      setState(() {
+                        ingredient = text;
+                      });
+                    },
                   ),
 
                   SizedBox(height: 20),
@@ -215,7 +244,11 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                     maxLines: null,
                     label: 'วิธีทำ',
                     text: recipes,
-                    onChanged: (cookMethod) {},
+                    onChanged: (text) {
+                      setState(() {
+                        recipes = text;
+                      });
+                    },
                   ),
 
                   //เลือกความเป็นส่วนตัว
@@ -259,7 +292,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                               onChanged: (String? newValue) {
                                 setState(
                                   () {
-                                    selectedValue = newValue!;
+                                    isPublic = !isPublic;
                                   },
                                 );
                               },
@@ -280,7 +313,45 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                         ),
                         backgroundColor: Color.fromARGB(255, 246, 170, 72),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        var menu = {
+                          "Foodname": foodname,
+                          "ingredient": ingredient,
+                          "recipes": recipes,
+                          "is_public": isPublic,
+                        };
+
+                        if (isedit && imageFile != null) {
+                          var response =
+                              await Cooking().putimage(id, imageFile!.path);
+                          if (response.statusCode == 200) {
+                            print('successupdateimage');
+                          } else {
+                            setState(() {
+                              error = 'Image could not be blank';
+                            });
+                          }
+                        }
+
+                        var response = await Cooking().put(id, menu);
+                        if (response.statusCode == 200) {
+                          print('success update menu');
+                          await setReset(true);
+                          int count = 0;
+                          Navigator.of(context).popUntil((_) => count++ >= 2);
+                        } else {
+                          setState(() {
+                            error = 'Field could not be blank';
+                          });
+                        }
+                        print(error);
+                        // print(foodname);
+                        // print(ingredient);
+                        // print(recipes);
+                        // print(isPublic);
+                        // print(isedit);
+                        // print(imageFile);
+                      },
                       child: const Text(
                         'บันทึก',
                         style: TextStyle(
@@ -366,8 +437,14 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.red),
-                onPressed: () {
-                  // Write code to delete item
+                onPressed: () async {
+                  var response = await Cooking().delete(id);
+                  if (response.statusCode == 204) {
+                    print('success delete menu');
+                    await setReset(true);
+                    int count = 0;
+                    Navigator.of(context).popUntil((_) => count++ >= 3);
+                  }
                 },
                 child: const Text(
                   'ลบ',

@@ -11,6 +11,7 @@ import 'package:ginraid/Screens/Favorite/favoriteFoodScreen.dart';
 import 'package:ginraid/Screens/Favorite/favoritemodel.dart';
 import 'package:ginraid/Screens/Favorite/followingScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
+import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -83,8 +84,20 @@ class _favScreenState extends State<favScreen> {
   late double screenWidth, screenHeight;
   List item = [];
   List followitem = [];
-  String username = "loading";
+  String username = "";
+  String? userpic;
   Timer? timer;
+
+  fetchuserpic() async {
+    var response = await Userdata().get();
+    if (response.statusCode == 200) {
+      var data = json.decode(utf8.decode(response.bodyBytes));
+      setState(() {
+        userpic = data["userpic"] ??
+            'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png';
+      });
+    }
+  }
 
   fetchdata() async {
     var response = await Favoritelist().get();
@@ -125,6 +138,7 @@ class _favScreenState extends State<favScreen> {
     super.initState();
     timer = Timer.periodic(Duration(milliseconds: 1), (Timer t) => isreset());
     fetchdata();
+    fetchuserpic();
     fetchfollow();
   }
 
@@ -241,7 +255,8 @@ class _favScreenState extends State<favScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => EditProfileScreen(),
+                                    builder: (context) => EditProfileScreen(
+                                        username: username, userPic: userpic!),
                                   ),
                                 );
                               },

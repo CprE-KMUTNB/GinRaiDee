@@ -163,7 +163,8 @@ class _favFoodScreenState extends State<favFoodScreen> {
                   height: 40,
                   child: TextField(
                     controller: searchController,
-                    onChanged: (text) {
+                    onChanged: (text) {},
+                    onSubmitted: (text) {
                       fetchdata();
                       setState(() {
                         item = [];

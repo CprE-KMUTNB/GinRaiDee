@@ -33,7 +33,7 @@ class NotAuthen extends StatefulWidget {
   static final title = 'salomon_bottom_bar';
   _NotAuthenState createState() => _NotAuthenState();
   // This widget is the root of your application.
-  
+
 }
 
 class _NotAuthenState extends State<NotAuthen> {
@@ -47,6 +47,7 @@ class _NotAuthenState extends State<NotAuthen> {
       return homeinScreen();
     }
   }
+
   var _currentIndex = 0;
 
   @override
@@ -58,7 +59,7 @@ class _NotAuthenState extends State<NotAuthen> {
         // primaryColor: authenPriColor,
         scaffoldBackgroundColor: Color(0xFFF1F7E7),
       ),
-      home: FutureBuilder(        
+      home: FutureBuilder(
         future: getWidget(),
         builder: (BuildContext context, AsyncSnapshot<Widget> widget) {
           if (widget.hasData) {
@@ -73,7 +74,6 @@ class _NotAuthenState extends State<NotAuthen> {
           }
         },
       ),
-      
     );
   }
 }

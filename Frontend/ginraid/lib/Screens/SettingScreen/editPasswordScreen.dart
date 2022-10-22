@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:ginraid/Screens/Cooking/myFood.dart';
 import 'package:ginraid/Screens/Cooking/textFieldwid.dart';
 import 'package:ginraid/Screens/SettingScreen/ProfilePicWid.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
+import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
 import 'package:ginraid/Screens/SettingScreen/user.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -33,6 +35,13 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   String? _retrieveDataError;
   User user = UserPreferences.myUser;
   File? imageFile;
+  final oldpasswordController = TextEditingController();
+  final newpasswordController = TextEditingController();
+  final newpasswordconfirmController = TextEditingController();
+
+  String oldpasswordError = '';
+  String newpasswordError = '';
+  String newpasswordconfirmError = '';
 
   late double screenWidth, screenHeight;
 
@@ -96,7 +105,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: TextField(
-                      // controller: confirmpasswordController,
+                      controller: oldpasswordController,
                       obscureText: _isObscure,
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration: InputDecoration(
@@ -142,7 +151,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: TextField(
-                      // controller: confirmpasswordController,
+                      controller: newpasswordController,
                       obscureText: _isObscure2,
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration: InputDecoration(
@@ -188,7 +197,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: TextField(
-                      // controller: confirmpasswordController,
+                      controller: newpasswordconfirmController,
                       obscureText: _isObscure3,
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration: InputDecoration(
@@ -241,7 +250,38 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                         ),
                         backgroundColor: Color.fromARGB(255, 136, 68, 106),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        var body = {
+                          "old_password": oldpasswordController.text,
+                          "password": newpasswordController.text,
+                          "confirm_password": newpasswordconfirmController.text
+                        };
+                        var response = await Userdata().changepassword(body);
+                        if (response.statusCode == 200) {
+                          print('success change password');
+                          int count = 0;
+                          Navigator.of(context).popUntil((_) => count++ >= 1);
+                        } else {
+                          var error =
+                              json.decode(utf8.decode(response.bodyBytes));
+                          setState(() {
+                            oldpasswordError = error["old_password"] == null
+                                ? ''
+                                : error["old_password"][0];
+                            newpasswordError = error["password"] == null
+                                ? ''
+                                : error["password"][0];
+                            newpasswordconfirmError =
+                                error["confirm_password"] == null
+                                    ? ''
+                                    : error["confirm_password"][0];
+                          });
+                          print('oldpassword = ${oldpasswordError}');
+                          print('newpassword = ${newpasswordError}');
+                          print(
+                              'confirmnewpassword = ${newpasswordconfirmError}');
+                        }
+                      },
                       child: const Text(
                         'บันทึก',
                         style: TextStyle(

@@ -291,42 +291,45 @@ class _signupScreenState extends State<signupScreen> {
                                 builder: (context) => const loginScreen()),
                           );
                         } else {
-                          email_error =
-                              Registermodel.fromJson(json.decode(response.body))
-                                          .email!
-                                          .isNotEmpty ==
-                                      true
-                                  ? Registermodel.fromJson(
-                                          json.decode(response.body))
-                                      .email![0]
-                                  : "";
-                          username_error =
-                              Registermodel.fromJson(json.decode(response.body))
-                                          .username!
-                                          .isNotEmpty ==
-                                      true
-                                  ? Registermodel.fromJson(
-                                          json.decode(response.body))
-                                      .username![0]
-                                  : "";
-                          password_error =
-                              Registermodel.fromJson(json.decode(response.body))
-                                          .password!
-                                          .isNotEmpty ==
-                                      true
-                                  ? Registermodel.fromJson(
-                                          json.decode(response.body))
-                                      .password![0]
-                                  : "";
-                          confirmPassword_error =
-                              Registermodel.fromJson(json.decode(response.body))
-                                          .confirmPassword!
-                                          .isNotEmpty ==
-                                      true
-                                  ? Registermodel.fromJson(
-                                          json.decode(response.body))
-                                      .confirmPassword![0]
-                                  : "";
+                          setState(() {
+                            email_error = Registermodel.fromJson(
+                                            json.decode(response.body))
+                                        .email!
+                                        .isNotEmpty ==
+                                    true
+                                ? Registermodel.fromJson(
+                                        json.decode(response.body))
+                                    .email![0]
+                                : "";
+                            username_error = Registermodel.fromJson(
+                                            json.decode(response.body))
+                                        .username!
+                                        .isNotEmpty ==
+                                    true
+                                ? Registermodel.fromJson(
+                                        json.decode(response.body))
+                                    .username![0]
+                                : "";
+                            password_error = Registermodel.fromJson(
+                                            json.decode(response.body))
+                                        .password!
+                                        .isNotEmpty ==
+                                    true
+                                ? Registermodel.fromJson(
+                                        json.decode(response.body))
+                                    .password![0]
+                                : "";
+                            confirmPassword_error = Registermodel.fromJson(
+                                            json.decode(response.body))
+                                        .confirmPassword!
+                                        .isNotEmpty ==
+                                    true
+                                ? Registermodel.fromJson(
+                                        json.decode(response.body))
+                                    .confirmPassword![0]
+                                : "";
+                          });
+
                           print(email_error);
                           print(username_error);
                           print(password_error);

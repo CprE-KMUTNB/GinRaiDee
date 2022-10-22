@@ -6,11 +6,13 @@ class ProfileWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
+  final File? imageFile;
 
   ProfileWidget({
     Key? key,
     required this.imagePath,
-    this.isEdit = false,
+    required this.imageFile,
+    required this.isEdit,
     required this.onClicked,
   }) : super(key: key);
 
@@ -35,7 +37,21 @@ class ProfileWidget extends StatelessWidget {
 
   late double screenWidth, screenHeight;
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
+    final imageold = NetworkImage(imagePath);
+
+    if (imageFile != null && isEdit == true) {
+      final imagenew = FileImage(imageFile!);
+      return Container(
+          height: 180,
+          width: screenWidth,
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 255, 255, 255),
+            image: DecorationImage(
+              image: imagenew,
+            ),
+          ),
+          child: GestureDetector(onTap: onClicked));
+    }
 
     return Container(
         height: 180,
@@ -43,7 +59,7 @@ class ProfileWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 255, 255, 255),
           image: DecorationImage(
-            image: image,
+            image: imageold,
           ),
         ),
         child: GestureDetector(onTap: onClicked));

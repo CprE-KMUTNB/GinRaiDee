@@ -112,7 +112,8 @@ class _homeScreenState extends State<homeScreen> {
             height: 40,
             child: TextField(
               controller: searchController,
-              onChanged: (text) {
+              onChanged: (text) {},
+              onSubmitted: (text) {
                 fetchdata();
                 setState(() {
                   item = [];

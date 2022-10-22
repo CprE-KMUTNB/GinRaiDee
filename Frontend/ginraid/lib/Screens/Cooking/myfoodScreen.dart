@@ -53,25 +53,31 @@ class _myFoodScreenState extends State<myFoodScreen> {
     fetchdata();
   }
 
-  Future<bool> setcookReset(bool state) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setBool('cookreset', state);
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
-  Future<bool> checkcookReset() async {
+  Future<bool> setReset(bool state) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final bool reset = await prefs.getBool('cookreset') ?? false;
+    return prefs.setBool('reset', state);
+  }
+
+  Future<bool> checkReset() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool reset = await prefs.getBool('reset') ?? false;
     return reset;
   }
 
   isreset() async {
-    if (await checkcookReset() == true) {
+    if (await checkReset() == true) {
       fetchdata();
 
       setState(() {
         item = [];
       });
-      await setcookReset(false);
+      await setReset(false);
     }
   }
 
@@ -186,7 +192,8 @@ class _myFoodScreenState extends State<myFoodScreen> {
                   height: 40,
                   child: TextField(
                     controller: searchController,
-                    onChanged: (text) {
+                    onChanged: (text) {},
+                    onSubmitted: (text) {
                       fetchdata();
                       setState(() {
                         item = [];

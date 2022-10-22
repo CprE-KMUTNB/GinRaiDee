@@ -6,11 +6,13 @@ class ProfilePicWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
+  final File? imageFile;
 
-  const ProfilePicWidget({
+  ProfilePicWidget({
     Key? key,
     required this.imagePath,
-    this.isEdit = false,
+    required this.imageFile,
+    required this.isEdit,
     required this.onClicked,
   }) : super(key: key);
 
@@ -33,13 +35,29 @@ class ProfilePicWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
+    final imageold = NetworkImage(imagePath);
+
+    if (imageFile != null && isEdit == true) {
+      final imagenew = FileImage(imageFile!);
+      return ClipOval(
+        child: Material(
+          color: Colors.transparent,
+          child: Ink.image(
+            image: imagenew,
+            fit: BoxFit.cover,
+            width: 128,
+            height: 128,
+            child: InkWell(onTap: onClicked),
+          ),
+        ),
+      );
+    }
 
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: image,
+          image: imageold,
           fit: BoxFit.cover,
           width: 128,
           height: 128,

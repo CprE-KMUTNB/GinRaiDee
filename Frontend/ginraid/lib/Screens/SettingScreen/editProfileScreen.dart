@@ -12,24 +12,51 @@ import 'package:ginraid/Screens/Cooking/myFood.dart';
 import 'package:ginraid/Screens/Cooking/textFieldwid.dart';
 import 'package:ginraid/Screens/SettingScreen/ProfilePicWid.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
+import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
 import 'package:ginraid/Screens/SettingScreen/user.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<dynamic> setUsername(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString('username', value);
+}
 
 class EditProfileScreen extends StatefulWidget {
   static const routeName = '/';
 
-  const EditProfileScreen({Key? key}) : super(key: key);
+  String username;
+  String userPic;
+
+  EditProfileScreen({
+    required this.username,
+    required this.userPic,
+  });
 
   @override
   State<StatefulWidget> createState() {
-    return _EditProfileScreenState();
+    return _EditProfileScreenState(username: username, userPic: userPic);
   }
+}
+
+Future<bool> setReset(bool state) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setBool('reset', state);
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   String? _retrieveDataError;
   User user = UserPreferences.myUser;
   File? imageFile;
+  String username;
+  String userPic;
+  bool isEdit = false;
+  String error = '';
+
+  _EditProfileScreenState({
+    required this.username,
+    required this.userPic,
+  });
 
   late double screenWidth, screenHeight;
 
@@ -92,8 +119,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   SizedBox(height: 10),
 
                   ProfilePicWidget(
-                    imagePath: user.imagePath,
-                    isEdit: true,
+                    imagePath: userPic,
+                    imageFile: imageFile,
+                    isEdit: isEdit,
                     onClicked: () async {
                       optionDialog();
                     },
@@ -107,21 +135,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   TextFieldWidget(
                     maxLines: 1,
                     label: 'Username',
-                    text: user.username,
-                    onChanged: (username) {},
+                    text: username,
+                    onChanged: (text) {
+                      setState(() {
+                        username = text;
+                      });
+                    },
                   ),
 
                   SizedBox(height: 40),
 
                   // อีเมล
-                  TextFieldWidget(
-                    maxLines: 1,
-                    label: 'Email',
-                    text: user.email,
-                    onChanged: (email) {},
-                  ),
+                  // TextFieldWidget(
+                  //   maxLines: 1,
+                  //   label: 'Email',
+                  //   text: user.email,
+                  //   onChanged: (email) {},
+                  // ),
 
-                  SizedBox(height: 40),
+                  // SizedBox(height: 40),
 
                   //ปุ่มบันทึก
                   Container(
@@ -134,7 +166,59 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         backgroundColor: Color.fromARGB(255, 136, 68, 106),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        if (isEdit &&
+                            imageFile != null &&
+                            username.isNotEmpty) {
+                          var response =
+                              await Userdata().putimage(imageFile!.path);
+                          if (response.statusCode == 200) {
+                            print('successupdateimage');
+                          } else {
+                            setState(() {
+                              error = 'Image could not be blank';
+                            });
+                          }
+                        }
+
+                        if (isEdit &&
+                            imageFile == null &&
+                            username.isNotEmpty) {
+                          var response = await Userdata().deleteimage();
+
+                          if (response.statusCode == 200) {
+                            print('successdeleteimage');
+                          } else {
+                            print(response.statusCode);
+                            setState(() {
+                              error = 'Image could not be blank';
+                            });
+                          }
+                        }
+
+                        if (username.isEmpty) {
+                          setState(() {
+                            error = 'Username could not be blank';
+                          });
+                        }
+
+                        if (username.isNotEmpty) {
+                          var response =
+                              await Userdata().changeusername(username);
+                          if (response.statusCode == 200) {
+                            print('success update username');
+                            await setUsername(username);
+                            await setReset(true);
+                            int count = 0;
+                            Navigator.of(context).popUntil((_) => count++ >= 1);
+                          } else {
+                            setState(() {
+                              error = 'This username cannot be use';
+                            });
+                          }
+                        }
+                        print(error);
+                      },
                       child: const Text(
                         'บันทึก',
                         style: TextStyle(
@@ -146,32 +230,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
 
-                  GestureDetector(
-                    onTap: () => {showAlertDialog()},
-                    child: RichText(
-                      text: TextSpan(
-                        // ignore: prefer_const_literals_to_create_immutables
-                        children: [
-                          TextSpan(
-                            text: 'ต้องการที่จะ ',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontFamily: "NotoSansThai",
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'ลบบัญชีผู้ใช้',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontFamily: "NotoSansThai",
-                              color: Color.fromARGB(255, 227, 0, 0),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () => {showAlertDialog()},
+                  //   child: RichText(
+                  //     text: TextSpan(
+                  //       // ignore: prefer_const_literals_to_create_immutables
+                  //       children: [
+                  //         TextSpan(
+                  //           text: 'ต้องการที่จะ ',
+                  //           style: TextStyle(
+                  //             fontSize: 18.0,
+                  //             fontFamily: "NotoSansThai",
+                  //             color: Color.fromARGB(255, 0, 0, 0),
+                  //           ),
+                  //         ),
+                  //         TextSpan(
+                  //           text: 'ลบบัญชีผู้ใช้',
+                  //           style: TextStyle(
+                  //             fontSize: 18.0,
+                  //             fontFamily: "NotoSansThai",
+                  //             color: Color.fromARGB(255, 227, 0, 0),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -180,6 +264,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
   }
+
   void showAlertDialog() {
     showDialog(
       context: context,
@@ -260,6 +345,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             onPressed: () {
               getImage(source: ImageSource.gallery);
+              setState(() {
+                isEdit = true;
+              });
             },
           ),
           SimpleDialogOption(
@@ -273,6 +361,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             onPressed: () {
               getImage(source: ImageSource.camera);
+              setState(() {
+                isEdit = true;
+              });
             },
           ),
           SimpleDialogOption(
@@ -285,7 +376,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
             onPressed: () {
-              print('hi');
+              setState(() {
+                userPic =
+                    'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png';
+                isEdit = true;
+                imageFile = null;
+              });
               //เขียนให้เปลี่ยนเป็นรูปไอคอน
             },
           ),
