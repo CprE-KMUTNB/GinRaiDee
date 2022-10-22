@@ -57,7 +57,8 @@ class _SettingScreenState extends State<SettingScreen> {
   String username = "";
   int follower = 0;
   int food = 0;
-  String? userpic;
+  String userpic =
+      'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png';
 
   @override
   void initState() {
@@ -155,7 +156,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => EditProfileScreen(
-                              username: username, userPic: userpic!)),
+                              username: username, userPic: userpic)),
                     ),
                   },
                   child: Container(
@@ -178,11 +179,19 @@ class _SettingScreenState extends State<SettingScreen> {
                               children: [
                                 //รูปโปร
                                 Container(
-                                  child: Icon(
-                                    Icons.account_circle,
-                                    size: 50.0,
+                                  // margin: EdgeInsets.only(top: 35),
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 226, 226, 226),
+                                    image: DecorationImage(
+                                        image: NetworkImage(userpic),
+                                        fit: BoxFit.cover),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(360)),
                                   ),
                                 ),
+
                                 //ชื่อ
                                 Container(
                                   margin: EdgeInsets.only(left: 20),

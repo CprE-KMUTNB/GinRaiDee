@@ -85,7 +85,8 @@ class _favScreenState extends State<favScreen> {
   List item = [];
   List followitem = [];
   String username = "";
-  String? userpic;
+  String userpic =
+      'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png';
   Timer? timer;
 
   fetchuserpic() async {
@@ -93,8 +94,9 @@ class _favScreenState extends State<favScreen> {
     if (response.statusCode == 200) {
       var data = json.decode(utf8.decode(response.bodyBytes));
       setState(() {
-        userpic = data["userpic"] ??
-            'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png';
+        userpic = data["userpic"] == null
+            ? 'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'
+            : data["userpic"];
       });
     }
   }
@@ -214,9 +216,7 @@ class _favScreenState extends State<favScreen> {
                         decoration: BoxDecoration(
                           color: Color.fromARGB(255, 226, 226, 226),
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'),
-                              fit: BoxFit.cover),
+                              image: NetworkImage(userpic), fit: BoxFit.cover),
                           borderRadius: BorderRadius.all(Radius.circular(360)),
                         ),
                       ),
@@ -256,7 +256,7 @@ class _favScreenState extends State<favScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => EditProfileScreen(
-                                        username: username, userPic: userpic!),
+                                        username: username, userPic: userpic),
                                   ),
                                 );
                               },

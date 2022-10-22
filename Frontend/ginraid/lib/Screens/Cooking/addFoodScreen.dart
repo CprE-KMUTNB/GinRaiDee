@@ -28,7 +28,7 @@ class _addFoodScreenState extends State<addFoodScreen> {
 
   String? selectedValue = null;
 
-  String error = '';
+  String error = ''; ////////////////////////////////////
   final _dropdownFormKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final ingredientController = TextEditingController();

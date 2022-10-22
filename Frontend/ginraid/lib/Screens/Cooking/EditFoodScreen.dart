@@ -77,7 +77,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
   // String? newingredient = '';
   // String? newrecipe = '';
   String? selectedValue = '';
-  String error = '';
+  String error = ''; ////////////////////////////////////////
 
   final _dropdownFormKey = GlobalKey<FormState>();
 

@@ -39,9 +39,11 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   final newpasswordController = TextEditingController();
   final newpasswordconfirmController = TextEditingController();
 
-  String oldpasswordError = '';
-  String newpasswordError = '';
-  String newpasswordconfirmError = '';
+  String oldpasswordError = ''; ////////////////////////////////////////////////
+  String newpasswordError =
+      ''; /////////////////////////////////////////////////
+  String newpasswordconfirmError =
+      ''; /////////////////////////////////////////////
 
   late double screenWidth, screenHeight;
 

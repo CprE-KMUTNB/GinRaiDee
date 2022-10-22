@@ -158,8 +158,7 @@ class _homeScreen2State extends State<homeScreen2> {
                               decoration: BoxDecoration(
                                 color: Color.fromARGB(255, 226, 226, 226),
                                 image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'),
+                                    image: NetworkImage(ownerPic),
                                     fit: BoxFit.cover),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(360)),

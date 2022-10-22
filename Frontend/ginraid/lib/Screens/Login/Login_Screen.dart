@@ -64,9 +64,9 @@ Future<int> getID() async {
 class _loginScreenState extends State<loginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  String email_error = "";
-  String password_error = "";
-  String error = "";
+  String email_error = ""; /////////////////////////////////////////////
+  String password_error = ""; /////////////////////////////////////////
+  String error = ""; ///////////////////////////////////////////////////
 
   bool _isObscure = true;
   late double screenWidth, screenHeight;

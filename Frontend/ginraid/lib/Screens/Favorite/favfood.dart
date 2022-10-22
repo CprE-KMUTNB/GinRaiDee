@@ -181,9 +181,7 @@ class _favfoodState extends State<favfood> {
                         decoration: BoxDecoration(
                           color: Color.fromARGB(255, 226, 226, 226),
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png'),
-                              fit: BoxFit.cover),
+                              image: NetworkImage(ownerPic), fit: BoxFit.cover),
                           borderRadius: BorderRadius.all(Radius.circular(360)),
                         ),
                       ),

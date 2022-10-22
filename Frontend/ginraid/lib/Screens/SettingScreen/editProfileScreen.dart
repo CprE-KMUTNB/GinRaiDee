@@ -51,7 +51,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String username;
   String userPic;
   bool isEdit = false;
-  String error = '';
+  String error = ''; ////////////////////////////////////
 
   _EditProfileScreenState({
     required this.username,

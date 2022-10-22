@@ -28,10 +28,10 @@ class _signupScreenState extends State<signupScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmpasswordController = TextEditingController();
-  String email_error = "";
-  String username_error = "";
-  String password_error = "";
-  String confirmPassword_error = "";
+  String email_error = ""; //////////////////////////////////////////
+  String username_error = ""; ////////////////////////////////////////////
+  String password_error = ""; /////////////////////////////////////////
+  String confirmPassword_error = ""; ///////////////////////////////////
 
   bool _isObscure = true;
   bool _isObscure1 = true;
@@ -119,36 +119,6 @@ class _signupScreenState extends State<signupScreen> {
                     ),
                   ),
 
-                  // กรอกusername
-                  Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: 10),
-                    child: TextField(
-                      controller: usernameController,
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 179, 190, 190)),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-                        ),
-                        hintText: 'Username',
-                        hintStyle: TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: "Itim",
-                          color: Color.fromARGB(255, 179, 190, 190),
-                        ),
-                        labelStyle: TextStyle(
-                          fontSize: 30.0,
-                          fontFamily: "Itim",
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                      ),
-                    ),
-                  ),
-
                   //email
                   Container(
                     alignment: Alignment.center,
@@ -165,6 +135,36 @@ class _signupScreenState extends State<signupScreen> {
                               BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                         ),
                         hintText: 'Email',
+                        hintStyle: TextStyle(
+                          fontSize: 25.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 179, 190, 190),
+                        ),
+                        labelStyle: TextStyle(
+                          fontSize: 30.0,
+                          fontFamily: "Itim",
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // กรอกusername
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 179, 190, 190)),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        hintText: 'Username',
                         hintStyle: TextStyle(
                           fontSize: 25.0,
                           fontFamily: "Itim",
