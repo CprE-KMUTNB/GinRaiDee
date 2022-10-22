@@ -90,6 +90,7 @@ class _myFoodScreenState extends State<myFoodScreen> {
       extendBodyBehindAppBar: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
@@ -272,16 +273,15 @@ class _myFoodScreenState extends State<myFoodScreen> {
         shrinkWrap: true,
         itemCount: item.length,
         itemBuilder: (context, index) {
-          return myFood(
-              context,
-              Selfmenu.fromJson(item[index]).id!,
-              Selfmenu.fromJson(item[index]).foodname!,
-              Selfmenu.fromJson(item[index]).foodpic!,
-              Selfmenu.fromJson(item[index]).ingredient!,
-              Selfmenu.fromJson(item[index]).recipes!,
-              Selfmenu.fromJson(item[index]).isFavorites!,
-              Selfmenu.fromJson(item[index]).favoritesCount!,
-              Selfmenu.fromJson(item[index]).isPublic!);
+          return myFood(              
+              id: Selfmenu.fromJson(item[index]).id!,
+              foodname: Selfmenu.fromJson(item[index]).foodname!,
+              foodpic: Selfmenu.fromJson(item[index]).foodpic!,
+              ingredient: Selfmenu.fromJson(item[index]).ingredient!,
+              recipes: Selfmenu.fromJson(item[index]).recipes!,
+              isFavorites: Selfmenu.fromJson(item[index]).isFavorites!,
+              favoritesCount: Selfmenu.fromJson(item[index]).favoritesCount!,
+              isPublic: Selfmenu.fromJson(item[index]).isPublic!);
         });
   }
 }

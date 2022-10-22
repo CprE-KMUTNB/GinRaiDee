@@ -113,7 +113,7 @@ class _favFoodScreenState extends State<favFoodScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
+      appBar: AppBar(        
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),

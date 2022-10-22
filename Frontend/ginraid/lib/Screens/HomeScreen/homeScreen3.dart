@@ -13,6 +13,7 @@ import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
 import 'package:ginraid/Screens/HomeScreen/menu_data.dart';
 import 'package:ginraid/Screens/HomeScreen/post.dart';
 import 'package:ginraid/Screens/HomeScreen/postInHomeScreen3.dart';
+import 'package:ginraid/Screens/HomeScreen/reportUserScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'homeScreen2.dart';
@@ -243,10 +244,23 @@ class _homeScreen3State extends State<homeScreen3> {
                         //report buttom
                         Container(
                           margin: EdgeInsets.only(left: 2),
-                          child: Icon(
-                            Icons.report,
-                            size: 30,
-                          ),
+                          child: IconButton(
+                    icon: Icon(
+                      Icons.report,
+                      size: 30.0,
+                    ),
+                    onPressed: () {
+                      setState(
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => reportUserScreen()),
+                          );
+                        },
+                      );
+                    },
+                  ),
                         ),
                       ],
                     )
@@ -377,19 +391,18 @@ class _homeScreen3State extends State<homeScreen3> {
         itemCount: item.length,
         itemBuilder: (context, index) {
           return Userpost(
-              context,
-              MenuAll.fromJson(item[index]).id,
-              MenuAll.fromJson(item[index]).owner,
-              MenuAll.fromJson(item[index]).ownerName,
-              MenuAll.fromJson(item[index]).ownerPic,
-              MenuAll.fromJson(item[index]).isFollowing,
-              MenuAll.fromJson(item[index]).foodname,
-              MenuAll.fromJson(item[index]).foodpic,
-              MenuAll.fromJson(item[index]).ingredient,
-              MenuAll.fromJson(item[index]).recipes,
-              MenuAll.fromJson(item[index]).isFavorites,
-              MenuAll.fromJson(item[index]).favoritesCount,
-              MenuAll.fromJson(item[index]).created);
+              id: MenuAll.fromJson(item[index]).id,
+              owner: MenuAll.fromJson(item[index]).owner,
+              ownerName: MenuAll.fromJson(item[index]).ownerName,
+              ownerPic: MenuAll.fromJson(item[index]).ownerPic,
+              isFollowing: MenuAll.fromJson(item[index]).isFollowing,
+              foodname: MenuAll.fromJson(item[index]).foodname,
+              foodpic: MenuAll.fromJson(item[index]).foodpic,
+              ingredient: MenuAll.fromJson(item[index]).ingredient,
+              recipes: MenuAll.fromJson(item[index]).recipes,
+              isFavorites: MenuAll.fromJson(item[index]).isFavorites,
+              favoritesCount: MenuAll.fromJson(item[index]).favoritesCount,
+              created: MenuAll.fromJson(item[index]).created);
         });
   }
 }

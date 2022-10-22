@@ -132,6 +132,7 @@ flutter:
     - assets/image/fav3.png
     - assets/image/noti.png
     - assets/image/setting.png
+    - assets/image/report.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

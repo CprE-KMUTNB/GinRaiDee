@@ -116,6 +116,7 @@ class _SettingScreenState extends State<SettingScreen> {
       extendBodyBehindAppBar: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(

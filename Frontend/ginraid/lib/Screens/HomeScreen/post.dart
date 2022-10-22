@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
+import 'package:ginraid/Screens/HomeScreen/reportPostScreen.dart';
 import '../HomeScreen/homeScreen3.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
@@ -328,9 +329,18 @@ class _PostState extends State<Post> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.thumb_up),
+                      icon: Icon(
+                        Icons.thumb_up,
+                        color: isFavorites
+                            ? Color.fromARGB(255, 166, 198, 6)
+                            : Colors.black,
+                      ),
                       onPressed: () {
-                        setState(() {});
+                        setState(
+                          () {
+                            isFavorites = !isFavorites;
+                          },
+                        );
                       },
                     ),
                     Text(
@@ -346,9 +356,22 @@ class _PostState extends State<Post> {
 
                 Container(
                   margin: EdgeInsets.only(right: 10),
-                  child: Icon(
-                    Icons.report,
-                    size: 20.0,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.report,
+                      // size: 20.0,
+                    ),
+                    onPressed: () {
+                      setState(
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => reportPostScreen()),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
               ],
