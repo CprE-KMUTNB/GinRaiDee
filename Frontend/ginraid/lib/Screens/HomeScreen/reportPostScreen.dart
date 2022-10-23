@@ -146,6 +146,8 @@ class _reportPostScreenState extends State<reportPostScreen> {
                               .post(reporttextcontroller.text, id);
                           if (response.statusCode == 201) {
                             print('reportsuccess');
+                            // int count = 0;
+                            // Navigator.of(context).popUntil((_) => count++ >= 1);
                             //redirect to "เราได้รับเรื่องแล้ว"
                           } else {
                             setState(() {

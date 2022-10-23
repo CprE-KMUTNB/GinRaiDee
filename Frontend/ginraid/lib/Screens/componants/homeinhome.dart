@@ -49,7 +49,7 @@ class Notilist {
       return response;
     }
     if (response.statusCode == 401) {
-      print('Authentication credentials were not provided.');
+      return response;
     } else {
       print('fail');
     }
