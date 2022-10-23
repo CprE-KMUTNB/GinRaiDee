@@ -245,72 +245,62 @@ class _favfoodState extends State<favfood> {
                   ),
 
                   //followbut
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (isFollowing == false) {
-                          var followid = {"following": owner};
-                          var response = await follow().post(followid);
-                          if (response.statusCode == 201) {
-                            print('follow');
-                            await setReset(true);
-                            setState(
-                              () {
-                                isFollowing = !isFollowing;
-                                //ฟอลอยู่           ไม่ฟอล อัลฟอล
-                                followingvalue += 1;
-                              },
-                            );
-                          } else {
-                            print('server down');
-                          }
-                        } else {
-                          var response = await follow().delete(owner);
-                          if (response.statusCode == 204) {
-                            await setReset(true);
-                            print('unfollow');
-                            setState(
-                              () {
-                                isFollowing = !isFollowing;
-                                //ฟอลอยู่           ไม่ฟอล อัลฟอล
-                                followingvalue -= 1;
-                              },
-                            );
-                          } else {
-                            print('server down');
-                          }
-                        }
-                      },
-                      child: AnimatedContainer(
-                        height: 35,
-                        width: 110,
-                        duration: Duration(milliseconds: 300),
-                        decoration: BoxDecoration(
-                          color: isFollowing
-                              ? Colors.transparent
-                              : Color.fromARGB(255, 224, 132, 106),
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            color: isFollowing
-                                ? Color.fromARGB(255, 224, 132, 106)
-                                : Colors.transparent,
+                  GestureDetector(
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => homeScreen3(
+                            owner: owner,
+                            ownerName: ownerName,
+                            ownerPic: ownerPic,
+                            isFollowing: isFollowing,
                           ),
                         ),
-                        child: Center(
-                          child: Text(
-                            isFollowing ? 'Following' : 'Follow',
-                            style: TextStyle(
-                              fontSize: 17.0,
-                              fontFamily: "IBMPlexSansThaiReg",
-                              color: isFollowing
-                                  ? Color.fromARGB(255, 224, 132, 106)
-                                  : Color.fromARGB(255, 255, 255, 255),
+                      );
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 110,
+                      child: isFollowing
+                          ? Container(
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(
+                                  color: Color.fromARGB(255, 224, 132, 106),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Following',
+                                  style: TextStyle(
+                                    fontSize: 17.0,
+                                    fontFamily: "IBMPlexSansThaiReg",
+                                    color: Color.fromARGB(255, 224, 132, 106),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 224, 132, 106),
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Follow',
+                                  style: TextStyle(
+                                    fontSize: 17.0,
+                                    fontFamily: "IBMPlexSansThaiReg",
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                 ],

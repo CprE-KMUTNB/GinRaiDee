@@ -126,6 +126,8 @@ class _reportUserScreenState extends State<reportUserScreen> {
                       ),
                     ),
                   ),
+
+                  //ปุ่มยืนยัน
                   Container(
                     width: 120,
                     margin: EdgeInsets.symmetric(vertical: 20),
@@ -141,6 +143,7 @@ class _reportUserScreenState extends State<reportUserScreen> {
                           var response = await Report()
                               .post(reporttextcontroller.text, id);
                           if (response.statusCode == 201) {
+                            showAlertDialog();
                             print('reportsuccess');
                             // int count = 0;
                             // Navigator.of(context).popUntil((_) => count++ >= 1);
@@ -174,6 +177,71 @@ class _reportUserScreenState extends State<reportUserScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void showAlertDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'ลบบัญชี',
+            style: TextStyle(
+                fontSize: 20.0,
+                fontFamily: "NotoSansThai",
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontWeight: FontWeight.bold),
+          ),
+          content: const Text(
+            'คุณต้องการที่จะลบบัญชีนี้',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontFamily: "NotoSansThai",
+              color: Color.fromARGB(255, 0, 0, 0),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 179, 190, 190)),
+              onPressed: () {
+                int count = 0;
+                Navigator.of(context).popUntil((_) => count++ >= 1);
+              },
+              child: const Text(
+                'ยกเลิก',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: "NotoSansThai",
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+              ),
+            ),
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(primary: Colors.red),
+            //   onPressed: () async {
+            //     var response = await Userdata().deleteaccount();
+            //     if (response.statusCode == 204) {
+            //       print('delete is success');
+            //       Navigator.pushAndRemoveUntil(
+            //           context,
+            //           MaterialPageRoute(builder: (context) => loginScreen()),
+            //           (Route<dynamic> route) => false);
+            //     }
+            //   },
+            //   child: const Text(
+            //     'ลบบัญชี',
+            //     style: TextStyle(
+            //       fontSize: 18.0,
+            //       fontFamily: "NotoSansThai",
+            //       color: Color.fromARGB(255, 255, 255, 255),
+            //     ),
+            //   ),
+            // ),
+          ],
+        );
+      },
     );
   }
 }

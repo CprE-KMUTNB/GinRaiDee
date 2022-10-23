@@ -96,7 +96,7 @@ class _reportPostScreenState extends State<reportPostScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  //กรอกชื่อเมนู
+                  //กรอกเหตุผล
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: TextField(
@@ -130,6 +130,8 @@ class _reportPostScreenState extends State<reportPostScreen> {
                       ),
                     ),
                   ),
+
+                  //ปุ่มยืนยัน
                   Container(
                     width: 120,
                     margin: EdgeInsets.symmetric(vertical: 20),
@@ -145,10 +147,8 @@ class _reportPostScreenState extends State<reportPostScreen> {
                           var response = await Report()
                               .post(reporttextcontroller.text, id);
                           if (response.statusCode == 201) {
-                            print('reportsuccess');
-                            // int count = 0;
-                            // Navigator.of(context).popUntil((_) => count++ >= 1);
-                            //redirect to "เราได้รับเรื่องแล้ว"
+                            showAlertDialog();
+                            print('reportsuccess');                            
                           } else {
                             setState(() {
                               error = 'Server down';
@@ -178,6 +178,51 @@ class _reportPostScreenState extends State<reportPostScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void showAlertDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'รายงานสำเร็จ',
+            style: TextStyle(
+                fontSize: 20.0,
+                fontFamily: "NotoSansThai",
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontWeight: FontWeight.bold),
+          ),
+          content: const Text(
+            'ทางเราได้รับเรื่องเรียบร้อยแล้ว',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontFamily: "NotoSansThai",
+              color: Color.fromARGB(255, 0, 0, 0),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 179, 190, 190)),
+              onPressed: () {
+                int count = 0;
+                Navigator.of(context).popUntil((_) => count++ >= 2);
+              },
+              child: const Text(
+                'ตกลง',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: "NotoSansThai",
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+              ),
+            ),
+            
+          ],
+        );
+      },
     );
   }
 }
