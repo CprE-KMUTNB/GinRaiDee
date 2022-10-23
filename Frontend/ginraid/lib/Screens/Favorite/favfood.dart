@@ -440,7 +440,8 @@ class _favfoodState extends State<favfood> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => reportPostScreen()),
+                                  builder: (context) =>
+                                      reportPostScreen(id: id)),
                             );
                           },
                         );
@@ -711,7 +712,8 @@ class _favfoodState extends State<favfood> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => reportPostScreen()),
+                                  builder: (context) =>
+                                      reportPostScreen(id: id)),
                             );
                           },
                         );

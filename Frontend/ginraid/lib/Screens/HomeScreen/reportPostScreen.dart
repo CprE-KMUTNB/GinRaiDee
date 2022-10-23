@@ -7,22 +7,35 @@ import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/bgCook2.dart';
 import 'package:ginraid/Screens/Cooking/foodrequest.dart';
 import 'package:ginraid/Screens/HomeScreen/bgReport.dart';
+import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class reportPostScreen extends StatefulWidget {
   static const routeName = '/';
 
-  const reportPostScreen({Key? key}) : super(key: key);
+  int id;
+  reportPostScreen({required this.id});
 
   @override
   State<StatefulWidget> createState() {
-    return _reportPostScreenState();
+    return _reportPostScreenState(id: id);
   }
 }
 
 class _reportPostScreenState extends State<reportPostScreen> {
   late double screenWidth, screenHeight;
+  int id;
+  _reportPostScreenState({required this.id});
+  final reporttextcontroller = TextEditingController();
+  String error = ''; //////////////////////////////////////////////
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +100,7 @@ class _reportPostScreenState extends State<reportPostScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: TextField(
+                      controller: reporttextcontroller,
                       maxLines: null,
                       textAlignVertical: TextAlignVertical.bottom,
                       // controller: emailController,
@@ -126,7 +140,25 @@ class _reportPostScreenState extends State<reportPostScreen> {
                         ),
                         backgroundColor: Color.fromARGB(255, 255, 85, 85),
                       ),
-                      onPressed: () async {                        
+                      onPressed: () async {
+                        if (reporttextcontroller.text.isNotEmpty) {
+                          var response = await Report()
+                              .post(reporttextcontroller.text, id);
+                          if (response.statusCode == 201) {
+                            print('reportsuccess');
+                            //redirect to "เราได้รับเรื่องแล้ว"
+                          } else {
+                            setState(() {
+                              error = 'Server down';
+                            });
+                            print(error);
+                          }
+                        } else {
+                          setState(() {
+                            error = 'Field could not be blank';
+                          });
+                          print(error);
+                        }
                       },
                       child: const Text(
                         'ยืนยัน',

@@ -7,22 +7,35 @@ import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/bgCook2.dart';
 import 'package:ginraid/Screens/Cooking/foodrequest.dart';
 import 'package:ginraid/Screens/HomeScreen/bgReport.dart';
+import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class reportUserScreen extends StatefulWidget {
   static const routeName = '/';
 
-  const reportUserScreen({Key? key}) : super(key: key);
+  int id;
+  reportUserScreen({required this.id});
 
   @override
   State<StatefulWidget> createState() {
-    return _reportUserScreenState();
+    return _reportUserScreenState(id: id);
   }
 }
 
 class _reportUserScreenState extends State<reportUserScreen> {
   late double screenWidth, screenHeight;
+  int id;
+  _reportUserScreenState({required this.id});
+  final reporttextcontroller = TextEditingController();
+  String error = ''; //////////////////////////////////////////////
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +53,19 @@ class _reportUserScreenState extends State<reportUserScreen> {
         children: [
           bgReport().buildBackground(screenWidth, screenHeight),
           Container(
-            margin: EdgeInsets.only(top: 75,left: 20),
+            margin: EdgeInsets.only(top: 75, left: 20),
             child: Row(
               //แถว1
               // mainAxisAlignment: MainAxisAlignment.start,
-              children: [               
-                 Text(
-                    'รายงานผู้ใช้ ',
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: "NotoSansThai",
-                      color: Colors.white,
-                    ),
+              children: [
+                Text(
+                  'รายงานผู้ใช้ ',
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: "NotoSansThai",
+                    color: Colors.white,
                   ),
-                
+                ),
                 Container(
                   child: Icon(
                     Icons.report,
@@ -84,6 +96,7 @@ class _reportUserScreenState extends State<reportUserScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: TextField(
+                      controller: reporttextcontroller,
                       maxLines: null,
                       textAlignVertical: TextAlignVertical.bottom,
                       // controller: emailController,
@@ -123,7 +136,26 @@ class _reportUserScreenState extends State<reportUserScreen> {
                         ),
                         backgroundColor: Color.fromARGB(255, 255, 85, 85),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        if (reporttextcontroller.text.isNotEmpty) {
+                          var response = await Report()
+                              .post(reporttextcontroller.text, id);
+                          if (response.statusCode == 201) {
+                            print('reportsuccess');
+                            //redirect to "เราได้รับเรื่องแล้ว"
+                          } else {
+                            setState(() {
+                              error = 'Server down';
+                            });
+                            print(error);
+                          }
+                        } else {
+                          setState(() {
+                            error = 'Field could not be blank';
+                          });
+                          print(error);
+                        }
+                      },
                       child: const Text(
                         'ยืนยัน',
                         style: TextStyle(

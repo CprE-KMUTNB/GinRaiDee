@@ -426,7 +426,8 @@ class _PostState extends State<Post> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => reportPostScreen()),
+                                  builder: (context) =>
+                                      reportPostScreen(id: id)),
                             );
                           },
                         );
@@ -693,7 +694,8 @@ class _PostState extends State<Post> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => reportPostScreen()),
+                                  builder: (context) =>
+                                      reportPostScreen(id: id)),
                             );
                           },
                         );

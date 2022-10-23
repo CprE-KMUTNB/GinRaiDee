@@ -222,7 +222,7 @@ class _UserpostState extends State<Userpost> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => reportPostScreen()),
+                                builder: (context) => reportPostScreen(id: id)),
                           );
                         },
                       );

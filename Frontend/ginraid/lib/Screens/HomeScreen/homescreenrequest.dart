@@ -51,3 +51,28 @@ class Userviewmenu {
     }
   }
 }
+
+class Report {
+  Client client = http.Client();
+  Future<dynamic> post(String text, int menu) async {
+    var url = Uri.parse('https://ginraid.herokuapp.com/report-api/');
+    var _headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ${await getToken()}',
+    };
+    var data = {"report_text": text, "target_object": menu};
+
+    var _body = json.encode(data);
+
+    var response = await client.post(url, headers: _headers, body: _body);
+    if (response.statusCode == 201) {
+      return response;
+    }
+    if (response.statusCode == 401) {
+      print('Authentication credentials were not provided.');
+    } else {
+      print('fail');
+      return response;
+    }
+  }
+}
