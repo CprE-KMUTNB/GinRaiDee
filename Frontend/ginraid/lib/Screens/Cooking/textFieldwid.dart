@@ -41,7 +41,13 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
+          TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'กรุณากรอกข้อมูล';
+              }
+              return null;
+            },
             controller: controller,
             onChanged: widget.onChanged,
             decoration: InputDecoration(
@@ -65,6 +71,19 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 fontSize: 20.0,
                 fontFamily: "NotoSansThai",
                 color: Color.fromARGB(255, 0, 0, 0),
+              ),
+              errorStyle: TextStyle(
+                fontSize: 18,
+                fontFamily: "NotoSansThai",
+                color: Color.fromARGB(255, 255, 0, 0),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(color: Color.fromARGB(255, 255, 0, 0)),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(color: Color.fromARGB(255, 255, 0, 0)),
               ),
             ),
             maxLines: widget.maxLines,

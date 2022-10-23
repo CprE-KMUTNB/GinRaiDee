@@ -45,6 +45,7 @@ Future<bool> setReset(bool state) async {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
   String? _retrieveDataError;
   User user = UserPreferences.myUser;
   File? imageFile;
@@ -121,149 +122,155 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               color: Color.fromARGB(255, 255, 255, 255),
             ),
             child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 10),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 10),
 
-                  ProfilePicWidget(
-                    imagePath: userPic,
-                    imageFile: imageFile,
-                    isEdit: isEdit,
-                    onClicked: () async {
-                      optionDialog();
-                    },
-                  ),
-
-                  //รูป ติดตรงถ้าเลือกจากโทรศัพท์ให้เปลี่ยนค่าไม่ได้ คิดว่าน่าจะต้องเชื่อ backend เป็นลิ้งก่อน
-
-                  SizedBox(height: 40),
-
-                  //ชื่อบัญชี
-                  TextFieldWidget(
-                    maxLines: 1,
-                    label: 'Username',
-                    text: username,
-                    onChanged: (text) {
-                      setState(() {
-                        username = text;
-                      });
-                    },
-                  ),
-
-                  SizedBox(height: 40),
-
-                  // อีเมล
-                  // TextFieldWidget(
-                  //   maxLines: 1,
-                  //   label: 'Email',
-                  //   text: user.email,
-                  //   onChanged: (email) {},
-                  // ),
-
-                  // SizedBox(height: 40),
-
-                  //ปุ่มบันทึก
-                  Container(
-                    width: 120,
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        backgroundColor: Color.fromARGB(255, 136, 68, 106),
-                      ),
-                      onPressed: () async {
-                        if (isEdit &&
-                            imageFile != null &&
-                            username.isNotEmpty) {
-                          var response =
-                              await Userdata().putimage(imageFile!.path);
-                          if (response.statusCode == 200) {
-                            print('successupdateimage');
-                          } else {
-                            setState(() {
-                              error = 'Image could not be blank';
-                            });
-                          }
-                        }
-
-                        if (isEdit &&
-                            imageFile == null &&
-                            username.isNotEmpty) {
-                          var response = await Userdata().deleteimage();
-
-                          if (response.statusCode == 200) {
-                            print('successdeleteimage');
-                          } else {
-                            print(response.statusCode);
-                            setState(() {
-                              error = 'Image could not be blank';
-                            });
-                          }
-                        }
-
-                        if (username.isEmpty) {
-                          setState(() {
-                            error = 'Username could not be blank';
-                          });
-                        }
-
-                        if (username.isNotEmpty) {
-                          var response =
-                              await Userdata().changeusername(username);
-                          if (response.statusCode == 200) {
-                            print('success update username');
-                            await setUsername(username);
-                            await setReset(true);
-                            int count = 0;
-                            Navigator.of(context).popUntil((_) => count++ >= 1);
-                          } else {
-                            setState(() {
-                              error = 'This username cannot be use';
-                            });
-                          }
-                        }
-                        print(error);
+                    ProfilePicWidget(
+                      imagePath: userPic,
+                      imageFile: imageFile,
+                      isEdit: isEdit,
+                      onClicked: () async {
+                        optionDialog();
                       },
-                      child: const Text(
-                        'บันทึก',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: "NotoSansThai",
-                          color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+
+                    //รูป ติดตรงถ้าเลือกจากโทรศัพท์ให้เปลี่ยนค่าไม่ได้ คิดว่าน่าจะต้องเชื่อ backend เป็นลิ้งก่อน
+
+                    SizedBox(height: 40),
+
+                    //ชื่อบัญชี
+                    TextFieldWidget(
+                      maxLines: 1,
+                      label: 'Username',
+                      text: username,
+                      onChanged: (text) {
+                        setState(() {
+                          username = text;
+                        });
+                      },
+                    ),
+
+                    SizedBox(height: 40),
+
+                    // อีเมล
+                    // TextFieldWidget(
+                    //   maxLines: 1,
+                    //   label: 'Email',
+                    //   text: user.email,
+                    //   onChanged: (email) {},
+                    // ),
+
+                    // SizedBox(height: 40),
+
+                    //ปุ่มบันทึก
+                    Container(
+                      width: 120,
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          backgroundColor: Color.fromARGB(255, 136, 68, 106),
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            if (isEdit &&
+                                imageFile != null &&
+                                username.isNotEmpty) {
+                              var response =
+                                  await Userdata().putimage(imageFile!.path);
+                              if (response.statusCode == 200) {
+                                print('successupdateimage');
+                              } else {
+                                setState(() {
+                                  error = 'Image could not be blank';
+                                });
+                              }
+                            }
+
+                            if (isEdit &&
+                                imageFile == null &&
+                                username.isNotEmpty) {
+                              var response = await Userdata().deleteimage();
+
+                              if (response.statusCode == 200) {
+                                print('successdeleteimage');
+                              } else {
+                                print(response.statusCode);
+                                setState(() {
+                                  error = 'Image could not be blank';
+                                });
+                              }
+                            }
+
+                            if (username.isEmpty) {
+                              setState(() {
+                                error = 'Username could not be blank';
+                              });
+                            }
+
+                            if (username.isNotEmpty) {
+                              var response =
+                                  await Userdata().changeusername(username);
+                              if (response.statusCode == 200) {
+                                print('success update username');
+                                await setUsername(username);
+                                await setReset(true);
+                                int count = 0;
+                                Navigator.of(context)
+                                    .popUntil((_) => count++ >= 1);
+                              } else {
+                                setState(() {
+                                  error = 'This username cannot be use';
+                                });
+                              }
+                            }
+                            print(error);
+                          }
+                        },
+                        child: const Text(
+                          'บันทึก',
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            fontFamily: "NotoSansThai",
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  // GestureDetector(
-                  //   onTap: () => {showAlertDialog()},
-                  //   child: RichText(
-                  //     text: TextSpan(
-                  //       // ignore: prefer_const_literals_to_create_immutables
-                  //       children: [
-                  //         TextSpan(
-                  //           text: 'ต้องการที่จะ ',
-                  //           style: TextStyle(
-                  //             fontSize: 18.0,
-                  //             fontFamily: "NotoSansThai",
-                  //             color: Color.fromARGB(255, 0, 0, 0),
-                  //           ),
-                  //         ),
-                  //         TextSpan(
-                  //           text: 'ลบบัญชีผู้ใช้',
-                  //           style: TextStyle(
-                  //             fontSize: 18.0,
-                  //             fontFamily: "NotoSansThai",
-                  //             color: Color.fromARGB(255, 227, 0, 0),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                ],
+                    // GestureDetector(
+                    //   onTap: () => {showAlertDialog()},
+                    //   child: RichText(
+                    //     text: TextSpan(
+                    //       // ignore: prefer_const_literals_to_create_immutables
+                    //       children: [
+                    //         TextSpan(
+                    //           text: 'ต้องการที่จะ ',
+                    //           style: TextStyle(
+                    //             fontSize: 18.0,
+                    //             fontFamily: "NotoSansThai",
+                    //             color: Color.fromARGB(255, 0, 0, 0),
+                    //           ),
+                    //         ),
+                    //         TextSpan(
+                    //           text: 'ลบบัญชีผู้ใช้',
+                    //           style: TextStyle(
+                    //             fontSize: 18.0,
+                    //             fontFamily: "NotoSansThai",
+                    //             color: Color.fromARGB(255, 227, 0, 0),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/bgCook2.dart';
 import 'package:ginraid/Screens/Cooking/foodrequest.dart';
@@ -24,6 +25,7 @@ class reportPostScreen extends StatefulWidget {
 }
 
 class _reportPostScreenState extends State<reportPostScreen> {
+  final _formKey = GlobalKey<FormState>();
   late double screenWidth, screenHeight;
   int id;
   _reportPostScreenState({required this.id});
@@ -94,85 +96,108 @@ class _reportPostScreenState extends State<reportPostScreen> {
               ),
             ),
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  //กรอกเหตุผล
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: TextField(
-                      controller: reporttextcontroller,
-                      maxLines: null,
-                      textAlignVertical: TextAlignVertical.bottom,
-                      // controller: emailController,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 179, 190, 190)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide:
-                              BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-                        ),
-                        hintText: 'เหตุผลที่รายงานโพสนี้',
-                        hintStyle: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "NotoSansThai",
-                          color: Color.fromARGB(255, 179, 190, 190),
-                        ),
-                        labelText: 'เหตุผลที่รายงานโพสนี้',
-                        labelStyle: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "NotoSansThai",
-                          color: Color.fromARGB(255, 179, 190, 190),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    //กรอกเหตุผล
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'กรุณากรอกข้อมูล';
+                          }
+                          return null;
+                        },
+                        controller: reporttextcontroller,
+                        maxLines: null,
+                        textAlignVertical: TextAlignVertical.bottom,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 179, 190, 190)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide:
+                                BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+                          ),
+                          hintText: 'เหตุผลที่รายงานโพสนี้',
+                          hintStyle: TextStyle(
+                            fontSize: 20.0,
+                            fontFamily: "NotoSansThai",
+                            color: Color.fromARGB(255, 179, 190, 190),
+                          ),
+                          labelText: 'เหตุผลที่รายงานโพสนี้',
+                          labelStyle: TextStyle(
+                            fontSize: 20.0,
+                            fontFamily: "NotoSansThai",
+                            color: Color.fromARGB(255, 179, 190, 190),
+                          ),
+                          errorStyle: TextStyle(
+                            fontSize: 20.0,
+                            fontFamily: "NotoSansThai",
+                            color: Color.fromARGB(255, 255, 0, 0),
+                          ),                          
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide:
+                                BorderSide(color: Color.fromARGB(255, 255, 0, 0)),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 255, 0, 0)),
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  //ปุ่มยืนยัน
-                  Container(
-                    width: 120,
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                    //ปุ่มยืนยัน
+                    Container(
+                      width: 120,
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          backgroundColor: Color.fromARGB(255, 255, 85, 85),
                         ),
-                        backgroundColor: Color.fromARGB(255, 255, 85, 85),
-                      ),
-                      onPressed: () async {
-                        if (reporttextcontroller.text.isNotEmpty) {
-                          var response = await Report()
-                              .post(reporttextcontroller.text, id);
-                          if (response.statusCode == 201) {
-                            showAlertDialog();
-                            print('reportsuccess');                            
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {//สำเร็จ
+                            var response = await Report()
+                                .post(reporttextcontroller.text, id);
+                            if (response.statusCode == 201) {
+                              showAlertDialog();
+                              print('reportsuccess');
+                            } else {
+                              setState(() {
+                                error = 'Server down';
+                              });
+                              print(error);
+                            }
                           } else {
-                            setState(() {
-                              error = 'Server down';
+                            setState(() {//error
+                              error = 'Field could not be blank';
                             });
                             print(error);
                           }
-                        } else {
-                          setState(() {
-                            error = 'Field could not be blank';
-                          });
-                          print(error);
-                        }
-                      },
-                      child: const Text(
-                        'ยืนยัน',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: "NotoSansThai",
-                          color: Color.fromARGB(255, 255, 255, 255),
+                        },
+                        child: const Text(
+                          'ยืนยัน',
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            fontFamily: "NotoSansThai",
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -219,10 +244,11 @@ class _reportPostScreenState extends State<reportPostScreen> {
                 ),
               ),
             ),
-            
           ],
         );
       },
     );
   }
+
+
 }
