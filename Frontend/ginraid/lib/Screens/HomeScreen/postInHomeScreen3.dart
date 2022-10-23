@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ginraid/Screens/Favorite/favoriterequest.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
+import 'package:ginraid/Screens/HomeScreen/post.dart';
 import 'package:ginraid/Screens/HomeScreen/reportPostScreen.dart';
 
 class Userpost extends StatefulWidget {
@@ -76,6 +78,13 @@ class _UserpostState extends State<Userpost> {
     required this.favoritesCount,
     required this.created,
   });
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   bool isFollowedByMe = true;
   Widget build(BuildContext context) {
@@ -156,12 +165,38 @@ class _UserpostState extends State<Userpost> {
                             ? Color.fromARGB(255, 166, 198, 6)
                             : Colors.black,
                       ),
-                      onPressed: () {
-                        setState(
-                          () {
-                            isFavorites = !isFavorites;
-                          },
-                        );
+                      onPressed: () async {
+                        if (isFavorites == false) {
+                          var response = await Favoritefood().post(id);
+                          if (response.statusCode == 201) {
+                            print('favorite');
+                            await setReset(true);
+                            setState(
+                              () {
+                                isFavorites = !isFavorites;
+                                favoritesCount += 1;
+                                //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                              },
+                            );
+                          } else {
+                            print('server down');
+                          }
+                        } else {
+                          var response = await Favoritefood().delete(id);
+                          if (response.statusCode == 204) {
+                            print('unfavorite');
+                            await setReset(true);
+                            setState(
+                              () {
+                                isFavorites = !isFavorites;
+                                favoritesCount -= 1;
+                                //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                              },
+                            );
+                          } else {
+                            print('server down');
+                          }
+                        }
                       },
                     ),
                     Text(

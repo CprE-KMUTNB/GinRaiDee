@@ -110,6 +110,13 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
   late double screenWidth, screenHeight;
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;

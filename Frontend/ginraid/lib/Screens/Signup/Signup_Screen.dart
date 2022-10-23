@@ -38,6 +38,13 @@ class _signupScreenState extends State<signupScreen> {
   late double screenWidth, screenHeight;
   int _toggleValue = 0;
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;

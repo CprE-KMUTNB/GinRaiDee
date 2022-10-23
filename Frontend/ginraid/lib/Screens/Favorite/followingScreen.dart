@@ -99,6 +99,13 @@ class _followingScreenState extends State<followingScreen> {
     super.dispose();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Future<bool> setReset(bool state) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setBool('reset', state);
@@ -159,16 +166,16 @@ class _followingScreenState extends State<followingScreen> {
                     ),
 
                     //จำนวนกำลังติดตาม
-                    Container(
-                      child: Text(
-                        '${followitem.length}',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: "IBMPlexSansThaiReg",
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   child: Text(
+                    //     '${followitem.length}',
+                    //     style: TextStyle(
+                    //       fontSize: 25.0,
+                    //       fontFamily: "IBMPlexSansThaiReg",
+                    //       color: Color.fromARGB(255, 255, 255, 255),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
 

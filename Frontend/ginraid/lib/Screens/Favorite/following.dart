@@ -90,6 +90,12 @@ class _followState extends State<follow> {
       required this.ownerPic,
       required this.created,
       required this.isFollowing});
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   Widget build(BuildContext context) {
     return Container(

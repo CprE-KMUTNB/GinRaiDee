@@ -118,6 +118,13 @@ class _NotiScreenState extends State<NotiScreen> {
     super.dispose();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Future<bool> setReset(bool state) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setBool('reset', state);

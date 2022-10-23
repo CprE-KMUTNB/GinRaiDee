@@ -84,6 +84,8 @@ class _favScreenState extends State<favScreen> {
   late double screenWidth, screenHeight;
   List item = [];
   List followitem = [];
+  int followitemvalue = 0;
+  int itemvalue = 0;
   String username = "";
   String userpic =
       'https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png';
@@ -109,6 +111,7 @@ class _favScreenState extends State<favScreen> {
       setState(() {
         item = data;
         username = name;
+        itemvalue = item.length;
       });
     } else {
       setState(() {
@@ -125,6 +128,7 @@ class _favScreenState extends State<favScreen> {
       var data = json.decode(utf8.decode(response.bodyBytes));
       setState(() {
         followitem = data;
+        followitemvalue = followitem.length;
         username = name;
       });
     } else {
@@ -148,6 +152,13 @@ class _favScreenState extends State<favScreen> {
   void dispose() {
     timer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   Future<bool> setReset(bool state) async {
@@ -287,7 +298,7 @@ class _favScreenState extends State<favScreen> {
                       Container(
                         width: screenWidth * 0.5,
                         child: Text(
-                          '${followitem.length}',
+                          '$followitemvalue',
                           style: TextStyle(
                             fontSize: 20.0,
                             fontFamily: "Itim",
@@ -299,7 +310,7 @@ class _favScreenState extends State<favScreen> {
                       //จำนวน อาหารที่ชอบ
                       Container(
                         child: Text(
-                          '${item.length}',
+                          '$itemvalue',
                           style: TextStyle(
                             fontSize: 20.0,
                             fontFamily: "Itim",
@@ -367,7 +378,9 @@ class _favScreenState extends State<favScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const favFoodScreen(),
+                                builder: (context) => favFoodScreen(
+                                    followingvalue: followitemvalue,
+                                    favoritevalue: itemvalue),
                               ),
                             );
                           },
@@ -401,7 +414,7 @@ class _favScreenState extends State<favScreen> {
                         ),
                       ),
                       Text(
-                        '${item.length}',
+                        '$itemvalue',
                         style: TextStyle(
                           fontSize: 25.0,
                           fontFamily: "Itim",
@@ -461,12 +474,14 @@ class _favScreenState extends State<favScreen> {
               ownerName: Favorite.fromJson(item[index]).ownerName,
               ownerPic: Favorite.fromJson(item[index]).ownerPic,
               isFollowing: Favorite.fromJson(item[index]).isFollowing,
+              followingvalue: followitemvalue,
               foodname: Favorite.fromJson(item[index]).foodname,
               foodpic: Favorite.fromJson(item[index]).foodpic,
               ingredient: Favorite.fromJson(item[index]).ingredient,
               recipes: Favorite.fromJson(item[index]).recipes,
               isFavorites: Favorite.fromJson(item[index]).isFavorites,
               favoritesCount: Favorite.fromJson(item[index]).favoritesCount,
+              favoritesvalue: itemvalue,
               created: Favorite.fromJson(item[index]).created);
         });
   }

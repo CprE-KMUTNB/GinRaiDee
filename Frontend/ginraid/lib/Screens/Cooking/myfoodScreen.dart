@@ -59,6 +59,13 @@ class _myFoodScreenState extends State<myFoodScreen> {
     super.dispose();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Future<bool> setReset(bool state) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setBool('reset', state);
@@ -273,7 +280,7 @@ class _myFoodScreenState extends State<myFoodScreen> {
         shrinkWrap: true,
         itemCount: item.length,
         itemBuilder: (context, index) {
-          return myFood(              
+          return myFood(
               id: Selfmenu.fromJson(item[index]).id!,
               foodname: Selfmenu.fromJson(item[index]).foodname!,
               foodpic: Selfmenu.fromJson(item[index]).foodpic!,

@@ -55,6 +55,13 @@ class _homeScreenState extends State<homeScreen> {
     super.dispose();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   fetchdata() async {
     var response = await Allmenu().get('?search=' + searchController.text);
 

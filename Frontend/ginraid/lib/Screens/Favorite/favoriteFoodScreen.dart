@@ -42,19 +42,32 @@ class Favoritelist {
 class favFoodScreen extends StatefulWidget {
   static const routeName = '/';
 
-  const favFoodScreen({Key? key}) : super(key: key);
+  int followingvalue;
+  int favoritevalue;
+  favFoodScreen({
+    required this.followingvalue,
+    required this.favoritevalue,
+  });
 
   @override
   State<StatefulWidget> createState() {
-    return _favFoodScreenState();
+    return _favFoodScreenState(
+        followingvalue: followingvalue, favoritevalue: favoritevalue);
   }
 }
 
 class _favFoodScreenState extends State<favFoodScreen> {
+  int followingvalue;
+  int favoritevalue;
+  _favFoodScreenState({
+    required this.followingvalue,
+    required this.favoritevalue,
+  });
   late double screenWidth, screenHeight;
   final searchController = TextEditingController();
   Timer? timer;
   List item = [];
+  int itemvalue = 0;
 
   Future<bool> setReset(bool state) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -74,6 +87,7 @@ class _favFoodScreenState extends State<favFoodScreen> {
       var data = json.decode(utf8.decode(response.bodyBytes));
       setState(() {
         item = data;
+        favoritevalue = item.length;
       });
     } else {
       setState(() {
@@ -95,6 +109,13 @@ class _favFoodScreenState extends State<favFoodScreen> {
     super.dispose();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   isreset() async {
     if (await checkReset() == true) {
       fetchdata();
@@ -113,7 +134,7 @@ class _favFoodScreenState extends State<favFoodScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(        
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -143,16 +164,16 @@ class _favFoodScreenState extends State<favFoodScreen> {
                     ),
 
                     //จำนวนที่กดถูกใจ
-                    Container(
-                      child: Text(
-                        '${item.length}',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: "IBMPlexSansThaiReg",
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   child: Text(
+                    //     '$favoritevalue',
+                    //     style: TextStyle(
+                    //       fontSize: 25.0,
+                    //       fontFamily: "IBMPlexSansThaiReg",
+                    //       color: Color.fromARGB(255, 255, 255, 255),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
 
@@ -247,18 +268,21 @@ class _favFoodScreenState extends State<favFoodScreen> {
         itemCount: item.length,
         itemBuilder: (context, index) {
           return favfood(
-              id: Favorite.fromJson(item[index]).favMenu,
-              owner: Favorite.fromJson(item[index]).ownerId,
-              ownerName: Favorite.fromJson(item[index]).ownerName,
-              ownerPic: Favorite.fromJson(item[index]).ownerPic,
-              isFollowing: Favorite.fromJson(item[index]).isFollowing,
-              foodname: Favorite.fromJson(item[index]).foodname,
-              foodpic: Favorite.fromJson(item[index]).foodpic,
-              ingredient: Favorite.fromJson(item[index]).ingredient,
-              recipes: Favorite.fromJson(item[index]).recipes,
-              isFavorites: Favorite.fromJson(item[index]).isFavorites,
-              favoritesCount: Favorite.fromJson(item[index]).favoritesCount,
-              created: Favorite.fromJson(item[index]).created);
+            id: Favorite.fromJson(item[index]).favMenu,
+            owner: Favorite.fromJson(item[index]).ownerId,
+            ownerName: Favorite.fromJson(item[index]).ownerName,
+            ownerPic: Favorite.fromJson(item[index]).ownerPic,
+            isFollowing: Favorite.fromJson(item[index]).isFollowing,
+            foodname: Favorite.fromJson(item[index]).foodname,
+            foodpic: Favorite.fromJson(item[index]).foodpic,
+            ingredient: Favorite.fromJson(item[index]).ingredient,
+            recipes: Favorite.fromJson(item[index]).recipes,
+            isFavorites: Favorite.fromJson(item[index]).isFavorites,
+            favoritesCount: Favorite.fromJson(item[index]).favoritesCount,
+            created: Favorite.fromJson(item[index]).created,
+            favoritesvalue: favoritevalue,
+            followingvalue: followingvalue,
+          );
         });
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/Cooking/EditFoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/mycookgotoEditScreen.dart';
+import 'package:ginraid/Screens/Favorite/favoriterequest.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 
 class myFood extends StatefulWidget {
@@ -57,6 +58,13 @@ class _myFoodState extends State<myFood> {
     required this.favoritesCount,
     required this.isPublic,
   });
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   Widget build(BuildContext context) {
     return Container(
@@ -129,12 +137,36 @@ class _myFoodState extends State<myFood> {
                         ? Color.fromARGB(255, 224, 132, 106)
                         : Colors.black,
                   ),
-                  onPressed: () {
-                    setState(
-                      () {
-                        isFavorites = !isFavorites;
-                      },
-                    );
+                  onPressed: () async {
+                    if (isFavorites == false) {
+                      var response = await Favoritefood().post(id);
+                      if (response.statusCode == 201) {
+                        print('favorite');
+                        setState(
+                          () {
+                            isFavorites = !isFavorites;
+                            favoritesCount += 1;
+                            //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                          },
+                        );
+                      } else {
+                        print('server down');
+                      }
+                    } else {
+                      var response = await Favoritefood().delete(id);
+                      if (response.statusCode == 204) {
+                        print('unfavorite');
+                        setState(
+                          () {
+                            isFavorites = !isFavorites;
+                            favoritesCount -= 1;
+                            //ฟอลอยู่           ไม่ฟอล อัลฟอล
+                          },
+                        );
+                      } else {
+                        print('server down');
+                      }
+                    }
                   },
                 ),
                 Text(

@@ -73,6 +73,13 @@ class _SettingScreenState extends State<SettingScreen> {
     super.dispose();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   fetchdata() async {
     var response = await Userdata().get();
 
