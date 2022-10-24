@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 import '../HomeScreen/homeScreen3.dart';
 
 const String baseUrl = 'https://ginraid.herokuapp.com/user-api/';
@@ -160,7 +161,7 @@ class _followState extends State<follow> {
             Container(
               margin: EdgeInsets.only(right: 10),
               alignment: Alignment.center,
-              child: GestureDetector(
+              child: TapDebouncer(
                 onTap: () async {
                   var response = await unfollow().delete(owner);
                   if (response.statusCode == 204) {
@@ -176,35 +177,40 @@ class _followState extends State<follow> {
                   } else {
                     print('server down');
                   }
-                },
-                child: AnimatedContainer(
-                  height: 35,
-                  width: 110,
-                  duration: Duration(milliseconds: 300),
-                  decoration: BoxDecoration(
-                    color: isFollowing
-                        ? Colors.transparent
-                        : Color.fromARGB(255, 224, 132, 106),
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(
-                      color: isFollowing
-                          ? Color.fromARGB(255, 224, 132, 106)
-                          : Colors.transparent,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      isFollowing ? 'Following' : 'Follow',
-                      style: TextStyle(
-                        fontSize: 17.0,
-                        fontFamily: "IBMPlexSansThaiReg",
+                }, // your tap handler moved here
+                builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                  return GestureDetector(
+                    onTap: onTap,
+                    child: AnimatedContainer(
+                      height: 35,
+                      width: 110,
+                      duration: Duration(milliseconds: 300),
+                      decoration: BoxDecoration(
                         color: isFollowing
-                            ? Color.fromARGB(255, 224, 132, 106)
-                            : Color.fromARGB(255, 255, 255, 255),
+                            ? Colors.transparent
+                            : Color.fromARGB(255, 224, 132, 106),
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(
+                          color: isFollowing
+                              ? Color.fromARGB(255, 224, 132, 106)
+                              : Colors.transparent,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          isFollowing ? 'Following' : 'Follow',
+                          style: TextStyle(
+                            fontSize: 17.0,
+                            fontFamily: "IBMPlexSansThaiReg",
+                            color: isFollowing
+                                ? Color.fromARGB(255, 224, 132, 106)
+                                : Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             )
           ],

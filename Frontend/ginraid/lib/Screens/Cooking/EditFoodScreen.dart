@@ -15,6 +15,7 @@ import 'package:ginraid/Screens/Cooking/textFieldwid.dart';
 import 'package:ginraid/Screens/componants/homeinhome.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 import '../Favorite/user.dart';
 
@@ -317,14 +318,8 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                     Container(
                       width: 120,
                       margin: EdgeInsets.symmetric(vertical: 20),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          backgroundColor: Color.fromARGB(255, 246, 170, 72),
-                        ),
-                        onPressed: () async {
+                      child: TapDebouncer(
+                        onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             var menu = {
                               "Foodname": foodname,
@@ -365,15 +360,28 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                             // print(isedit);
                             // print(imageFile);
                           }
+                        }, // your tap handler moved here
+                        builder:
+                            (BuildContext context, TapDebouncerFunc? onTap) {
+                          return TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor:
+                                  Color.fromARGB(255, 246, 170, 72),
+                            ),
+                            onPressed: onTap,
+                            child: const Text(
+                              'บันทึก',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                fontFamily: "NotoSansThai",
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                          );
                         },
-                        child: const Text(
-                          'บันทึก',
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            fontFamily: "NotoSansThai",
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        ),
                       ),
                     ),
 
@@ -450,9 +458,8 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.red),
-                onPressed: () async {
+              TapDebouncer(
+                onTap: () async {
                   var response = await Cooking().delete(id);
                   if (response.statusCode == 204) {
                     print('success delete menu');
@@ -460,15 +467,21 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                     int count = 0;
                     Navigator.of(context).popUntil((_) => count++ >= 3);
                   }
+                }, // your tap handler moved here
+                builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.red),
+                    onPressed: onTap,
+                    child: const Text(
+                      'ลบ',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontFamily: "NotoSansThai",
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                    ),
+                  );
                 },
-                child: const Text(
-                  'ลบ',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontFamily: "NotoSansThai",
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                ),
               ),
             ],
           );

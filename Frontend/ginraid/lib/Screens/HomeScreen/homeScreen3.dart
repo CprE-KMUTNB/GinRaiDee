@@ -15,6 +15,7 @@ import 'package:ginraid/Screens/HomeScreen/post.dart';
 import 'package:ginraid/Screens/HomeScreen/postInHomeScreen3.dart';
 import 'package:ginraid/Screens/HomeScreen/reportUserScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 import 'homeScreen2.dart';
 
@@ -465,7 +466,7 @@ class _homeScreen3State extends State<homeScreen3> {
                           Container(
                             // margin: EdgeInsets.only(right: 5),
                             alignment: Alignment.center,
-                            child: GestureDetector(
+                            child: TapDebouncer(
                               onTap: () async {
                                 if (isFollowing == false) {
                                   var followid = {"following": owner};
@@ -503,34 +504,40 @@ class _homeScreen3State extends State<homeScreen3> {
                                     print('server down');
                                   }
                                 }
-                              },
-                              child: AnimatedContainer(
-                                height: 35,
-                                width: 110,
-                                duration: Duration(milliseconds: 300),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    (isFollowing == null
-                                            ? isfollowing
-                                            : isFollowing!)
-                                        ? 'Following'
-                                        : 'Follow',
-                                    style: TextStyle(
-                                      fontSize: 17.0,
-                                      fontFamily: "IBMPlexSansThaiReg",
-                                      color: (isFollowing == null
-                                              ? isfollowing
-                                              : isFollowing!)
-                                          ? Color.fromARGB(255, 166, 198, 6)
-                                          : Color.fromARGB(255, 251, 0, 0),
+                              }, // your tap handler moved here
+                              builder: (BuildContext context,
+                                  TapDebouncerFunc? onTap) {
+                                return GestureDetector(
+                                  onTap: onTap,
+                                  child: AnimatedContainer(
+                                    height: 35,
+                                    width: 110,
+                                    duration: Duration(milliseconds: 300),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        (isFollowing == null
+                                                ? isfollowing
+                                                : isFollowing!)
+                                            ? 'Following'
+                                            : 'Follow',
+                                        style: TextStyle(
+                                          fontSize: 17.0,
+                                          fontFamily: "IBMPlexSansThaiReg",
+                                          color: (isFollowing == null
+                                                  ? isfollowing
+                                                  : isFollowing!)
+                                              ? Color.fromARGB(255, 166, 198, 6)
+                                              : Color.fromARGB(255, 251, 0, 0),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
                           ),
 

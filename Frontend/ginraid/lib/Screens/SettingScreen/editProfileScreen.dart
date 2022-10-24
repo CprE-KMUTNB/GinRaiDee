@@ -16,6 +16,7 @@ import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
 import 'package:ginraid/Screens/SettingScreen/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 Future<dynamic> setUsername(String value) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -169,14 +170,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Container(
                       width: 120,
                       margin: EdgeInsets.symmetric(vertical: 20),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          backgroundColor: Color.fromARGB(255, 136, 68, 106),
-                        ),
-                        onPressed: () async {
+                      child: TapDebouncer(
+                        onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             if (isEdit &&
                                 imageFile != null &&
@@ -227,19 +222,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 setState(() {
                                   error = 'This username cannot be use';
                                 });
+                                showusernameError();
                               }
                             }
                             print(error);
                           }
+                        }, // your tap handler moved here
+                        builder:
+                            (BuildContext context, TapDebouncerFunc? onTap) {
+                          return TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor:
+                                  Color.fromARGB(255, 136, 68, 106),
+                            ),
+                            onPressed: onTap,
+                            child: const Text(
+                              'บันทึก',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                fontFamily: "NotoSansThai",
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                          );
                         },
-                        child: const Text(
-                          'บันทึก',
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            fontFamily: "NotoSansThai",
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        ),
                       ),
                     ),
 
@@ -426,5 +435,45 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         imageFile = File(file!.path);
       });
     }
+  }
+
+  void showusernameError() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "username นี้ไม่สามารถใช้งานได้",
+            style: TextStyle(
+                fontSize: 20.0, fontFamily: "Itim", fontWeight: FontWeight.bold
+                // color: Color.fromARGB(255, 166, 198, 6),
+                ),
+          ),
+          content: Text(
+            'กรุณาเลือกใช้ username อื่น',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontFamily: "Itim",
+              // color: Color.fromARGB(255, 166, 198, 6),
+            ),
+          ),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text(
+                "ตกลง",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: "Itim",
+                  color: Color.fromARGB(255, 166, 198, 6),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

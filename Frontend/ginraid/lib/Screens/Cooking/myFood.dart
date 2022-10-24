@@ -3,6 +3,7 @@ import 'package:ginraid/Screens/Cooking/EditFoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/mycookgotoEditScreen.dart';
 import 'package:ginraid/Screens/Favorite/favoriterequest.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class myFood extends StatefulWidget {
   static const routeName = '/';
@@ -130,14 +131,8 @@ class _myFoodState extends State<myFood> {
               // ignore: prefer_const_literals_to_create_immutables
               children: [
                 SizedBox(width: 15),
-                IconButton(
-                  icon: Icon(
-                    Icons.thumb_up,
-                    color: isFavorites
-                        ? Color.fromARGB(255, 224, 132, 106)
-                        : Colors.black,
-                  ),
-                  onPressed: () async {
+                TapDebouncer(
+                  onTap: () async {
                     if (isFavorites == false) {
                       var response = await Favoritefood().post(id);
                       if (response.statusCode == 201) {
@@ -167,6 +162,17 @@ class _myFoodState extends State<myFood> {
                         print('server down');
                       }
                     }
+                  }, // your tap handler moved here
+                  builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                    return IconButton(
+                      icon: Icon(
+                        Icons.thumb_up,
+                        color: isFavorites
+                            ? Color.fromARGB(255, 224, 132, 106)
+                            : Colors.black,
+                      ),
+                      onPressed: onTap,
+                    );
                   },
                 ),
                 Text(

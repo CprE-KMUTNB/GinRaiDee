@@ -11,6 +11,7 @@ import 'package:ginraid/Screens/HomeScreen/bgReport.dart';
 import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class reportPostScreen extends StatefulWidget {
   static const routeName = '/';
@@ -140,11 +141,11 @@ class _reportPostScreenState extends State<reportPostScreen> {
                             fontSize: 20.0,
                             fontFamily: "NotoSansThai",
                             color: Color.fromARGB(255, 255, 0, 0),
-                          ),                          
+                          ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide(color: Color.fromARGB(255, 255, 0, 0)),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 255, 0, 0)),
                           ),
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
@@ -159,15 +160,10 @@ class _reportPostScreenState extends State<reportPostScreen> {
                     Container(
                       width: 120,
                       margin: EdgeInsets.symmetric(vertical: 20),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          backgroundColor: Color.fromARGB(255, 255, 85, 85),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {//สำเร็จ
+                      child: TapDebouncer(
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            //สำเร็จ
                             var response = await Report()
                                 .post(reporttextcontroller.text, id);
                             if (response.statusCode == 201) {
@@ -180,20 +176,33 @@ class _reportPostScreenState extends State<reportPostScreen> {
                               print(error);
                             }
                           } else {
-                            setState(() {//error
+                            setState(() {
+                              //error
                               error = 'Field could not be blank';
                             });
                             print(error);
                           }
+                        }, // your tap handler moved here
+                        builder:
+                            (BuildContext context, TapDebouncerFunc? onTap) {
+                          return TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor: Color.fromARGB(255, 255, 85, 85),
+                            ),
+                            onPressed: onTap,
+                            child: const Text(
+                              'ยืนยัน',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                fontFamily: "NotoSansThai",
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                          );
                         },
-                        child: const Text(
-                          'ยืนยัน',
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            fontFamily: "NotoSansThai",
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        ),
                       ),
                     )
                   ],
@@ -249,6 +258,4 @@ class _reportPostScreenState extends State<reportPostScreen> {
       },
     );
   }
-
-
 }

@@ -14,6 +14,7 @@ import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 Future<dynamic> logout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -352,43 +353,48 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
 
                 //ออกจากระบบ
-                GestureDetector(
+                TapDebouncer(
                   onTap: () async {
                     await logout();
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => loginScreen()),
                         (Route<dynamic> route) => false);
+                  }, // your tap handler moved here
+                  builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                    return GestureDetector(
+                      onTap: onTap,
+                      child: Container(
+                        width: screenWidth * 0.9,
+                        height: 100,
+                        margin: EdgeInsets.only(top: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 227, 227, 227),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.logout_outlined,
+                              size: 50,
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              'ออกจากระบบ',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: "NotoSansThai",
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   },
-                  child: Container(
-                    width: screenWidth * 0.9,
-                    height: 100,
-                    margin: EdgeInsets.only(top: 15),
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 227, 227, 227),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.logout_outlined,
-                          size: 50,
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Text(
-                          'ออกจากระบบ',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontFamily: "NotoSansThai",
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
 
                 //ลบบัญชี
@@ -470,9 +476,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ),
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Colors.red),
-              onPressed: () async {
+            TapDebouncer(
+              onTap: () async {
                 var response = await Userdata().deleteaccount();
                 if (response.statusCode == 204) {
                   print('delete is success');
@@ -481,15 +486,21 @@ class _SettingScreenState extends State<SettingScreen> {
                       MaterialPageRoute(builder: (context) => loginScreen()),
                       (Route<dynamic> route) => false);
                 }
+              }, // your tap handler moved here
+              builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.red),
+                  onPressed: onTap,
+                  child: const Text(
+                    'ลบบัญชี',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontFamily: "NotoSansThai",
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
+                );
               },
-              child: const Text(
-                'ลบบัญชี',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: "NotoSansThai",
-                  color: Color.fromARGB(255, 255, 255, 255),
-                ),
-              ),
             ),
           ],
         );

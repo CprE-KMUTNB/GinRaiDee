@@ -16,6 +16,7 @@ import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
 import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
 import 'package:ginraid/Screens/SettingScreen/user.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class EditPasswordScreen extends StatefulWidget {
   static const routeName = '/';
@@ -321,14 +322,8 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     Container(
                       width: 120,
                       margin: EdgeInsets.symmetric(vertical: 40),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          backgroundColor: Color.fromARGB(255, 136, 68, 106),
-                        ),
-                        onPressed: () async {
+                      child: TapDebouncer(
+                        onTap: () async {
                           var body = {
                             "old_password": oldpasswordController.text,
                             "password": newpasswordController.text,
@@ -367,15 +362,28 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                             print(
                                 'confirmnewpassword = ${newpasswordconfirmError}');
                           }
+                        }, // your tap handler moved here
+                        builder:
+                            (BuildContext context, TapDebouncerFunc? onTap) {
+                          return TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              backgroundColor:
+                                  Color.fromARGB(255, 136, 68, 106),
+                            ),
+                            onPressed: onTap,
+                            child: const Text(
+                              'บันทึก',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                fontFamily: "NotoSansThai",
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
+                          );
                         },
-                        child: const Text(
-                          'บันทึก',
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            fontFamily: "NotoSansThai",
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        ),
                       ),
                     ),
                   ],

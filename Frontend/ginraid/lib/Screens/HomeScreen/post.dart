@@ -5,6 +5,7 @@ import 'package:ginraid/Screens/Favorite/favoriterequest.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 import 'package:ginraid/Screens/HomeScreen/reportPostScreen.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 import '../HomeScreen/homeScreen3.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
@@ -363,14 +364,8 @@ class _PostState extends State<Post> {
                   // SizedBox(width: 15),
                   Row(
                     children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.thumb_up,
-                          color: isFavorites
-                              ? Color.fromARGB(255, 166, 198, 6)
-                              : Colors.black,
-                        ),
-                        onPressed: () async {
+                      TapDebouncer(
+                        onTap: () async {
                           if (isFavorites == false) {
                             var response = await Favoritefood().post(id);
                             if (response.statusCode == 201) {
@@ -400,6 +395,17 @@ class _PostState extends State<Post> {
                               print('server down');
                             }
                           }
+                        }, // your tap handler moved here
+                        builder:
+                            (BuildContext context, TapDebouncerFunc? onTap) {
+                          return IconButton(
+                              icon: Icon(
+                                Icons.thumb_up,
+                                color: isFavorites
+                                    ? Color.fromARGB(255, 166, 198, 6)
+                                    : Colors.black,
+                              ),
+                              onPressed: onTap);
                         },
                       ),
                       Text(
@@ -622,14 +628,8 @@ class _PostState extends State<Post> {
                   // SizedBox(width: 15),
                   Row(
                     children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.thumb_up,
-                          color: isFavorites
-                              ? Color.fromARGB(255, 166, 198, 6)
-                              : Colors.black,
-                        ),
-                        onPressed: () async {
+                      TapDebouncer(
+                        onTap: () async {
                           if (isFavorites == false) {
                             var response = await Favoritefood().post(id);
                             if (response.statusCode == 201) {
@@ -659,6 +659,17 @@ class _PostState extends State<Post> {
                               print('server down');
                             }
                           }
+                        }, // your tap handler moved here
+                        builder:
+                            (BuildContext context, TapDebouncerFunc? onTap) {
+                          return IconButton(
+                              icon: Icon(
+                                Icons.thumb_up,
+                                color: isFavorites
+                                    ? Color.fromARGB(255, 166, 198, 6)
+                                    : Colors.black,
+                              ),
+                              onPressed: onTap);
                         },
                       ),
                       Text(

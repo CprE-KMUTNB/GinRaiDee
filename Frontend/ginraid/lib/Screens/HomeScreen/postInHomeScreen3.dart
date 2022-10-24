@@ -5,6 +5,7 @@ import 'package:ginraid/Screens/Favorite/favoriterequest.dart';
 import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
 import 'package:ginraid/Screens/HomeScreen/post.dart';
 import 'package:ginraid/Screens/HomeScreen/reportPostScreen.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class Userpost extends StatefulWidget {
   static const routeName = '/';
@@ -158,19 +159,12 @@ class _UserpostState extends State<Userpost> {
               children: [
                 Row(
                   children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.thumb_up,
-                        color: isFavorites
-                            ? Color.fromARGB(255, 166, 198, 6)
-                            : Colors.black,
-                      ),
-                      onPressed: () async {
+                    TapDebouncer(
+                      onTap: () async {
                         if (isFavorites == false) {
                           var response = await Favoritefood().post(id);
                           if (response.statusCode == 201) {
                             print('favorite');
-                            await setReset(true);
                             setState(
                               () {
                                 isFavorites = !isFavorites;
@@ -178,6 +172,7 @@ class _UserpostState extends State<Userpost> {
                                 //ฟอลอยู่           ไม่ฟอล อัลฟอล
                               },
                             );
+                            await setReset(true);
                           } else {
                             print('server down');
                           }
@@ -185,7 +180,6 @@ class _UserpostState extends State<Userpost> {
                           var response = await Favoritefood().delete(id);
                           if (response.statusCode == 204) {
                             print('unfavorite');
-                            await setReset(true);
                             setState(
                               () {
                                 isFavorites = !isFavorites;
@@ -193,10 +187,21 @@ class _UserpostState extends State<Userpost> {
                                 //ฟอลอยู่           ไม่ฟอล อัลฟอล
                               },
                             );
+                            await setReset(true);
                           } else {
                             print('server down');
                           }
                         }
+                      }, // your tap handler moved here
+                      builder: (BuildContext context, TapDebouncerFunc? onTap) {
+                        return IconButton(
+                            icon: Icon(
+                              Icons.thumb_up,
+                              color: isFavorites
+                                  ? Color.fromARGB(255, 166, 198, 6)
+                                  : Colors.black,
+                            ),
+                            onPressed: onTap);
                       },
                     ),
                     Text(

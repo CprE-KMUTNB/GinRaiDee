@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 Future<String> getToken() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -68,7 +69,7 @@ Container noti(
     width: MediaQuery.of(context).size.width,
 
     //ไปหน้า Home 2
-    child: GestureDetector(
+    child: TapDebouncer(
       onTap: () async {
         var response = await read().delete(noti_id);
         if (response.statusCode == 204) {
@@ -91,87 +92,93 @@ Container noti(
                     created: created)),
           );
         }
-      },
-      child: Card(
-        color: Color.fromARGB(255, 248, 248, 248),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  //รูปโปร
-                  Container(
-                    // margin: EdgeInsets.only(top: 35),
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 226, 226, 226),
-                      image: DecorationImage(
-                          image: NetworkImage(ownerPic), fit: BoxFit.cover),
-                      borderRadius: BorderRadius.all(Radius.circular(360)),
-                    ),
-                  ),
-
-                  //text ต่างๆ
-                  Container(
-                    margin: EdgeInsets.only(left: 5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          ownerName,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: "Itim",
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                        Text(
-                          'ได้เพิ่มเมนูใหม่',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontFamily: "Itim",
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                        Text(
-                          time,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontFamily: "Itim",
-                            color: Color.fromARGB(255, 154, 148, 148),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  //รูป
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                    width: 90,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(foodpic), fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                  )
-                ],
-              ),
+      }, // your tap handler moved here
+      builder: (BuildContext context, TapDebouncerFunc? onTap) {
+        return GestureDetector(
+          onTap: onTap,
+          child: Card(
+            color: Color.fromARGB(255, 248, 248, 248),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
             ),
-          ],
-        ),
-        elevation: 0,
-      ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      //รูปโปร
+                      Container(
+                        // margin: EdgeInsets.only(top: 35),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 226, 226, 226),
+                          image: DecorationImage(
+                              image: NetworkImage(ownerPic), fit: BoxFit.cover),
+                          borderRadius: BorderRadius.all(Radius.circular(360)),
+                        ),
+                      ),
+
+                      //text ต่างๆ
+                      Container(
+                        margin: EdgeInsets.only(left: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              ownerName,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: "Itim",
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                            Text(
+                              'ได้เพิ่มเมนูใหม่',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: "Itim",
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                            Text(
+                              time,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontFamily: "Itim",
+                                color: Color.fromARGB(255, 154, 148, 148),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      //รูป
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        width: 90,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(foodpic), fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(13),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            elevation: 0,
+          ),
+        );
+      },
     ),
   );
 }

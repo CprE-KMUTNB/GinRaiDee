@@ -16,6 +16,7 @@ import 'package:ginraid/Screens/componants/AnimatedLog.dart';
 import 'package:ginraid/Screens/componants/AnimatedSign.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 import '../Signup/Signup_Screen.dart';
 import '../componants/test.dart';
 import 'WidLog.dart';
@@ -288,14 +289,8 @@ class _loginScreenState extends State<loginScreen> {
                     //loginbutton
                     Container(
                       child: Center(
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            backgroundColor: Color.fromARGB(255, 166, 198, 6),
-                          ),
-                          onPressed: () async {
+                        child: TapDebouncer(
+                          onTap: () async {
                             var user = {
                               "username": emailController.text,
                               "password": passwordController.text,
@@ -368,15 +363,28 @@ class _loginScreenState extends State<loginScreen> {
                                 print(error);
                               }
                             }
+                          }, // your tap handler moved here
+                          builder:
+                              (BuildContext context, TapDebouncerFunc? onTap) {
+                            return TextButton(
+                              style: TextButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                backgroundColor:
+                                    Color.fromARGB(255, 166, 198, 6),
+                              ),
+                              onPressed: onTap,
+                              child: const Text(
+                                '       Login       ',
+                                style: TextStyle(
+                                  fontSize: 25.0,
+                                  fontFamily: "Itim",
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                            );
                           },
-                          child: const Text(
-                            '       Login       ',
-                            style: TextStyle(
-                              fontSize: 25.0,
-                              fontFamily: "Itim",
-                              color: Color.fromARGB(255, 255, 255, 255),
-                            ),
-                          ),
                         ),
                       ),
                     ),

@@ -49,6 +49,7 @@ dependencies:
   salomon_bottom_bar: ^3.3.1
   intl: ^0.17.0
   form_field_validator: ^1.1.0
+  tap_debouncer: ^2.0.2
 
 dev_dependencies:
   flutter_test:
