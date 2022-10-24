@@ -343,8 +343,8 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                               Navigator.of(context)
                                   .popUntil((_) => count++ >= 1);
                             }
-                          } else {
-                            showError();
+                          }
+                          if (response.statusCode == 400) {
                             var error =
                                 json.decode(utf8.decode(response.bodyBytes));
                             setState(() {
@@ -359,6 +359,9 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                                       ? ''
                                       : error["confirm_password"][0];
                             });
+                            if (oldpasswordError == "Incorrect Password!") {
+                              showError();
+                            }
                             print('oldpassword = ${oldpasswordError}');
                             print('newpassword = ${newpasswordError}');
                             print(

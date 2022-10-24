@@ -373,7 +373,6 @@ class _signupScreenState extends State<signupScreen> {
                               );
                             } else {
                               setState(() {
-                                showError();
                                 email_error = Registermodel.fromJson(
                                                 json.decode(response.body))
                                             .email!
@@ -411,6 +410,12 @@ class _signupScreenState extends State<signupScreen> {
                                         .confirmPassword![0]
                                     : "";
                               });
+                              if (email_error != '') {
+                                showemailError();
+                              }
+                              if (username_error != '') {
+                                showusernameError();
+                              }
 
                               print(email_error);
                               print(username_error);
@@ -467,7 +472,8 @@ class _signupScreenState extends State<signupScreen> {
       ),
     );
   }
-  void showError() {
+
+  void showemailError() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -481,6 +487,46 @@ class _signupScreenState extends State<signupScreen> {
           ),
           content: Text(
             'กรุณาเลือกใช้ Email อื่น',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontFamily: "Itim",
+              // color: Color.fromARGB(255, 166, 198, 6),
+            ),
+          ),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text(
+                "ตกลง",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: "Itim",
+                  color: Color.fromARGB(255, 166, 198, 6),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showusernameError() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "username นี้ไม่สามารถใช้งานได้",
+            style: TextStyle(
+                fontSize: 20.0, fontFamily: "Itim", fontWeight: FontWeight.bold
+                // color: Color.fromARGB(255, 166, 198, 6),
+                ),
+          ),
+          content: Text(
+            'กรุณาเลือกใช้ username อื่น',
             style: TextStyle(
               fontSize: 18.0,
               fontFamily: "Itim",
