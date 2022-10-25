@@ -62,8 +62,23 @@ class _homeScreenState extends State<homeScreen> {
     }
   }
 
-  fetchdata() async {
+  fetchsearchdata() async {
     var response = await Allmenu().get('?search=' + searchController.text);
+
+    if (response.statusCode == 200) {
+      var data = json.decode(utf8.decode(response.bodyBytes));
+      setState(() {
+        item = data;
+      });
+    } else {
+      setState(() {
+        item = [];
+      });
+    }
+  }
+
+  fetchdata() async {
+    var response = await Allmenu().get('?ordering=-created');
 
     if (response.statusCode == 200) {
       var data = json.decode(utf8.decode(response.bodyBytes));
@@ -121,10 +136,17 @@ class _homeScreenState extends State<homeScreen> {
               controller: searchController,
               onChanged: (text) {},
               onSubmitted: (text) {
-                fetchdata();
-                setState(() {
-                  item = [];
-                });
+                if (searchController.text.isNotEmpty) {
+                  fetchsearchdata();
+                  setState(() {
+                    item = [];
+                  });
+                } else {
+                  fetchdata();
+                  setState(() {
+                    item = [];
+                  });
+                }
               },
               textAlignVertical: TextAlignVertical.bottom,
               decoration: InputDecoration(
