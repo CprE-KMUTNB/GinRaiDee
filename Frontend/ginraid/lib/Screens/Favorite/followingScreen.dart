@@ -27,7 +27,8 @@ Future<String> getUsername() async {
 class Followinglist {
   Client client = http.Client();
   Future<dynamic> get() async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/user-api/followlist/');
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/user-api/followlist/?ordering=-created');
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',

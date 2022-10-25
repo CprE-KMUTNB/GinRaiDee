@@ -61,7 +61,8 @@ Container noti(
     bool isFavorites,
     int favoritesCount,
     DateTime created) {
-  String time = DateFormat('kk:mm น. dd/MM/yyyy').format(created);
+  String time =
+      DateFormat('kk:mm น. dd/MM/yyyy').format(created.add(Duration(hours: 7)));
   return Container(
     margin: EdgeInsets.only(top: 5),
     padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),

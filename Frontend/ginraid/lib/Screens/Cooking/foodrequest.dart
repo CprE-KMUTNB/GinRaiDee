@@ -13,7 +13,8 @@ Future<String> getToken() async {
 class Cooking {
   Client client = http.Client();
   Future<dynamic> get() async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/menu-api/self/');
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/menu-api/self/?ordering=-created');
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',

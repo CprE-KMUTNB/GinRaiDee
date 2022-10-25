@@ -21,8 +21,8 @@ Future<String> getToken() async {
 
 class Favoritelist {
   Client client = http.Client();
-  Future<dynamic> get(String search) async {
-    var url = Uri.parse(baseUrl + '?search=' + search);
+  Future<dynamic> get(String text) async {
+    var url = Uri.parse(baseUrl + text);
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',
@@ -80,8 +80,24 @@ class _favFoodScreenState extends State<favFoodScreen> {
     return reset;
   }
 
+  fetchsearchdata() async {
+    var response = await Favoritelist().get('?search=' + searchController.text);
+
+    if (response.statusCode == 200) {
+      var data = json.decode(utf8.decode(response.bodyBytes));
+      setState(() {
+        item = data;
+        favoritevalue = item.length;
+      });
+    } else {
+      setState(() {
+        item = [];
+      });
+    }
+  }
+
   fetchdata() async {
-    var response = await Favoritelist().get(searchController.text);
+    var response = await Favoritelist().get('?ordering=-created');
 
     if (response.statusCode == 200) {
       var data = json.decode(utf8.decode(response.bodyBytes));
@@ -186,10 +202,17 @@ class _favFoodScreenState extends State<favFoodScreen> {
                     controller: searchController,
                     onChanged: (text) {},
                     onSubmitted: (text) {
-                      fetchdata();
-                      setState(() {
-                        item = [];
-                      });
+                      if (searchController.text.isNotEmpty) {
+                        fetchsearchdata();
+                        setState(() {
+                          item = [];
+                        });
+                      } else {
+                        fetchdata();
+                        setState(() {
+                          item = [];
+                        });
+                      }
                     },
                     textAlignVertical: TextAlignVertical.bottom,
                     decoration: InputDecoration(

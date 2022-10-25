@@ -32,8 +32,22 @@ class _myFoodScreenState extends State<myFoodScreen> {
 
   Timer? timer;
 
-  fetchdata() async {
+  fetchsearchdata() async {
     var response = await Cooking().search(searchController.text);
+    if (response.statusCode == 200) {
+      var data = json.decode(utf8.decode(response.bodyBytes));
+      setState(() {
+        item = data;
+      });
+    } else {
+      setState(() {
+        item = [];
+      });
+    }
+  }
+
+  fetchdata() async {
+    var response = await Cooking().get();
     if (response.statusCode == 200) {
       var data = json.decode(utf8.decode(response.bodyBytes));
       setState(() {
@@ -202,10 +216,17 @@ class _myFoodScreenState extends State<myFoodScreen> {
                     controller: searchController,
                     onChanged: (text) {},
                     onSubmitted: (text) {
-                      fetchdata();
-                      setState(() {
-                        item = [];
-                      });
+                      if (searchController.text.isNotEmpty) {
+                        fetchsearchdata();
+                        setState(() {
+                          item = [];
+                        });
+                      } else {
+                        fetchdata();
+                        setState(() {
+                          item = [];
+                        });
+                      }
                     },
                     textAlignVertical: TextAlignVertical.bottom,
                     decoration: InputDecoration(

@@ -28,7 +28,8 @@ Future<String> getUsername() async {
 class Notilist {
   Client client = http.Client();
   Future<dynamic> get() async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/notification-api/');
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/notification-api/?ordering=-created');
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',

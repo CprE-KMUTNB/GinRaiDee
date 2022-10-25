@@ -31,8 +31,9 @@ Future<String> getUsername() async {
 
 class Favoritelist {
   Client client = http.Client();
-  Future<dynamic> get() async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/menu-api/fav-list/');
+  Future<dynamic> get(String text) async {
+    var url =
+        Uri.parse('https://ginraid.herokuapp.com/menu-api/fav-list/' + text);
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',
@@ -52,7 +53,8 @@ class Favoritelist {
 class Followinglist {
   Client client = http.Client();
   Future<dynamic> get() async {
-    var url = Uri.parse('https://ginraid.herokuapp.com/user-api/followlist/');
+    var url = Uri.parse(
+        'https://ginraid.herokuapp.com/user-api/followlist/?ordering=-created');
     var _headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Token ${await getToken()}',
@@ -104,7 +106,7 @@ class _favScreenState extends State<favScreen> {
   }
 
   fetchdata() async {
-    var response = await Favoritelist().get();
+    var response = await Favoritelist().get('?ordering=-created');
     var name = await getUsername();
     if (response.statusCode == 200) {
       var data = json.decode(utf8.decode(response.bodyBytes));
