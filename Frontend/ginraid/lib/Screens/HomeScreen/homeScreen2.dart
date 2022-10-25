@@ -189,43 +189,12 @@ class _homeScreen2State extends State<homeScreen2> {
                     margin: EdgeInsets.only(top: 10, left: 20, right: 20),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(foodpic), fit: BoxFit.cover),
+                          image: NetworkImage(foodpic), fit: BoxFit.contain),
                       borderRadius: BorderRadius.circular(13),
                     ),
                   ),
 
-                  //ประเภท
-
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 10, left: 20),
-                  //   child: Row(
-                  //     children: [
-                  //       //ประเภทหัวข้อ
-                  //       Container(
-                  //         child: Text(
-                  //           'ประเภท : ',
-                  //           style: TextStyle(
-                  //               fontSize: 25.0,
-                  //               fontFamily: "IBMPlexSansThai",
-                  //               color: Colors.black,
-                  //               fontWeight: FontWeight.bold),
-                  //         ),
-                  //       ),
-
-                  //       //ประเภท รับค่า
-                  //       Container(
-                  //         child: Text(
-                  //           'ผัด , กับข้าว',
-                  //           style: TextStyle(
-                  //             fontSize: 20.0,
-                  //             fontFamily: "IBMPlexSansThai",
-                  //             color: Colors.black,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                 
 
                   //วัตถุดิบ
                   Container(
@@ -308,6 +277,6 @@ class _homeScreen2State extends State<homeScreen2> {
           ),
         ));
 
-    // );
+
   }
 }

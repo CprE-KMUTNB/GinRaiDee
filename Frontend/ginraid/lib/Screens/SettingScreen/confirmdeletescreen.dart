@@ -1,20 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
+
 
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/Cooking/PicWid.dart';
-import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
-import 'package:ginraid/Screens/Cooking/bgCook1.dart';
-import 'package:ginraid/Screens/Cooking/bgCook3.dart';
-import 'package:ginraid/Screens/Cooking/food.dart';
-import 'package:ginraid/Screens/Cooking/myFood.dart';
-import 'package:ginraid/Screens/Cooking/textFieldwid.dart';
 import 'package:ginraid/Screens/Login/Login_Screen.dart';
-import 'package:ginraid/Screens/SettingScreen/ProfilePicWid.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
 import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
-import 'package:ginraid/Screens/SettingScreen/user.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 
 class ConfirmPasswordScreen extends StatefulWidget {
@@ -32,7 +22,6 @@ class _ConfirmPasswordScreenState extends State<ConfirmPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
   String? _retrieveDataError;
-  User user = UserPreferences.myUser;
   final oldpasswordController = TextEditingController();
 
   String oldpasswordError = ''; ////////////////////////////////////////////////

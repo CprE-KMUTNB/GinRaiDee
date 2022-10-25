@@ -3,17 +3,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/Cooking/PicWid.dart';
-import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
-import 'package:ginraid/Screens/Cooking/bgCook1.dart';
-import 'package:ginraid/Screens/Cooking/bgCook3.dart';
-import 'package:ginraid/Screens/Cooking/food.dart';
-import 'package:ginraid/Screens/Cooking/myFood.dart';
 import 'package:ginraid/Screens/Cooking/textFieldwid.dart';
 import 'package:ginraid/Screens/SettingScreen/ProfilePicWid.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
 import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
-import 'package:ginraid/Screens/SettingScreen/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -48,7 +41,6 @@ Future<bool> setReset(bool state) async {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   String? _retrieveDataError;
-  User user = UserPreferences.myUser;
   File? imageFile;
   String username;
   String userPic;
@@ -156,16 +148,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                     SizedBox(height: 40),
 
-                    // อีเมล
-                    // TextFieldWidget(
-                    //   maxLines: 1,
-                    //   label: 'Email',
-                    //   text: user.email,
-                    //   onChanged: (email) {},
-                    // ),
-
-                    // SizedBox(height: 40),
-
                     //ปุ่มบันทึก
                     Container(
                       width: 120,
@@ -251,33 +233,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         },
                       ),
                     ),
-
-                    // GestureDetector(
-                    //   onTap: () => {showAlertDialog()},
-                    //   child: RichText(
-                    //     text: TextSpan(
-                    //       // ignore: prefer_const_literals_to_create_immutables
-                    //       children: [
-                    //         TextSpan(
-                    //           text: 'ต้องการที่จะ ',
-                    //           style: TextStyle(
-                    //             fontSize: 18.0,
-                    //             fontFamily: "NotoSansThai",
-                    //             color: Color.fromARGB(255, 0, 0, 0),
-                    //           ),
-                    //         ),
-                    //         TextSpan(
-                    //           text: 'ลบบัญชีผู้ใช้',
-                    //           style: TextStyle(
-                    //             fontSize: 18.0,
-                    //             fontFamily: "NotoSansThai",
-                    //             color: Color.fromARGB(255, 227, 0, 0),
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

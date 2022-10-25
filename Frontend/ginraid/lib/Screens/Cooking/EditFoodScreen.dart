@@ -1,23 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/Cooking/PicWid.dart';
-import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
-import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/bgCook3.dart';
-import 'package:ginraid/Screens/Cooking/food.dart';
 import 'package:ginraid/Screens/Cooking/foodrequest.dart';
-import 'package:ginraid/Screens/Cooking/myFood.dart';
-import 'package:ginraid/Screens/Cooking/myfoodScreen.dart';
 import 'package:ginraid/Screens/Cooking/textFieldwid.dart';
-import 'package:ginraid/Screens/componants/homeinhome.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 
-import '../Favorite/user.dart';
+
 
 class EditFoodScreen extends StatefulWidget {
   static const routeName = '/';
@@ -66,7 +59,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
     required this.isPublic,
   });
   String? _retrieveDataError;
-  Food food = FoodEdit.myFood;
+  
   File? imageFile;
   bool isedit = false;
 
@@ -75,9 +68,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
     return prefs.setBool('reset', state);
   }
 
-  // String? newfoodname = '';
-  // String? newingredient = '';
-  // String? newrecipe = '';
+  
   String? selectedValue = '';
   String error = ''; ////////////////////////////////////////
 

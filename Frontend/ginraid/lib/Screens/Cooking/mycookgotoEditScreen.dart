@@ -159,38 +159,7 @@ class _mycookScreenState extends State<mycookScreen> {
                   ),
                 ),
 
-                //ประเภท
-
-                // Container(
-                //   margin: EdgeInsets.only(top: 10, left: 20),
-                //   child: Row(
-                //     children: [
-                //       //ประเภทหัวข้อ
-                //       Container(
-                //         child: Text(
-                //           'ประเภท : ',
-                //           style: TextStyle(
-                //               fontSize: 25.0,
-                //               fontFamily: "IBMPlexSansThai",
-                //               color: Colors.black,
-                //               fontWeight: FontWeight.bold),
-                //         ),
-                //       ),
-
-                //       //ประเภท รับค่า
-                //       Container(
-                //         child: Text(
-                //           'ผัด , กับข้าว',
-                //           style: TextStyle(
-                //             fontSize: 20.0,
-                //             fontFamily: "IBMPlexSansThai",
-                //             color: Colors.black,
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                
 
                 //วัตถุดิบ
                 Container(

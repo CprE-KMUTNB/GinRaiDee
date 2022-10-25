@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/Cooking/bgCook1.dart';
 import 'package:ginraid/Screens/Cooking/bgCook2.dart';
 import 'package:ginraid/Screens/Cooking/foodrequest.dart';
 import 'package:image_picker/image_picker.dart';

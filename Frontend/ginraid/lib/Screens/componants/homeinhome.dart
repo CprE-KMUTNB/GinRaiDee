@@ -2,19 +2,14 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:drop_shadow/drop_shadow.dart';
-import 'package:flutter/services.dart';
+
 import 'package:ginraid/Screens/Favorite/favoriteScreen.dart';
-import 'package:ginraid/Screens/HomeScreen/bgHome1.dart';
-import 'package:ginraid/Screens/HomeScreen/homescreenrequest.dart';
-import 'package:ginraid/Screens/HomeScreen/menu_data.dart';
-import 'package:ginraid/Screens/HomeScreen/post.dart';
+
 import 'package:ginraid/Screens/Notification/NotiScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/SettingScreen.dart';
-import 'package:ginraid/Screens/componants/salmon.dart';
+
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';

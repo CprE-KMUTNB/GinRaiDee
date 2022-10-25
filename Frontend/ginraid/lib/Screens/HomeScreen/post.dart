@@ -235,73 +235,7 @@ class _PostState extends State<Post> {
                     ),
                   ),
 
-                  //followbut
-                  // Container(
-                  //   margin: EdgeInsets.only(right: 10),
-                  //   alignment: Alignment.center,
-                  //   child: GestureDetector(
-                  //     onTap: () async {
-                  //       if (isFollowing == false) {
-                  //         var followid = {"following": owner};
-                  //         var response = await follow().post(followid);
-                  //         if (response.statusCode == 201) {
-                  //           print('follow');
-                  //           await setReset(true);
-                  //           setState(
-                  //             () {
-                  //               isFollowing = !isFollowing;
-                  //               //ฟอลอยู่           ไม่ฟอล อัลฟอล
-                  //             },
-                  //           );
-                  //         } else {
-                  //           print('server down');
-                  //         }
-                  //       } else {
-                  //         var response = await follow().delete(owner);
-                  //         if (response.statusCode == 204) {
-                  //           await setReset(true);
-                  //           print('unfollow');
-                  //           setState(
-                  //             () {
-                  //               isFollowing = !isFollowing;
-                  //               //ฟอลอยู่           ไม่ฟอล อัลฟอล
-                  //             },
-                  //           );
-                  //         } else {
-                  //           print('server down');
-                  //         }
-                  //       }
-                  //     },
-                  //     child: AnimatedContainer(
-                  //       height: 35,
-                  //       width: 110,
-                  //       duration: Duration(milliseconds: 300),
-                  //       decoration: BoxDecoration(
-                  //         color: isFollowing
-                  //             ? Colors.transparent
-                  //             : Color.fromARGB(255, 166, 198, 6),
-                  //         borderRadius: BorderRadius.circular(30),
-                  //         border: Border.all(
-                  //           color: isFollowing
-                  //               ? Color.fromARGB(255, 166, 198, 6)
-                  //               : Colors.transparent,
-                  //         ),
-                  //       ),
-                  //       child: Center(
-                  //         child: Text(
-                  //           isFollowing ? 'Following' : 'Follow',
-                  //           style: TextStyle(
-                  //             fontSize: 17.0,
-                  //             fontFamily: "IBMPlexSansThaiReg",
-                  //             color: isFollowing
-                  //                 ? Color.fromARGB(255, 166, 198, 6)
-                  //                 : Color.fromARGB(255, 255, 255, 255),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  
                 ],
               ),
 

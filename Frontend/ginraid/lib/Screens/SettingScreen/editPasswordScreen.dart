@@ -4,18 +4,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/Cooking/PicWid.dart';
-import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
-import 'package:ginraid/Screens/Cooking/bgCook1.dart';
-import 'package:ginraid/Screens/Cooking/bgCook3.dart';
-import 'package:ginraid/Screens/Cooking/food.dart';
-import 'package:ginraid/Screens/Cooking/myFood.dart';
-import 'package:ginraid/Screens/Cooking/textFieldwid.dart';
-import 'package:ginraid/Screens/SettingScreen/ProfilePicWid.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
 import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
-import 'package:ginraid/Screens/SettingScreen/user.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 
 class EditPasswordScreen extends StatefulWidget {
@@ -35,7 +25,6 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   bool _isObscure2 = true;
   bool _isObscure3 = true;
   String? _retrieveDataError;
-  User user = UserPreferences.myUser;
   File? imageFile;
   final oldpasswordController = TextEditingController();
   final newpasswordController = TextEditingController();

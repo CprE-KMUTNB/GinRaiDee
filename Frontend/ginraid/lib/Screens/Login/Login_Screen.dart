@@ -1,25 +1,23 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new
 
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';
+
 import 'package:ginraid/Screens/Login/login.dart';
 import 'package:ginraid/Screens/Login/loginmodel.dart';
 import 'package:ginraid/Screens/componants/homeinhome.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 import 'package:ginraid/Screens/componants/background.dart';
-import 'package:ginraid/Screens/componants/AnimatedLog.dart';
-import 'package:ginraid/Screens/componants/AnimatedSign.dart';
+
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 import '../Signup/Signup_Screen.dart';
-import '../componants/test.dart';
-import 'WidLog.dart';
+
+
 import 'dart:convert';
 
 class loginScreen extends StatefulWidget {

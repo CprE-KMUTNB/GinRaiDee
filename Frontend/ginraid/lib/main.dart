@@ -1,29 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ginraid/Screens/HomeScreen/reportPostScreen.dart';
-import 'package:ginraid/Screens/Notification/NotiScreen.dart';
-import 'package:ginraid/Screens/Cooking/EditFoodScreen.dart';
-import 'package:ginraid/Screens/Cooking/addFoodScreen.dart';
-import 'package:ginraid/Screens/Cooking/mycookgotoEditScreen.dart';
-import 'package:ginraid/Screens/Cooking/myfoodScreen.dart';
-import 'package:ginraid/Screens/Favorite/favoriteScreen.dart';
-import 'package:ginraid/Screens/Favorite/followingScreen.dart';
-import 'package:ginraid/Screens/HomeScreen/homeScreen.dart';
-import 'package:ginraid/Screens/HomeScreen/homeScreen2.dart';
-import 'package:ginraid/Screens/HomeScreen/homeScreen3.dart';
 import 'package:ginraid/Screens/Login/Login_Screen.dart';
-import 'package:ginraid/Screens/SettingScreen/SettingScreen.dart';
-import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
-import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
-import 'package:ginraid/Screens/componants/test.dart';
-import 'package:ginraid/constant.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/src/material/progress_indicator.dart';
-
-import 'Screens/Signup/Signup_Screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/src/material/progress_indicator.dart';
-
 import 'Screens/componants/homeinhome.dart';
 
 void main() {

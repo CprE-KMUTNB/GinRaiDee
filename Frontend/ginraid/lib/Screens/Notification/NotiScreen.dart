@@ -2,13 +2,10 @@
 
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/Notification/notimodel.dart';
 import 'package:ginraid/Screens/Notification/bgNoti.dart';
 import 'package:ginraid/Screens/Notification/notiCard.dart';
-import 'package:ginraid/Screens/Favorite/bgFav3.dart';
-import 'package:ginraid/Screens/Favorite/favfood.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
