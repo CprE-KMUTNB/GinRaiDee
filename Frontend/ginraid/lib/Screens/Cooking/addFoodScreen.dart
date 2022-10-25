@@ -506,7 +506,7 @@ class _addFoodScreenState extends State<addFoodScreen> {
   }
 
   void getImage({required ImageSource source}) async {
-    final file = await ImagePicker().pickImage(source: source);
+    final file = await ImagePicker().pickImage(source: source, imageQuality: 1);
 
     if (file?.path != null) {
       setState(() {
