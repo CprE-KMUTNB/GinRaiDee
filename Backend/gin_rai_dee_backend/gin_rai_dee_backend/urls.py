@@ -25,4 +25,4 @@ urlpatterns = [
     path('menu-api/', include('GinRaiD_Recipes.urls')),
     path('notification-api/', include('GinRaiD_Notifications.urls')),
     path('report-api/', include('GinRaiD_Reports.urls'))
-] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

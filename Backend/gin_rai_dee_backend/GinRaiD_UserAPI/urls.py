@@ -10,6 +10,7 @@ router.register('username', views.UserNameViewSet, 'username')
 router.register('password', views.UserPasswordViewSet, 'password')
 router.register('follow', views.UserFollowViewSet, 'follow')
 router.register('followlist', views.UserFollowListViewSet, 'followlist')
+'''router.register('fav-follow', views.UserFavoriteAndFollowingViewSet, 'fav-follow')'''
 router.register('all-data', views.UserAllDataViewSet, 'all-data')
 
 urlpatterns = [

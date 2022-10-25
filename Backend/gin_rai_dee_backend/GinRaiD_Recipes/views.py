@@ -3,6 +3,33 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
 from . import serializers,models,permissions
+from django.db.models.signals import post_save,pre_save,post_delete
+from django.dispatch import receiver
+
+@receiver(post_delete, sender=models.Menu)
+def post_save_image(sender, instance, *args, **kwargs):
+    try:
+        instance.Foodpic.delete(save=False)
+    except:
+        pass
+
+@receiver(pre_save, sender=models.Menu)
+def pre_save_image(sender, instance, *args, **kwargs):
+    try:
+        old_img = instance.__class__.objects.get(id=instance.id).Foodpic
+        try:
+            new_img = instance.Foodpic
+        except:
+            new_img = None
+        if new_img != old_img:
+            try:
+                instance.__class__.objects.get(id=instance.id).Foodpic.delete(save=False)
+            except:
+                pass
+    except:
+        pass
+
+
 
 
 class MenuViewSet(viewsets.ModelViewSet):
@@ -14,8 +41,8 @@ class MenuViewSet(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     filter_backends = (filters.SearchFilter, filters.OrderingFilter,)
-    search_fields = ('Owner__username','Foodname', 'ingredient','recipes')
-    ordering_fields = ['Owner__username', 'Foodname', 'ingredient','recipes','created']
+    search_fields = ('Owner__username','Foodname',)
+    ordering_fields = ['Owner__username', 'Foodname','created']
     http_method_names = ['get']
 
     def perform_create(self, serializer):
@@ -66,8 +93,8 @@ class SelfViewSet(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     filter_backends = (filters.SearchFilter, filters.OrderingFilter,)
-    search_fields = ('Foodname', 'ingredient','recipes')
-    ordering_fields = ['Foodname', 'ingredient','recipes','created']
+    search_fields = ('Foodname',)
+    ordering_fields = ['Foodname','created']
     http_method_names = ['get','put','post','delete']
     def perform_create(self, serializer):
         serializer.save(Owner=self.request.user)
@@ -92,8 +119,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         permissions.UpdateOwnFav,
         IsAuthenticated,
     )
-    filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
-    search_fields = ('fav_menu__Foodname', 'user__username')
+    filter_backends = (filters.OrderingFilter,)
     ordering_fields = ['fav_menu__Foodname', 'user__username','created']
     http_method_names = ['get','post','delete']
 
@@ -110,8 +136,8 @@ class FavoriteListViewSet(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
-    search_fields = ('fav_menu__Foodname', 'user__username')
-    ordering_fields = ['fav_menu__Foodname', 'user__username','created']
+    search_fields = ['fav_menu__Foodname', 'fav_menu__Owner__username']
+    ordering_fields = ['fav_menu__Foodname', 'fav_menu__Owner__username','created']
     lookup_field = 'fav_menu'
     http_method_names = ['get','delete']
 

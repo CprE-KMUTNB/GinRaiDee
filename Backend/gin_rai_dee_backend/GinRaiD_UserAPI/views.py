@@ -5,6 +5,33 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 from rest_framework.permissions import IsAuthenticated
 from . import serializers,models,permissions
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from django.db.models.signals import post_save,pre_save,post_delete
+from django.dispatch import receiver
+
+@receiver(post_delete, sender=models.UserProfile)
+def post_save_image(sender, instance, *args, **kwargs):
+    try:
+        instance.userpic.delete(save=False)
+    except:
+        pass
+
+@receiver(pre_save, sender=models.UserProfile)
+def pre_save_image(sender, instance, *args, **kwargs):
+    try:
+        old_img = instance.__class__.objects.get(id=instance.id).userpic
+        try:
+            new_img = instance.userpic
+        except:
+            new_img = None
+        if new_img != old_img:
+            try:
+                instance.__class__.objects.get(id=instance.id).userpic.delete(save=False)
+            except:
+                pass
+    except:
+        pass
 
 
 class UserRegisterViewSet(viewsets.ModelViewSet):
@@ -12,7 +39,7 @@ class UserRegisterViewSet(viewsets.ModelViewSet):
     queryset = models.UserProfile.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)
-    http_method_names = ['post']
+    http_method_names = ['post','get',]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -29,7 +56,7 @@ class UserPicViewSet(viewsets.ModelViewSet):
     )
     filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
     ordering_fields = ['username']
-    search_fields = ('username')
+    search_fields = ('username',)
 
 
 class UserNameViewSet(viewsets.ModelViewSet):
@@ -42,7 +69,7 @@ class UserNameViewSet(viewsets.ModelViewSet):
         IsAuthenticated,
     )
     filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
-    search_fields = ('username')
+    search_fields = ('username',)
     ordering_fields = ['username']
 
 
@@ -56,7 +83,7 @@ class UserPasswordViewSet(viewsets.ModelViewSet):
     )
     http_method_names = ['put','get', ]
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('username')
+    search_fields = ('username',)
     
     
 
@@ -71,7 +98,7 @@ class UserFollowViewSet(viewsets.ModelViewSet):
     )
     filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
     ordering_fields = ['follower__username','following__username','created']
-    search_fields = ('follower__username','following__username')
+    search_fields = ('follower__username','following__username',)
     http_method_names = ['post','get', 'delete']
 
     def perform_create(self, serializer):
@@ -88,7 +115,7 @@ class UserFollowListViewSet(viewsets.ModelViewSet):
     )
     filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
     ordering_fields = ['following__username','created']
-    search_fields = ('following__username')
+    search_fields = ('following__username',)
     http_method_names = ['get', 'delete']
     lookup_field = 'following'
 
@@ -110,10 +137,24 @@ class UserAllDataViewSet(viewsets.ModelViewSet):
     )
     filter_backends = (filters.SearchFilter,filters.OrderingFilter,)
     ordering_fields = ['username','email']
-    search_fields = ('username','email')
+    search_fields = ('username','email',)
     http_method_names = ['get', 'delete']
 
 
 
 class UserLoginApiView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'name': user.username,
+        })
+
+
+

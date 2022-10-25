@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-#import django_heroku
+import django_heroku
+import dj_database_url
+import cloudinary_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'rest_framework',
     'rest_framework.authtoken',
     'GinRaiD_UserAPI',
@@ -82,12 +86,13 @@ WSGI_APPLICATION = 'gin_rai_dee_backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': os.path.join(BASE_DIR,'db.sqlite3')
+   }
 }
 
+DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -108,8 +113,29 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dnhw2fk8e',
+    'API_KEY': '168592612174969',
+    'API_SECRET': 'bG55tCTM_WZtKX3twLTanA0T-pY'
+}
 
 
+
+
+
+# DEFAULT_FILE_STORAGE = 'django_dropbox_storage.storage.DropboxStorage'
+# DROPBOX_CONSUMER_KEY = 'xxyjpomuygk3zvh'
+# DROPBOX_CONSUMER_SECRET = 'g366b880ezx3ymf'
+# DROPBOX_ACCESS_TOKEN = 'sl.BRsc23ZauxOWAbrREEbY7P8fRU1Xk6Cci8iTUpBj1S3xVzRirqO5oqASO680f_A7o0kx4EXrNitWRLEgRm9LSBR-02bC7MxUgaTRgxrcaRkJfwgWAXTW9ebSmQDyLBcM142A97aUKER9'
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+# DROPBOX_OAUTH2_TOKEN = 'sl.BRsc23ZauxOWAbrREEbY7P8fRU1Xk6Cci8iTUpBj1S3xVzRirqO5oqASO680f_A7o0kx4EXrNitWRLEgRm9LSBR-02bC7MxUgaTRgxrcaRkJfwgWAXTW9ebSmQDyLBcM142A97aUKER9'
+# DROPBOX_APP_KEY = 'xxyjpomuygk3zvh'
+# DROPBOX_APP_SECRET = 'g366b880ezx3ymf'
+# DROPBOX_ROOT_PATH = '/static'
+
+
+# DROPBOX_ROOT_FOLDER = '/static'
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -125,14 +151,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'    
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'  # or any prefix you choose
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -140,4 +169,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'GinRaiD_UserAPI.UserProfile'
 
-#django_heroku.settings(locals())
+
+
+
+django_heroku.settings(locals())

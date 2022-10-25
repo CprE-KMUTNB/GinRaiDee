@@ -59,6 +59,20 @@ class MenuSerializer(serializers.ModelSerializer):
             return True
         return False
 
+    def validate(self, data):
+        pic = data.get('Foodpic')
+        Validate_text = {}
+        has_error = False
+
+        if pic is None:
+            Validate_text.update({'Foodpic' : 'This field cannot be blank!'})
+            has_error = True
+
+        if has_error:
+            raise ValidationError(Validate_text)
+
+        return data
+
 
 
     def get_is_favorites(self,obj):
@@ -99,7 +113,19 @@ class MenuPicSerializer(serializers.ModelSerializer):
             'Foodname': {'read_only': True},
             'created': {'read_only': True,},
         }
+    def validate(self, data):
+        pic = data.get('Foodpic')
+        Validate_text = {}
+        has_error = False
 
+        if pic is None:
+            Validate_text.update({'Foodpic' : 'This field cannot be blank!'})
+            has_error = True
+
+        if has_error:
+            raise ValidationError(Validate_text)
+
+        return data
 
 
 class FavSerializer(serializers.ModelSerializer):
@@ -119,22 +145,48 @@ class FavSerializer(serializers.ModelSerializer):
         menus = list(models.Favorite.objects.values_list('fav_menu',flat=True).filter(user=user.id))
         if menu.id in menus:
             raise ValidationError({'fav_menu':'This menu has been favorited!'})
-        return data
+        return data   
         
 
 
 class FavListSerializer(serializers.ModelSerializer):
 
+    is_following = serializers.SerializerMethodField()
+    owner_id = serializers.IntegerField(source='fav_menu.Owner.id', read_only=True)
+    owner_name = serializers.CharField(source='fav_menu.Owner', read_only = True)
+    owner_pic = serializers.ImageField(source='fav_menu.Owner.userpic', read_only = True)
     Foodname = serializers.CharField(source='fav_menu.Foodname', read_only=True)
     ingredient = serializers.CharField(source='fav_menu.ingredient', read_only=True)
     recipes = serializers.CharField(source='fav_menu.recipes', read_only=True)
     Foodpic = serializers.ImageField(source='fav_menu.Foodpic',read_only=True)
+    is_favorites = serializers.SerializerMethodField()
+    favorites_count = serializers.IntegerField(source='fav_menu.favorites.count', read_only=True)
 
     class Meta:
         model = models.Favorite
-        fields = ('fav_menu','user', 'Foodname','ingredient','recipes','Foodpic','created')
+        fields = ('fav_menu','user','owner_id','owner_name','owner_pic', 'Foodname','ingredient','recipes','Foodpic','is_following','is_favorites','favorites_count','created')
         extra_kwargs = {
             'user': {'read_only': True,},
             'fav_menu': {'read_only': True,},
             'created': {'read_only': True,},
         }
+    
+    def get_is_following(self,obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        following = list(UserFollowModule.objects.values_list('following',flat=True).filter(follower=user.id))
+        if obj.fav_menu.Owner.id in following:
+            return True
+        return False
+
+    def get_is_favorites(self,obj):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        fav_list = list(models.Favorite.objects.values_list('user',flat=True).filter(fav_menu=obj.fav_menu.id))
+        if user.id in fav_list:
+            return True
+        return False

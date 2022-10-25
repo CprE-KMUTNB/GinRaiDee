@@ -32,7 +32,7 @@ class UserProfileManager(BaseUserManager):
 def image_file_path(instance, filename):
     ext = os.path.splitext(filename)[1]
     filename = f'{uuid.uuid4()}{ext}'
-    return os.path.join('static','profile-images', filename)
+    return os.path.join('media','profile-images', filename)
 
 
 
@@ -79,6 +79,7 @@ class UserFollowModule(models.Model):
 
     class Meta:
         unique_together = ('follower', 'following',)
+        # db_table = 'userfollowmodule'
 
     def __str__(self):
         return 'follower :'+self.follower.username+' |following :'+self.following.username

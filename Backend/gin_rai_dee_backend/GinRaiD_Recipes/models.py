@@ -7,7 +7,7 @@ import uuid
 def image_file_path(instance, filename):
     ext = os.path.splitext(filename)[1]
     filename = f'{uuid.uuid4()}{ext}'
-    return os.path.join('static','images', filename)
+    return os.path.join('media','images', filename)
 
 
 class MenuManager(models.Manager):
@@ -32,7 +32,7 @@ class Menu(models.Model):
     )
     Foodname = models.CharField(max_length=255)
     Foodpic = models.ImageField(upload_to = image_file_path,null = True)
-    ingredient = models.CharField(max_length=255)
+    ingredient = models.TextField()
     recipes = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True)
@@ -74,6 +74,7 @@ class Favorite(models.Model):
 
     class Meta:
         unique_together = ('user', 'fav_menu',)
+        # db_table = 'favorite'
 
     def __str__(self):
         return 'user :'+self.user.username+' |favorite :'+self.fav_menu.Foodname

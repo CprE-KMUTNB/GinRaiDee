@@ -170,6 +170,7 @@ class UserFollowSerializer(serializers.ModelSerializer):
             'follower': {'read_only':True},
             'created': {'read_only':True},
         }
+
     def validate(self,data):
         following = data.get('following')
         user = None
@@ -180,7 +181,8 @@ class UserFollowSerializer(serializers.ModelSerializer):
         if following.id in followings:
             raise ValidationError({'following':'This user has been followed!'})
         return data
-    
+
+
 
 class UserFollowListSerializer(serializers.ModelSerializer):
 
@@ -205,6 +207,12 @@ class FollowerSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'created': {'read_only':True},
         }
+
+'''class FollowerandFavoriteSerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = models.UserFollowModule
+        fields = ('follower','following','fav_menu')'''
+
 
     
 
