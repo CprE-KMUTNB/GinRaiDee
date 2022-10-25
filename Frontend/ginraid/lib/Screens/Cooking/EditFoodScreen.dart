@@ -489,7 +489,8 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
   }
 
   void getImage({required ImageSource source}) async {
-    final file = await ImagePicker().pickImage(source: source, imageQuality: 1);
+    final file =
+        await ImagePicker().pickImage(source: source, imageQuality: 10);
 
     if (file?.path != null) {
       setState(() {
