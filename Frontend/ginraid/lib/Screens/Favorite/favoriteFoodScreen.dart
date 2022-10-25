@@ -237,7 +237,7 @@ class _favFoodScreenState extends State<favFoodScreen> {
                       topLeft: Radius.circular(47),
                     ),
                   ),
-                  height: screenHeight * 0.7,
+                  height: screenHeight * 0.762,
                   width: screenWidth,
                   child:
                       //กล่องที่ใส่เมนูที่ถูกใจไว้ กล่องใหญ่

@@ -146,7 +146,7 @@ class _homeScreen3State extends State<homeScreen3> {
             bgHome3().buildBackground(screenWidth, screenHeight),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.only(top: 80, left: 10, right: 10),
+              margin: EdgeInsets.only(top: 90, left: 10, right: 10),
               child: Column(
                 children: [
                   //แถวแรก
@@ -384,7 +384,7 @@ class _homeScreen3State extends State<homeScreen3> {
                   Container(
                     // color: Colors.amber,
                     // margin: EdgeInsets.only(left: 15, right: 15),
-                    height: 560,
+                    height: 615,
                     width: screenWidth,
                     // color: Colors.blueAccent,
                     child: SingleChildScrollView(
@@ -417,7 +417,7 @@ class _homeScreen3State extends State<homeScreen3> {
             bgHome3().buildBackground(screenWidth, screenHeight),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.only(top: 80, left: 10, right: 10),
+              margin: EdgeInsets.only(top: 90, left: 10, right: 10),
               child: Column(
                 children: [
                   //แถวแรก
@@ -661,7 +661,7 @@ class _homeScreen3State extends State<homeScreen3> {
                   Container(
                     // color: Colors.amber,
                     // margin: EdgeInsets.only(left: 15, right: 15),
-                    height: 560,
+                    height: 615,
                     width: screenWidth,
                     // color: Colors.blueAccent,
                     child: SingleChildScrollView(

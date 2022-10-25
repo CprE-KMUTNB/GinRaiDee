@@ -223,7 +223,7 @@ class _followingScreenState extends State<followingScreen> {
 
                 //กล่องใหญ่
                 Container(
-                  margin: EdgeInsets.only(top: 25),
+                  margin: EdgeInsets.only(top: 20),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -231,12 +231,12 @@ class _followingScreenState extends State<followingScreen> {
                       topLeft: Radius.circular(47),
                     ),
                   ),
-                  height: screenHeight * 0.7,
+                  height: screenHeight * 0.835,
                   width: screenWidth,
                   child:
                       //กล่องที่ใส่คนที่ฟอล กล่องใหญ่
                       Container(
-                    margin: EdgeInsets.only(top: 10),
+                    margin: EdgeInsets.only(top: 19),
                     child: SingleChildScrollView(
                       child: Column(
                         // ignore: prefer_const_literals_to_create_immutables
