@@ -114,9 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dnhw2fk8e',
-    'API_KEY': '168592612174969',
-    'API_SECRET': 'bG55tCTM_WZtKX3twLTanA0T-pY'
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+    'API_KEY': os.environ.get('API_KEY'),
+    'API_SECRET': os.environ.get('API_SECRET')
 }
 
 
