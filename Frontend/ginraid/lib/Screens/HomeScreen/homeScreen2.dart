@@ -189,7 +189,7 @@ class _homeScreen2State extends State<homeScreen2> {
                     margin: EdgeInsets.only(top: 10, left: 20, right: 20),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(foodpic), fit: BoxFit.contain),
+                          image: NetworkImage(foodpic), fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(13),
                     ),
                   ),
