@@ -166,7 +166,7 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
 
           //กล่องใหญ่
           Container(
-            height: screenHeight * 0.76,
+            height: screenHeight * 0.85,
             margin: const EdgeInsets.only(top: 140),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(

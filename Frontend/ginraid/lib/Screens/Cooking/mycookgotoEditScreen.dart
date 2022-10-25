@@ -88,6 +88,7 @@ class _mycookScreenState extends State<mycookScreen> {
             Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       // color: Colors.amberAccent,
@@ -107,8 +108,7 @@ class _mycookScreenState extends State<mycookScreen> {
                     Container(
                       // color: Colors.grey,
                       alignment: Alignment.topLeft,
-                      margin:
-                          EdgeInsets.only(top: 95, left: screenWidth * 0.25),
+                      margin: EdgeInsets.only(top: 95, right: 15),
                       child: GestureDetector(
                         onTap: () => {
                           Navigator.push(
