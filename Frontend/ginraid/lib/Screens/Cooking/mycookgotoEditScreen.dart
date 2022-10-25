@@ -67,25 +67,25 @@ class _mycookScreenState extends State<mycookScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Stack(
-        children: [
-          bgCook4().buildBackground(screenWidth, screenHeight),
-          //กล่องใหญ่ๆ
-          Container(
-            margin: const EdgeInsets.only(
-              top: 210.0,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            bgCook4().buildBackground(screenWidth, screenHeight),
+            //กล่องใหญ่ๆ
+            Container(
+              margin: const EdgeInsets.only(
+                top: 210.0,
+              ),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(60),
+              ),
+              height: 600,
+              width: screenWidth,
             ),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
-              borderRadius: BorderRadius.circular(60),
-            ),
-            height: 600,
-            width: screenWidth,
-          ),
 
-          SingleChildScrollView(
-            child: Column(
+            Column(
               children: [
                 Row(
                   children: [
@@ -269,8 +269,8 @@ class _mycookScreenState extends State<mycookScreen> {
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 

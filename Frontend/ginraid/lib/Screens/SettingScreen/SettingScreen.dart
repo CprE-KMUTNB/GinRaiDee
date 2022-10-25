@@ -10,6 +10,7 @@ import 'package:ginraid/Screens/Notification/notiCard.dart';
 import 'package:ginraid/Screens/Favorite/bgFav3.dart';
 import 'package:ginraid/Screens/Favorite/favfood.dart';
 import 'package:ginraid/Screens/SettingScreen/bgSet.dart';
+import 'package:ginraid/Screens/SettingScreen/confirmdeletescreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editPasswordScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/editProfileScreen.dart';
 import 'package:ginraid/Screens/SettingScreen/settingrequest.dart';
@@ -399,7 +400,13 @@ class _SettingScreenState extends State<SettingScreen> {
 
                 //ลบบัญชี
                 GestureDetector(
-                  onTap: () => {showAlertDialog()},
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ConfirmPasswordScreen()),
+                    )
+                  },
                   child: Container(
                     width: screenWidth * 0.9,
                     height: 100,
@@ -436,75 +443,6 @@ class _SettingScreenState extends State<SettingScreen> {
           )
         ],
       ),
-    );
-  }
-
-  void showAlertDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'ลบบัญชี',
-            style: TextStyle(
-                fontSize: 20.0,
-                fontFamily: "NotoSansThai",
-                color: Color.fromARGB(255, 0, 0, 0),
-                fontWeight: FontWeight.bold),
-          ),
-          content: const Text(
-            'คุณต้องการที่จะลบบัญชีนี้',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontFamily: "NotoSansThai",
-              color: Color.fromARGB(255, 0, 0, 0),
-            ),
-          ),
-          actions: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 179, 190, 190)),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text(
-                'ยกเลิก',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: "NotoSansThai",
-                  color: Color.fromARGB(255, 0, 0, 0),
-                ),
-              ),
-            ),
-            TapDebouncer(
-              onTap: () async {
-                var response = await Userdata().deleteaccount();
-                if (response.statusCode == 204) {
-                  print('delete is success');
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => loginScreen()),
-                      (Route<dynamic> route) => false);
-                }
-              }, // your tap handler moved here
-              builder: (BuildContext context, TapDebouncerFunc? onTap) {
-                return ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.red),
-                  onPressed: onTap,
-                  child: const Text(
-                    'ลบบัญชี',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontFamily: "NotoSansThai",
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

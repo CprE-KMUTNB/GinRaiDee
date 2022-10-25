@@ -177,8 +177,18 @@ class _homeinScreenState extends State<homeinScreen> {
 
             /// Noti
             SalomonBottomBarItem(
-              icon: Icon(Icons
-                  .notification_add_outlined), ////////////////////////////////////noti icpn
+              icon: Stack(
+                children: <Widget>[
+                  Icon(Icons
+                      .notifications_none_outlined), ///////////////////////////////////noti icpn
+                  Positioned(
+                      child: Icon(
+                    Icons.brightness_1,
+                    color: Colors.red,
+                    size: 9.0,
+                  ))
+                ],
+              ),
               title: Text(
                 "Notifications",
                 style: TextStyle(
