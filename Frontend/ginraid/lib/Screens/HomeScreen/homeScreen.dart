@@ -187,10 +187,9 @@ class _homeScreenState extends State<homeScreen> {
           //กล่องใหญ่ไว้ใส่ card
           Container(
             margin: EdgeInsets.only(top: 170, left: 15, right: 15),
-            height: 600,
-            width: 500,
-            //color: Colors.blueAccent,
-
+            height: screenHeight ,
+            width: screenWidth,
+            // color: Colors.blueAccent,
             child: SingleChildScrollView(
                 child: Column(children: <Widget>[getBody()])),
           ),
