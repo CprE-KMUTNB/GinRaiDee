@@ -7,6 +7,7 @@ import 'package:ginraid/Screens/Cooking/bgCook4.dart';
 import 'package:ginraid/Screens/HomeScreen/bgHome2.dart';
 
 import 'package:ginraid/Screens/HomeScreen/homeScreen3.dart';
+import 'package:ginraid/Screens/HomeScreen/pictureScreen.dart';
 
 //เป็นหน้าที่เอาไว้ไปหน้าแก้ไขเมนูอาหาร จะคล้ายๆหน้า home2 แต่จะมีปุ่มให้ไปสู่หน้าแก้ไข
 class mycookScreen extends StatefulWidget {
@@ -148,18 +149,28 @@ class _mycookScreenState extends State<mycookScreen> {
                 ),
 
                 //รูป
-                Container(
-                  // color: Colors.amber,
-                  height: 180,
-                  margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(foodpic), fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(13),
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PictureScreen(
+                          foodpic: foodpic,
+                        ),
+                      ),
+                    ),
+                  },
+                  child: Container(
+                    // color: Colors.amber,
+                    height: 180,
+                    margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(foodpic), fit: BoxFit.cover),
+                      borderRadius: BorderRadius.circular(13),
+                    ),
                   ),
                 ),
-
-                
 
                 //วัตถุดิบ
                 Container(

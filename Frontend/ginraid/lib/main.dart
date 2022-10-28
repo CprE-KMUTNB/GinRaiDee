@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ginraid/Screens/HomeScreen/pictureScreen.dart';
 import 'package:ginraid/Screens/Login/Login_Screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/componants/homeinhome.dart';
@@ -22,6 +23,7 @@ class _NotAuthenState extends State<NotAuthen> {
     if (token == '') {
       return loginScreen();
     } else {
+      // return PictureScreen();
       return homeinScreen();
     }
   }

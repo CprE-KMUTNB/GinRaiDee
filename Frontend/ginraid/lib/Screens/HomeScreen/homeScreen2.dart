@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ginraid/Screens/HomeScreen/bgHome2.dart';
 
 import 'package:ginraid/Screens/HomeScreen/homeScreen3.dart';
+import 'package:ginraid/Screens/HomeScreen/pictureScreen.dart';
 
 class homeScreen2 extends StatefulWidget {
   static const routeName = '/';
@@ -183,18 +184,28 @@ class _homeScreen2State extends State<homeScreen2> {
                   ),
 
                   //รูป
-                  Container(
-                    // color: Colors.amber,
-                    height: 180,
-                    margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(foodpic), fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(13),
+                  GestureDetector(
+                    onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PictureScreen(
+                            foodpic: foodpic,
+                          ),
+                        ),
+                      ),
+                    },
+                    child: Container(
+                      // color: Colors.amber,
+                      height: 180,
+                      margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(foodpic), fit: BoxFit.cover),
+                        borderRadius: BorderRadius.circular(13),
+                      ),
                     ),
                   ),
-
-                 
 
                   //วัตถุดิบ
                   Container(
@@ -276,7 +287,5 @@ class _homeScreen2State extends State<homeScreen2> {
             ],
           ),
         ));
-
-
   }
 }
