@@ -1,22 +1,17 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new
 
-
-
 import 'package:flutter/material.dart';
 
 import 'package:ginraid/Screens/Login/login.dart';
 import 'package:ginraid/Screens/Login/loginmodel.dart';
 import 'package:ginraid/Screens/componants/homeinhome.dart';
 
-
 import 'package:ginraid/Screens/componants/background.dart';
-
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 import '../Signup/Signup_Screen.dart';
-
 
 import 'dart:convert';
 
@@ -298,14 +293,15 @@ class _loginScreenState extends State<loginScreen> {
                                   await Login().post('/login/', user);
 
                               if (response.statusCode == 200) {
-                                int userid = Loginmodel.fromJson(
-                                        json.decode(response.body))
+                                int userid = Loginmodel.fromJson(json.decode(
+                                        utf8.decode(response.bodyBytes)))
                                     .userId!;
                                 String username = Loginmodel.fromJson(
-                                        json.decode(response.body))
+                                        json.decode(
+                                            utf8.decode(response.bodyBytes)))
                                     .name!;
-                                String token = Loginmodel.fromJson(
-                                        json.decode(response.body))
+                                String token = Loginmodel.fromJson(json.decode(
+                                        utf8.decode(response.bodyBytes)))
                                     .token!;
                                 setToken(token);
                                 setUserID(userid);
