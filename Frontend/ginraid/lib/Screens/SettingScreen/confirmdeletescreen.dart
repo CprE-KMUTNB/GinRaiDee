@@ -128,13 +128,13 @@ class _ConfirmPasswordScreenState extends State<ConfirmPasswordScreen> {
                             borderSide:
                                 BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                           ),
-                          hintText: 'รหัสผ่านเก่า',
+                          hintText: 'รหัสผ่าน',
                           hintStyle: TextStyle(
                             fontSize: 20.0,
                             fontFamily: "NotoSansThai",
                             color: Color.fromARGB(255, 179, 190, 190),
                           ),
-                          labelText: 'รหัสผ่านเก่า',
+                          labelText: 'รหัสผ่าน',
                           labelStyle: TextStyle(
                             fontSize: 20.0,
                             fontFamily: "NotoSansThai",
@@ -159,7 +159,6 @@ class _ConfirmPasswordScreenState extends State<ConfirmPasswordScreen> {
                       ),
                     ),
 
-                    //รหัสใหม่
 
                     //ปุ่มบันทึก
                     Container(
@@ -231,7 +230,7 @@ class _ConfirmPasswordScreenState extends State<ConfirmPasswordScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
-            "รหัสผ่านเก่าผิด",
+            "รหัสผ่านผิด",
             style: TextStyle(
                 fontSize: 20.0,
                 fontFamily: "NotoSansThai",
